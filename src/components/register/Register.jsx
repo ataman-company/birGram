@@ -8,7 +8,7 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 
-function Register({  setPhone, postData, setreferral }) {
+function Register({ setPhone, postData, setreferral }) {
   const [checkbox, setCheckbox] = useState(false);
   const [value, setValue] = useState("");
   const [ref, setRef] = useState("");

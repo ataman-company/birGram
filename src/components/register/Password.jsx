@@ -1,11 +1,23 @@
 "use client";
 import { Button, Checkbox, Input } from "@nextui-org/react";
-import React, { useState } from "react";
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
 
 function Password({ setPassword, submitPassword }) {
-  const [password1, setPassword1] = useState("");
-  const [password2, setPassword2] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors, isValid },
+  } = useForm({
+    defaultValues: {
+      password1: "",
+      password2: "",
+    },
+    mode: "onChange", // Validate form on change
+  });
+
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const handleShowPasswordChange = () => {
     setShowPassword(!showPassword);
@@ -20,6 +32,17 @@ function Password({ setPassword, submitPassword }) {
       password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers
     );
   };
+
+  const onSubmit = (data) => {
+    setPassword(data.password2);
+    submitPassword();
+  };
+
+  const password1 = watch("password1");
+  const password2 = watch("password2");
+
+  const isFormValid =
+    isValid && password1 === password2 && isPasswordValid(password1);
 
   return (
     <div className="flex flex-col py-5 px-2 h-screen justify-between max-w-2xl mx-auto">
@@ -36,26 +59,47 @@ function Password({ setPassword, submitPassword }) {
         <p className="text-lg">تعیین رمز عبور</p>
         <p className="text-gray-400">یک رمز برای حساب کاربری خود انتخاب کنید</p>
 
-        <Input
-          type={showPassword ? "text" : "password"}
-          value={password1}
-          onChange={(e) => setPassword1(e.target.value)}
-          label="رمز عبور"
-          variant="bordered"
+        <Controller
+          name="password1"
+          control={control}
+          rules={{
+            required: "رمز عبور الزامی است",
+            validate: (value) =>
+              isPasswordValid(value) ||
+              "پسورد باید شامل حروف بزرگ، کوچک و اعداد باشد",
+          }}
+          render={({ field }) => (
+            <Input
+              {...field}
+              type={showPassword ? "text" : "password"}
+              label="رمز عبور"
+              variant="bordered"
+              errorMessage={errors.password1?.message}
+              isInvalid={!!errors.password1}
+            />
+          )}
         />
-        {!isPasswordValid(password1) && password1.length > 0 && (
-          <p className="text-red-500 text-xs">پسورد نامعتبر است.</p>
-        )}
-        <Input
-          type={showPassword ? "text" : "password"}
-          value={password2}
-          onChange={(e) => setPassword2(e.target.value)}
-          label=" تکرار رمز عبور"
-          variant="bordered"
+
+        <Controller
+          name="password2"
+          control={control}
+          rules={{
+            required: "تکرار رمز عبور الزامی است",
+            validate: (value) =>
+              value === password1 || "رمز عبورها مطابقت ندارند",
+          }}
+          render={({ field }) => (
+            <Input
+              {...field}
+              type={showPassword ? "text" : "password"}
+              label="تکرار رمز عبور"
+              variant="bordered"
+              errorMessage={errors.password2?.message}
+              isInvalid={!!errors.password2}
+            />
+          )}
         />
-        {!isPasswordValid(password2) && password2.length > 0 && (
-          <p className="text-red-500 text-xs">پسورد نامعتبر است.</p>
-        )}
+
         <Checkbox
           checked={showPassword}
           onChange={handleShowPasswordChange}
@@ -67,18 +111,9 @@ function Password({ setPassword, submitPassword }) {
       </div>
       <Button
         className="text-white"
-        color={password2 && password1 ? "primary" : "default"}
-        isDisabled={
-          password1 === password2 &&
-          password1.length >= 8 &&
-          password2.length >= 8
-            ? false
-            : true
-        }
-        onClick={() => {
-          setPassword(password2);
-          submitPassword();
-        }}
+        color={isFormValid ? "primary" : "default"}
+        isDisabled={!isFormValid}
+        onClick={handleSubmit(onSubmit)}
       >
         تعیین رمز عبور
       </Button>

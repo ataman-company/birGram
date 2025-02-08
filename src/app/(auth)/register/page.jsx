@@ -67,22 +67,25 @@ function Login() {
       const formData = new FormData();
       formData.append("token", token);
       formData.append("password", password);
+      console.log("passs", password);
 
-      const res = await axios.post(
-        `${Config.apiUrl}/auth/savepassword`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+      if (password) {
+        const res = await axios.post(
+          `${Config.apiUrl}/auth/savepassword`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        if (res.data.code === 1) {
+          localStorage.setItem("token", res.data.user.token);
+          setStep(3);
+        } else {
+          alert(res.data.error);
         }
-      );
-
-      if (res.data.code === 1) {
-        localStorage.setItem("token", res.data.user.token);
-        setStep(3);
-      } else {
-        alert(res.data.error);
       }
     } catch (error) {
       console.error("Error verifying OTP:", error);
