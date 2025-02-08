@@ -1,6 +1,8 @@
 import { Card, CardBody, Tab, Tabs } from "@nextui-org/react";
 import Image from "next/image";
 import UserChart from "./UserChart";
+import ChevronUpIcon from "@public/icons/userPanel/chevronUp";
+import ChevronDownIcon from "@public/icons/userPanel/chevronDown";
 
 function UserPanelGoldInformation({
   data,
@@ -24,21 +26,33 @@ function UserPanelGoldInformation({
 
   const dailyMinPrice = dailyPrices.length ? Math.min(...dailyPrices) : 0;
   const dailyMaxPrice = dailyPrices.length ? Math.max(...dailyPrices) : 0;
+  // const dailyChange = (
+  //   Math.abs((dailyMinPrice - dailyMaxPrice) / dailyMinPrice) * 100
+  // ).toFixed(2);
   const dailyChange = (
-    Math.abs((dailyMinPrice - dailyMaxPrice) / dailyMinPrice) * 100
+    ((dailyMinPrice - dailyMaxPrice) / dailyMinPrice) *
+    100
   ).toFixed(2);
 
   const weeklyMinPrice = weeklyPrices.length ? Math.min(...weeklyPrices) : 0;
   const weeklyMaxPrice = weeklyPrices.length ? Math.max(...weeklyPrices) : 0;
+
   const weeklyChange = (
-    Math.abs((weeklyMinPrice - weeklyMaxPrice) / weeklyMinPrice) * 100
+    ((weeklyMinPrice - weeklyMaxPrice) / weeklyMinPrice) *
+    100
   ).toFixed(2);
 
   const monthlyMinPrice = monthlyPrices.length ? Math.min(...monthlyPrices) : 0;
   const monthlyMaxPrice = monthlyPrices.length ? Math.max(...monthlyPrices) : 0;
   const monthlyChange = (
-    Math.abs((monthlyMinPrice - monthlyMaxPrice) / monthlyMinPrice) * 100
+    ((monthlyMinPrice - monthlyMaxPrice) / monthlyMinPrice) *
+    100
   ).toFixed(2);
+
+  const getChangeColor = (change) =>
+    parseFloat(change) < 0 ? "red-500" : "green-500";
+
+  const getIconColor = (change) => (parseFloat(change) < 0 ? "red" : "green");
 
   return (
     <div className="relative h-[500px] ">
@@ -62,15 +76,25 @@ function UserPanelGoldInformation({
                     </p>
                     <div className="flex flex-col items-center gap-2">
                       <div className="flex">
-                        <span className="text-green-500 lg:text-base text-xs">
-                          {dailyChange}%
+                        <span
+                          className={`lg:text-base text-xs text-${getChangeColor(
+                            dailyChange
+                          )}`}
+                        >
+                          {Math.abs(dailyChange)}%
                         </span>
-                        <Image
-                          width={12}
-                          height={12}
-                          src={"/icons/userPanel/chevronUp.svg"}
-                          alt="up"
-                        />
+
+                        {dailyChange < 0 ? (
+                          <ChevronDownIcon
+                            fill={getIconColor(dailyChange)}
+                            size={12}
+                          />
+                        ) : (
+                          <ChevronUpIcon
+                            fill={getIconColor(dailyChange)}
+                            size={12}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
@@ -90,15 +114,25 @@ function UserPanelGoldInformation({
                     </p>
                     <div className="flex flex-col items-center gap-2">
                       <div className="flex">
-                        <span className="text-green-500 lg:text-base text-xs text-labelSmall">
-                          {weeklyChange}%
+                        <span
+                          className={`lg:text-base text-xs text-${getChangeColor(
+                            weeklyChange
+                          )}`}
+                        >
+                          {Math.abs(weeklyChange)}%
                         </span>
-                        <Image
-                          width={12}
-                          height={12}
-                          src={"/icons/userPanel/chevronUp.svg"}
-                          alt="up"
-                        />
+
+                        {dailyChange < 0 ? (
+                          <ChevronDownIcon
+                            fill={getIconColor(weeklyChange)}
+                            size={12}
+                          />
+                        ) : (
+                          <ChevronUpIcon
+                            fill={getIconColor(weeklyChange)}
+                            size={12}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
@@ -115,18 +149,26 @@ function UserPanelGoldInformation({
                     <p className="lg:text-xl md:text-base text-indigo-900 font-semibold">
                       {formatted}ریال
                     </p>
-                    <div className="flex flex-col items-center gap-2">
-                      <div className="flex">
-                        <span className="text-green-500 lg:text-base text-xs text-labelSmall">
-                          {monthlyChange}%
-                        </span>
-                        <Image
-                          width={12}
-                          height={12}
-                          src={"/icons/userPanel/chevronUp.svg"}
-                          alt="up"
+                    <div className="flex">
+                      <span
+                        className={`lg:text-base text-xs text-${getChangeColor(
+                          monthlyChange
+                        )}`}
+                      >
+                        {Math.abs(monthlyChange)}%
+                      </span>
+
+                      {dailyChange < 0 ? (
+                        <ChevronDownIcon
+                          fill={getIconColor(monthlyChange)}
+                          size={12}
                         />
-                      </div>
+                      ) : (
+                        <ChevronUpIcon
+                          fill={getIconColor(monthlyChange)}
+                          size={12}
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
