@@ -86,7 +86,7 @@ const Transactions = () => {
           </div>
         </div>
         {/* Pass modal state to FilterModal */}
-        <FilterModal isOpen={isOpen} onOpenChange={onOpenChange} />
+        <FilterModal open={isOpen} change={onOpenChange} />
 
         <BottomNav />
       </div>

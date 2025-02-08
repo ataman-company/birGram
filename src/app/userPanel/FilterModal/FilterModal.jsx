@@ -14,7 +14,7 @@ import {
 import { useState } from "react";
 import DatePicker from "react-multi-date-picker";
 
-const FilterModal = ({ isOpen, onOpenChange }) => {
+const FilterModal = ({ open, change }) => {
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
   const [selectedTransactions, setSelectedTransactions] = useState([]);
@@ -47,8 +47,8 @@ const FilterModal = ({ isOpen, onOpenChange }) => {
 
   return (
     <Modal
-      isOpen={isOpen}
-      onOpenChange={onOpenChange}
+      isOpen={open}
+      onOpenChange={change}
       placement="bottom"
       size="full"
       className="max-w-2xl rounded-t-2xl bg-white shadow-lg"
@@ -103,6 +103,8 @@ const FilterModal = ({ isOpen, onOpenChange }) => {
             <span className="text-sm text-gray-600">تاریخ تراکنش</span>
             <div className="flex justify-between  gap-2">
               <UserPanelDatePicker setdate={setFromDate} />
+            </div>
+            <div className="flex justify-between  gap-2">
               <UserPanelDatePicker setate={setToDate} />
             </div>
           </div>
