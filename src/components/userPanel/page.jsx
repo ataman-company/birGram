@@ -18,10 +18,10 @@
 //     <div>
 //       <Swiper
 //         className="panel-paginiation"
-//         autoplay={{
-//           delay: 3000, // تأخیر بین اسلایدها
-//           disableOnInteraction: false, // غیرفعال کردن اتوپلی در تعامل کاربر
-//         }}
+// autoplay={{
+//   delay: 3000, // تأخیر بین اسلایدها
+//   disableOnInteraction: false, // غیرفعال کردن اتوپلی در تعامل کاربر
+// }}
 //         effect="fade" // نوع انیمیشن
 //         modules={[Navigation, Pagination, Autoplay]} // افزودن ماژول‌ها
 //         spaceBetween={50} // فاصله بین اسلایدها
@@ -76,29 +76,22 @@ import { Pagination, Autoplay } from "swiper/modules"; // Removed Navigation
 import "swiper/swiper-bundle.css";
 import Link from "next/link";
 import Image from "next/image";
+import Config from "../config";
 
 const UserPanelSwipper = ({ slides }) => {
-  const data = [
-    "/images/userPanel/1.png",
-    "/images/userPanel/2.jpg",
-    "/images/userPanel/3.jpg",
-    "/images/userPanel/4.png",
-    "/images/userPanel/1.png",
-  ];
-
   return (
     <div>
       <Swiper
         className="panel-pagination"
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
-        }}
         effect="fade"
+        autoplay={{
+          delay: 3000, // تأخیر بین اسلایدها
+          disableOnInteraction: false, // غیرفعال کردن اتوپلی در تعامل کاربر
+        }}
+        loop
         modules={[Pagination, Autoplay]} // Removed Navigation
         spaceBetween={50}
         slidesPerView={1.6}
-        loop
         centeredSlides={true}
         pagination={{
           clickable: true,
@@ -109,19 +102,72 @@ const UserPanelSwipper = ({ slides }) => {
           1024: { slidesPerView: 1.6, spaceBetween: 50 },
         }}
       >
-        {data.map((item, index) => (
-          <SwiperSlide key={index} className="rounded-[5px] overflow-hidden">
-            <Link href={"#"}>
-              <Image
-                src={item}
-                alt="image"
-                width={300}
-                height={200}
-                className="w-full rounded-lg" // Added border-radius
-              />
-            </Link>
-          </SwiperSlide>
-        ))}
+        <SwiperSlide className="rounded-[5px] overflow-hidden">
+          <Link href={slides.slider_link1}>
+            <Image
+              src={`${Config.baseUrl}/${slides.slider_img1}`}
+              alt="image"
+              width={300}
+              height={200}
+              className="w-full rounded-lg" // Added border-radius
+            />
+          </Link>
+        </SwiperSlide>
+        <SwiperSlide className="rounded-[5px] overflow-hidden">
+          <Link href={slides.slider_link2}>
+            <Image
+              src={`${Config.baseUrl}/${slides.slider_img2}`}
+              alt="image"
+              width={300}
+              height={200}
+              className="w-full rounded-lg" // Added border-radius
+            />
+          </Link>
+        </SwiperSlide>
+        <SwiperSlide className="rounded-[5px] overflow-hidden">
+          <Link href={slides.slider_link3}>
+            <Image
+              src={`${Config.baseUrl}/${slides.slider_img3}`}
+              alt="image"
+              width={300}
+              height={200}
+              className="w-full rounded-lg" // Added border-radius
+            />
+          </Link>
+        </SwiperSlide>
+        <SwiperSlide className="rounded-[5px] overflow-hidden">
+          <Link href={slides.slider_link4}>
+            <Image
+              src={`${Config.baseUrl}/${slides.slider_img4}`}
+              alt="image"
+              width={300}
+              height={200}
+              className="w-full rounded-lg" // Added border-radius
+            />
+          </Link>
+        </SwiperSlide>
+        <SwiperSlide className="rounded-[5px] overflow-hidden">
+          <Link href={slides.slider_link5}>
+            <Image
+              src={`${Config.baseUrl}/${slides.slider_img5}`}
+              alt="image"
+              width={300}
+              height={200}
+              className="w-full rounded-lg" // Added border-radius
+            />
+          </Link>
+        </SwiperSlide>
+        <SwiperSlide className="rounded-[5px] overflow-hidden">
+          <Link href={slides.slider_link1}>
+            <Image
+              src={`${Config.baseUrl}/${slides.slider_img1}`}
+              alt="image"
+              width={300}
+              height={200}
+              className="w-full rounded-lg" // Added border-radius
+            />
+          </Link>
+        </SwiperSlide>
       </Swiper>
     </div>
   );

@@ -1,16 +1,34 @@
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
+//       experimental: {
+//         turbo: {
+//           rules: {
+//             "*.svg": {
+//               loaders: ["@svgr/webpack"],
+//               as: "*.js",
+//             },
+//           },
+//         },
+//       },
+//     };
+
+//     export default nextConfig;
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-      experimental: {
-        turbo: {
-          rules: {
-            "*.svg": {
-              loaders: ["@svgr/webpack"],
-              as: "*.js",
-            },
-          },
+  images: {
+    domains: ["gold.pronetwork.cloud"], // اضافه کردن دامنه API شما
+  },
+  experimental: {
+    turbo: {
+      rules: {
+        "*.svg": {
+          loaders: ["@svgr/webpack"],
+          as: "*.js",
         },
       },
-    };
-    
-    export default nextConfig;
-    
+    },
+  },
+};
+
+export default nextConfig;
