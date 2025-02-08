@@ -99,14 +99,24 @@ const FilterModal = ({ open, change }) => {
           </Accordion>
 
           {/* Date Picker */}
-          <div className="flex flex-col  px-10 space-y-3">
+          <div className="flex flex-col  px-6 space-y-3">
             <span className="text-sm text-gray-600">تاریخ تراکنش</span>
-            <div className="flex justify-between  gap-2">
+            {/* <div className="flex flex-col sm:flex-row justify-between gap-2">
               <UserPanelDatePicker setdate={setFromDate} />
+              <UserPanelDatePicker setdate={setToDate} />
+            </div> */}
+
+            <div className="flex sm:flex-row flex-col justify-between gap-2">
+              <div className="w-full">
+                <span className="text-sm text-gray-600">از تاریخ</span>
+                <UserPanelDatePicker setdate={setFromDate} />
+              </div>
+              <div className="w-full">
+                <span className="text-sm  text-gray-600">تا تاریخ</span>
+                <UserPanelDatePicker setdate={setToDate} />
+              </div>
             </div>
-            <div className="flex justify-between  gap-2">
-              <UserPanelDatePicker setate={setToDate} />
-            </div>
+            {/* <div className="flex justify-between  gap-2"></div> */}
           </div>
         </ModalBody>
 

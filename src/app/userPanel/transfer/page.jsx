@@ -456,8 +456,8 @@ export default function MoneyTransfer() {
               {/* Free Fee Tooltip */}
               <div className="relative my-3">
                 <div className="absolute -top-2 left-0 bg-gray-700 text-white text-xs p-2 rounded-lg">
-                  تعداد کارمزد رایگان باقی‌مانده: {apiData.remainingFreeFees} از
-                  ۲۰
+                  تعداد کارمزد رایگان باقی‌مانده:{" "}
+                  {apiData.remainingFreeFees || 0} از ۲۰
                 </div>
               </div>
 

@@ -62,8 +62,8 @@ const Transactions = () => {
     <>
       <div className="flex flex-col gap-2 pb-5 px-2 h-screen max-w-2xl mx-auto">
         <Header currentPrice={currentPrice} />
-        <div className="flex-col justify-between  mx-2.5">
-          <div className="flex justify-between  mx-2.5">
+        <div className="flex-col justify-between max-w-2xl ">
+          <div className="flex justify-between  ">
             <div className="inline-block">موجودی</div>
             {/* Open Modal on Button Click */}
             <Button

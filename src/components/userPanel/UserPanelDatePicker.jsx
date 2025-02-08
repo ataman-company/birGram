@@ -20,19 +20,22 @@ function UserPanelDatePicker({ setdate }) {
   };
 
   return (
-    <DatePicker
-      render={<InputIcon />}
-      minDate={new DateObject({ calendar: persian }).set({
-        year: 1300,
-        month: 1,
-        day: 1,
-      })} // ✅ Use DateObject
-      calendar={persian}
-      locale={persian_fa}
-      value={value}
-      onChange={handleChange}
-      inputClass="w-full" // ✅ Use inputClass instead of className
-    />
+    <div className="w-full mt-2">
+      <DatePicker
+        render={<InputIcon />}
+        minDate={new DateObject({ calendar: persian }).set({
+          year: 1300,
+          month: 1,
+          day: 1,
+        })} // ✅ Use DateObject
+        calendar={persian}
+        locale={persian_fa}
+        value={value}
+        onChange={handleChange}
+        inputClass="w-full"
+        // ✅ Use inputClass instead of className
+      />
+    </div>
   );
 }
 
