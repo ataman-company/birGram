@@ -15,17 +15,31 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 import Header from "./Header/Header";
+import toast, { Toaster } from "react-hot-toast";
 
 function UserPanel() {
   useAuthRedirect();
 
   const [data, setData] = useState(false);
   const [currentPrice, setCurrentPrice] = useState(0);
+  // State to control visibility of sensitive data
+  const [isBalanceVisible, setIsBalanceVisible] = useState(false);
+
+  const handleCopyHesab = () => {
+    if (!user?.hesab) return;
+    navigator.clipboard
+      .writeText(user.hesab)
+      .then(() => {
+        toast.success("حساب کپی شد!");
+      })
+      .catch(() => {
+        toast.error("خطا در کپی کردن حساب");
+      });
+  };
 
   const serverdata = async () => {
     try {
-      let token = localStorage.getItem("token");
-
+      const token = localStorage.getItem("token");
       if (!token) return;
 
       const res = await axios.get(`${Config.apiUrl}/user/home`, {
@@ -39,12 +53,11 @@ function UserPanel() {
         setData(res.data);
         setCurrentPrice(res.data.current_price);
       } else if (res.data.code === 401) {
-        //goto to login
+        // goto login
         localStorage.removeItem("token");
         useAuthRedirect();
       } else if (res.data.code === 555) {
-        //go to retoken
-
+        // go to retoken
         localStorage.removeItem("token");
         useAuthRedirect();
       } else {
@@ -57,8 +70,13 @@ function UserPanel() {
 
   useEffect(() => {
     serverdata();
-    let interval = setInterval(getCurrentPrice, 5000);
+    const interval = setInterval(getCurrentPrice, 5000);
+    return () => {
+      clearInterval(interval);
+    };
+    // eslint-disable-next-line
   }, []);
+
   const getCurrentPrice = async () => {
     try {
       const res = await axios.get(`${Config.apiUrl}/lastprice`);
@@ -74,14 +92,22 @@ function UserPanel() {
 
   if (!user) return null;
 
+  // Toggle the visibility of the balance details
+  const handleEyeClick = () => {
+    setIsBalanceVisible(!isBalanceVisible);
+  };
+
   return (
     <>
-      <div className="flex flex-col gap-2 pb-5 px-2  max-w-2xl mx-auto">
+      <Toaster position="top-left" reverseOrder={false} />
+      <div className="flex flex-col gap-2 pb-5 px-2 max-w-2xl mx-auto">
         <Header currentPrice={currentPrice} />
+
         <div className="flex flex-col gap-2">
+          {/* Top Section */}
           <div className="flex justify-between">
             <p className="text-lg font-bold">حساب بیرگرم</p>
-            <div className="py-1  px-2 bg-green-100 text-green-700 flex items-center rounded-lg relative">
+            <div className="py-1 px-2 bg-green-100 text-green-700 flex items-center rounded-lg relative">
               <p className="text-green-700 text-sm">پشتیبانی</p>
               <Support width={24} height={24} fill="#3a5a40" />
               <span className="absolute flex size-3 top-0 left-0">
@@ -90,24 +116,42 @@ function UserPanel() {
               </span>
             </div>
           </div>
+
+          {/* Balance Section */}
           <div className="w-full rounded-lg py-3 px-2 bg-panel flex flex-col gap-2">
+            {/* Header Row */}
             <div className="flex justify-between">
               <div className="flex gap-1 text-white">
                 <p>موجودی</p>
-                <Eye />
+                {/* Eye Icon Clickable */}
+                <button onClick={handleEyeClick}>
+                  <Eye />
+                </button>
               </div>
+
+              {/* حساب نمایش یا *** */}
               <div className="flex gap-1 text-sm text-yellow-400">
-                <p>{user.hesab}</p>
-                <Copy className="h-5 w-5" />
+                <p>{isBalanceVisible ? user.hesab : "****"}</p>
+                <button onClick={handleCopyHesab}>
+                  <Copy className="h-5 w-5" />
+                </button>
               </div>
             </div>
+
+            {/* موجودی طلا (Gold) */}
             <div className="flex gap-0.5 text-yellow-400">
-              <p>{user.gold} بیرگرم</p>
+              <p>{isBalanceVisible ? user.gold : "***"} بیرگرم</p>
               <Down />
             </div>
+
+            {/* معادل ریالی */}
             <p className="text-white">معادل</p>
-            <p className="text-white">{user.gold * currentPrice} ریال</p>
+            <p className="text-white">
+              {isBalanceVisible ? user.gold * currentPrice : "***"} ریال
+            </p>
           </div>
+
+          {/* 4 Icon Buttons */}
           <div className="flex mt-3 mb-3 justify-evenly">
             <Link href={"#"} className="flex flex-col gap-1 items-center">
               <div className="size-12 rounded-full bg-gray-100 flex justify-center items-center">
@@ -115,18 +159,21 @@ function UserPanel() {
               </div>
               <p className="text-sm">خرید</p>
             </Link>
+
             <Link href={"#"} className="flex flex-col gap-1 items-center">
               <div className="size-12 rounded-full bg-gray-100 flex justify-center items-center">
                 <Uparrow width={24} height={24} />
               </div>
               <p className="text-sm">فروش</p>
             </Link>
+
             <Link href={"#"} className="flex flex-col gap-1 items-center">
               <div className="size-12 rounded-full bg-gray-100 flex justify-center items-center">
                 <History width={24} height={24} />
               </div>
               <p className="text-sm">درخواست ها</p>
             </Link>
+
             <Link href={"#"} className="flex flex-col gap-1 items-center">
               <div className="size-12 rounded-full bg-gray-100 flex justify-center items-center">
                 <More width={24} height={24} fill="rgb(0, 19, 129)" />
@@ -134,7 +181,11 @@ function UserPanel() {
               <p className="text-sm">بیشتر</p>
             </Link>
           </div>
+
+          {/* Swiper / Slider */}
           <UserPanelSwipper slides={data.options} />
+
+          {/* Chart / Additional Section */}
           <div
             className="flex align-center items-center space-x-6 flex-row"
             dir="rtl"
