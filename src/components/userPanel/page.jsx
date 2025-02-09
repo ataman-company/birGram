@@ -89,7 +89,7 @@ const UserPanelSwipper = ({ slides }) => {
           disableOnInteraction: false, // غیرفعال کردن اتوپلی در تعامل کاربر
         }}
         loop
-        modules={[Pagination, Autoplay]} // Removed Navigation
+        modules={[Autoplay]} // Removed Navigation
         spaceBetween={50}
         slidesPerView={1.6}
         centeredSlides={true}
