@@ -24,7 +24,7 @@ export default function MoneyTransfer() {
   const [isLoading, setIsLoading] = useState(false);
   const [apiData, setApiData] = useState(null);
   const [balanceError, setBalanceError] = useState(false);
-
+  const [user, setUser] = useState(null);
   // Watch input changes
   const destinationAccount = watch("destinationAccount", "");
   const transferAmount = watch("transferAmount");
@@ -46,6 +46,8 @@ export default function MoneyTransfer() {
         toast.error("Token not found. Please log in again.");
         return;
       }
+
+      setUser(JSON.parse(localStorage.getItem("userData")));
 
       const formData = new FormData();
       formData.append("hesab", accountNumber);
@@ -78,7 +80,7 @@ export default function MoneyTransfer() {
   };
 
   const validateBalance = () => {
-    if (apiData && transferAmount > apiData.balance) {
+    if (user && transferAmount > user.gold) {
       setBalanceError(true);
     } else {
       setBalanceError(false);
@@ -115,6 +117,7 @@ export default function MoneyTransfer() {
     console.log("Submitted Data:", data);
     toast.success("انتقال ثبت شد!");
   };
+  console.log("user", user?.gold);
 
   return (
     <>
@@ -210,7 +213,7 @@ export default function MoneyTransfer() {
               {/* Balance Information */}
               <div className="flex justify-between text-gray-800 text-sm mt-2 p-3 border border-gray-300 rounded-xl">
                 <span>موجودی حساب میلی:</span>
-                <span>{apiData.balance} ریال</span>
+                <span>{user.wallet * 10} ریال</span>
               </div>
 
               {/* Fee Information */}
@@ -222,8 +225,7 @@ export default function MoneyTransfer() {
               {/* Free Fee Tooltip */}
               <div className="relative my-3">
                 <div className="absolute -top-2 left-0 bg-gray-700 text-white text-xs p-2 rounded-lg">
-                  تعداد کارمزد رایگان باقی‌مانده:{" "}
-                  {apiData.remainingFreeFees || 0} از ۲۰
+                  تعداد کارمزد رایگان باقی‌مانده: {user.freefee || 0} از ۲۰
                 </div>
               </div>
 

@@ -5,15 +5,20 @@ import Authentication from "@/components/register/Authentication";
 import Password from "@/components/register/Password";
 import Register from "@/components/register/Register";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 function Login() {
+  const searchParams = useSearchParams();
+  // Pull "referral" from the URL, default to empty string if null
+  const referralFromURL = searchParams.get("referral") ?? "";
+
   const [phone, setPhone] = useState(0);
   const [step, setStep] = useState(0);
   const [otpValue, setOtpValue] = useState("");
   const [password, setPassword] = useState("");
-  const [referral, setreferral] = useState("");
+  const [referral, setreferral] = useState(referralFromURL);
   const [token, setToken] = useState(0);
   const [fName, setfName] = useState("");
   const [lName, setlName] = useState("");
@@ -130,6 +135,7 @@ function Login() {
           setPhone={setPhone}
           postData={postData}
           setreferral={setreferral}
+          referral={referral}
         />
       )}
       {step === 1 && (

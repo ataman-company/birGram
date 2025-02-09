@@ -8,10 +8,10 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 
-function Register({ setPhone, postData, setreferral }) {
+function Register({ setPhone, postData, setreferral, referral }) {
   const [checkbox, setCheckbox] = useState(false);
   const [value, setValue] = useState("");
-  const [ref, setRef] = useState("");
+  const [ref, setRef] = useState(referral);
 
   // اعتبارسنجی شماره موبایل
   const validateNumber = (value) => value.match(/^0[0-9]{10}$/);
