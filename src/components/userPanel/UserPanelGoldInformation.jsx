@@ -26,27 +26,29 @@ function UserPanelGoldInformation({
 
   const dailyMinPrice = dailyPrices.length ? Math.min(...dailyPrices) : 0;
   const dailyMaxPrice = dailyPrices.length ? Math.max(...dailyPrices) : 0;
-  // const dailyChange = (
-  //   Math.abs((dailyMinPrice - dailyMaxPrice) / dailyMinPrice) * 100
-  // ).toFixed(2);
+
   const dailyChange = (
-    ((dailyMinPrice - dailyMaxPrice) / dailyMinPrice) *
-    100
+    currentPrice > dailyMinPrice
+      ? Math.abs((dailyMinPrice - dailyMaxPrice) / dailyMinPrice) * 100
+      : ((dailyMinPrice - dailyMaxPrice) / dailyMinPrice) * 100
   ).toFixed(2);
 
   const weeklyMinPrice = weeklyPrices.length ? Math.min(...weeklyPrices) : 0;
   const weeklyMaxPrice = weeklyPrices.length ? Math.max(...weeklyPrices) : 0;
 
   const weeklyChange = (
-    ((weeklyMinPrice - weeklyMaxPrice) / weeklyMinPrice) *
-    100
+    currentPrice > weeklyMinPrice
+      ? Math.abs((weeklyMinPrice - weeklyMaxPrice) / weeklyMinPrice) * 100
+      : ((weeklyMinPrice - weeklyMaxPrice) / weeklyMinPrice) * 100
   ).toFixed(2);
 
   const monthlyMinPrice = monthlyPrices.length ? Math.min(...monthlyPrices) : 0;
   const monthlyMaxPrice = monthlyPrices.length ? Math.max(...monthlyPrices) : 0;
+
   const monthlyChange = (
-    ((monthlyMinPrice - monthlyMaxPrice) / monthlyMinPrice) *
-    100
+    currentPrice > monthlyMinPrice
+      ? Math.abs((monthlyMinPrice - monthlyMaxPrice) / monthlyMinPrice) * 100
+      : ((monthlyMinPrice - monthlyMaxPrice) / monthlyMinPrice) * 100
   ).toFixed(2);
 
   const getChangeColor = (change) =>
