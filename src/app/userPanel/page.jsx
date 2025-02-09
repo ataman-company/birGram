@@ -130,12 +130,12 @@ function UserPanel() {
               </div>
 
               {/* حساب نمایش یا *** */}
-              <div className="flex gap-1 text-sm text-yellow-400">
-                <p>{isBalanceVisible ? user.hesab : "****"}</p>
-                <button onClick={handleCopyHesab}>
+              <button className="z-50" onClick={handleCopyHesab}>
+                <div className="flex gap-1 text-sm text-yellow-400">
+                  <p>{isBalanceVisible ? user.hesab : "****"}</p>
                   <Copy className="h-5 w-5" />
-                </button>
-              </div>
+                </div>
+              </button>
             </div>
 
             {/* موجودی طلا (Gold) */}
@@ -206,8 +206,10 @@ function UserPanel() {
             currentPrice={currentPrice}
           />
         </div>
-        <div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-300 z-[9999]">
-          <BottomNav />
+        <div className="fixed bottom-0 left-0 w-full bg-white border-gray-300 z-[9999]">
+          <div className="flex justify-center">
+            <BottomNav />
+          </div>
         </div>
       </div>
     </>

@@ -11,9 +11,11 @@ import LogoutIcon from "@public/icons/userPanel/logout";
 import Image from "next/image";
 import toast, { Toaster } from "react-hot-toast";
 import Header from "../Header/Header";
+import { useRouter } from "next/navigation";
 
 function Profile() {
   useAuthRedirect();
+  const router = useRouter();
 
   const [data, setData] = useState(false);
   const [currentPrice, setCurrentPrice] = useState(0);
@@ -46,6 +48,10 @@ function Profile() {
       if (res.data.code === 1) {
         setData(res.data);
         setCurrentPrice(res.data.current_price);
+
+        const isChecked = res.data.user.display == 1 ? true : false;
+
+        setIsBalanceVisible(isChecked);
       } else if (res.data.code === 401) {
         localStorage.removeItem("token");
         useAuthRedirect();
@@ -79,13 +85,53 @@ function Profile() {
     }
   };
 
+  const handleLogout = () => {
+    console.log("clicked");
+    localStorage.removeItem("token");
+    router.push("/");
+  };
+
   const { user } = data;
 
   if (!user) return null;
 
-  const handleEyeClick = () => {
-    setIsBalanceVisible(!isBalanceVisible);
+  const handleShowClick = async () => {
+    const newDisplayValue = !isBalanceVisible; // Toggle the value
+    setIsBalanceVisible(newDisplayValue); // Update local state
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      // Create FormData object
+      const formData = new FormData();
+      const isCheckedValue = newDisplayValue ? 1 : 0;
+      formData.append("display", isCheckedValue); // Append the display value
+
+      const res = await axios.post(
+        `${Config.apiUrl}/user/updateprofile`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data", // Set content type to FormData
+          },
+        }
+      );
+
+      if (res.data.code === 1) {
+        toast.success("تنظیمات با موفقیت به‌روزرسانی شد!");
+      } else {
+        toast.error("خطا در به‌روزرسانی تنظیمات");
+        setIsBalanceVisible(!newDisplayValue); // Revert state on error
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      toast.error("خطا در به‌روزرسانی تنظیمات");
+      setIsBalanceVisible(!newDisplayValue); // Revert state on error
+    }
   };
+  console.log("isInv", isBalanceVisible);
 
   return (
     <>
@@ -109,7 +155,10 @@ function Profile() {
 
           {/* Invite Section */}
           <div className="w-full rounded-xl bg-[#001A80] p-3 flex flex-row-reverse items-center justify-between">
-            <button className="text-white flex-shrink-0">
+            <button
+              onClick={() => router.push("/userPanel/referral")}
+              className="text-white flex-shrink-0"
+            >
               <ChevronLeftIcon fill="white" size={20} />
             </button>
             <div className="flex flex-row-reverse">
@@ -138,13 +187,19 @@ function Profile() {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <p className="text-base font-semibold text-gray-900">
-                    فرزاد جعفرپور
+                    {user.name}
                   </p>
-                  <p className="text-sm text-gray-500">09XX XXX XXXX</p>
+                  <p className="text-sm text-gray-500">{user.phone}</p>
                 </div>
-                <div className="bg-green-100 text-green-600 rounded-full px-3 py-1 text-xs">
-                  احراز هویت شده
-                </div>
+                {user.name ? (
+                  <div className="bg-green-100 text-green-600 rounded-full px-3 py-1 text-xs">
+                    احراز هویت شده
+                  </div>
+                ) : (
+                  <div className="bg-red-100 text-red-600 rounded-full px-3 py-1 text-xs">
+                    احراز هویت نشده
+                  </div>
+                )}
               </div>
 
               {/* Settings List */}
@@ -166,7 +221,7 @@ function Profile() {
                       type="checkbox"
                       className="sr-only peer"
                       checked={isBalanceVisible}
-                      onChange={() => setHiddenBalance(!isBalanceVisible)}
+                      onChange={handleShowClick}
                     />
                     <div
                       className="w-11 h-6 bg-gray-200 peer-focus:outline-none
@@ -196,18 +251,23 @@ function Profile() {
             </div>
 
             {/* Logout Button */}
-            <button className="mt-4 w-full bg-pink-50 text-pink-600 py-3 rounded-lg text-center font-semibold flex items-center justify-center gap-2">
+            <button
+              onClick={handleLogout}
+              className="mt-4 w-full bg-pink-50 text-pink-600 py-3 rounded-lg text-center font-semibold flex items-center justify-center gap-2"
+            >
               <LogoutIcon color="red" size={20} />
               خروج از حساب کاربری
             </button>
           </div>
         </div>
+        <div className="fixed bottom-0 left-0 w-full bg-white border-gray-300 z-[9999]">
+          <div className="flex justify-center">
+            <BottomNav />
+          </div>
+        </div>
       </div>
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-300 z-[9999]">
-        <BottomNav />
-      </div>
     </>
   );
 }

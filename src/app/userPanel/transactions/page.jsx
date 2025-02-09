@@ -91,6 +91,11 @@ const Transactions = () => {
         <div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-300 z-[9999]">
           <BottomNav />
         </div>
+        <div className="fixed bottom-0 left-0 w-full bg-white border-gray-300 z-[9999]">
+          <div className="flex justify-center">
+            <BottomNav />
+          </div>
+        </div>
       </div>
     </>
   );
