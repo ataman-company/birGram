@@ -63,7 +63,7 @@ export default function ReceiveGold() {
     <div className="h-screen max-w-2xl mx-auto flex flex-col p-4 bg-white relative">
       {/* Top Navigation */}
       <div className="flex justify-between items-center mb-1 py-3 ">
-        <Link href="/userPanel">
+        <Link href="/userPanel/ServicePage">
           <ChevronRightIcon className="w-5 h-5 text-gray-700 cursor-pointer" />
         </Link>
         <h1 className="flex justify-center grow text-md font-bold text-center">

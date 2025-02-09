@@ -23,7 +23,7 @@ const menuItems = [
   {
     text: "کارت هدیه",
     icon: "/icons/userPanel/gift.svg",
-    pathTo: "/gift-card",
+    pathTo: "/userPanel/giftCard",
   },
 ];
 
