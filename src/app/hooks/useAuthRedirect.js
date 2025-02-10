@@ -37,7 +37,6 @@ const useAuthRedirect = (apiUrl) => {
 
           // *** Store the response data in localStorage ***
           localStorage.setItem("userData", JSON.stringify(res.data.user));
-          console.log("user", JSON.stringify(res.data.user));
         } else if (res.data.code === 401 || res.data.code === 555) {
           // invalid or expired token
           localStorage.removeItem("token");

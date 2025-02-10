@@ -157,7 +157,10 @@ function UserPanel() {
 
           {/* 4 Icon Buttons */}
           <div className="flex mt-3 mb-3 justify-evenly">
-            <Link href={"#"} className="flex flex-col gap-1 items-center">
+            <Link
+              href={"/userPanel/goldTrade"}
+              className="flex flex-col gap-1 items-center"
+            >
               <div className="size-12 rounded-full bg-gray-100 flex justify-center items-center">
                 <BuyIcon />
               </div>

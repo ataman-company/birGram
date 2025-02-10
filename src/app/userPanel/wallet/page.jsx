@@ -91,10 +91,13 @@ const Wallet = () => {
                 {showBalance ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
-            <div className="mt-4 flex items-center text-yellow-400 cursor-pointer">
+            <button
+              onClick={() => router.push("/userPanel/walletDeposit")}
+              className="mt-4 flex items-center text-yellow-400 cursor-pointer"
+            >
               <Plus size={18} />
               <span className="mr-1 text-sm">افزایش موجودی</span>
-            </div>
+            </button>
           </div>
           <div className="mt-4">
             <p className="text-sm font-bold">
