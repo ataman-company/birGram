@@ -1,8 +1,7 @@
 import { Card, CardBody, Tab, Tabs } from "@nextui-org/react";
-import Image from "next/image";
-import UserChart from "./UserChart";
-import ChevronUpIcon from "@public/icons/userPanel/chevronUp";
 import ChevronDownIcon from "@public/icons/userPanel/chevronDown";
+import ChevronUpIcon from "@public/icons/userPanel/chevronUp";
+import UserChart from "./UserChart";
 
 function UserPanelGoldInformation({
   data,
@@ -88,12 +87,12 @@ function UserPanelGoldInformation({
 
                         {dailyChange < 0 ? (
                           <ChevronDownIcon
-                            fill={getIconColor(dailyChange)}
+                            color={getIconColor(dailyChange)}
                             size={12}
                           />
                         ) : (
                           <ChevronUpIcon
-                            fill={getIconColor(dailyChange)}
+                            color={getIconColor(dailyChange)}
                             size={12}
                           />
                         )}
@@ -126,12 +125,12 @@ function UserPanelGoldInformation({
 
                         {dailyChange < 0 ? (
                           <ChevronDownIcon
-                            fill={getIconColor(weeklyChange)}
+                            color={getIconColor(weeklyChange)}
                             size={12}
                           />
                         ) : (
                           <ChevronUpIcon
-                            fill={getIconColor(weeklyChange)}
+                            color={getIconColor(weeklyChange)}
                             size={12}
                           />
                         )}
@@ -162,12 +161,12 @@ function UserPanelGoldInformation({
 
                       {dailyChange < 0 ? (
                         <ChevronDownIcon
-                          fill={getIconColor(monthlyChange)}
+                          color={getIconColor(monthlyChange)}
                           size={12}
                         />
                       ) : (
                         <ChevronUpIcon
-                          fill={getIconColor(monthlyChange)}
+                          color={getIconColor(monthlyChange)}
                           size={12}
                         />
                       )}

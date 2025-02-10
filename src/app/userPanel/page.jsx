@@ -16,6 +16,10 @@ import { useEffect, useState } from "react";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 import Header from "./Header/Header";
 import toast, { Toaster } from "react-hot-toast";
+import BuyIcon from "@public/icons/userPanel/buy";
+import SellIcon from "@public/icons/userPanel/sell";
+import RequestIcon from "@public/icons/userPanel/request";
+import MoreIcon from "@public/icons/userPanel/more";
 
 function UserPanel() {
   useAuthRedirect();
@@ -155,28 +159,28 @@ function UserPanel() {
           <div className="flex mt-3 mb-3 justify-evenly">
             <Link href={"#"} className="flex flex-col gap-1 items-center">
               <div className="size-12 rounded-full bg-gray-100 flex justify-center items-center">
-                <Uparrow width={24} height={24} className="rotate-180" />
+                <BuyIcon />
               </div>
               <p className="text-sm">خرید</p>
             </Link>
 
             <Link href={"#"} className="flex flex-col gap-1 items-center">
               <div className="size-12 rounded-full bg-gray-100 flex justify-center items-center">
-                <Uparrow width={24} height={24} />
+                <SellIcon />
               </div>
               <p className="text-sm">فروش</p>
             </Link>
 
             <Link href={"#"} className="flex flex-col gap-1 items-center">
               <div className="size-12 rounded-full bg-gray-100 flex justify-center items-center">
-                <History width={24} height={24} />
+                <RequestIcon />
               </div>
               <p className="text-sm">درخواست ها</p>
             </Link>
 
             <Link href={"#"} className="flex flex-col gap-1 items-center">
               <div className="size-12 rounded-full bg-gray-100 flex justify-center items-center">
-                <More width={24} height={24} fill="rgb(0, 19, 129)" />
+                <MoreIcon />
               </div>
               <p className="text-sm">بیشتر</p>
             </Link>

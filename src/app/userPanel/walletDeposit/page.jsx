@@ -37,7 +37,7 @@ const WalletRecharge = () => {
           <Link href="/userPanel/wallet">
             <ChevronRight className="w-5 h-5 text-gray-700 cursor-pointer" />
           </Link>
-          <h1 className="text-md font-bold">انتقال مبلغ</h1>
+          <h1 className="text-md font-bold">شارژ کیف پول</h1>
 
           {/* 🔹 Info Icon to Open Modal */}
           <button onClick={() => setIsModalOpen(true)}>
