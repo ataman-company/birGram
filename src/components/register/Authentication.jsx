@@ -3,6 +3,7 @@ import { Button, Input } from "@nextui-org/react";
 import React, { useState } from "react";
 import MyDatePicker from "./MyDatePicker";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function Authentication({
   phone,
@@ -12,6 +13,7 @@ function Authentication({
   setnCode,
   setDateBirth,
 }) {
+  const router = useRouter();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [nationalCode, setNationalCode] = useState("");
@@ -91,6 +93,7 @@ function Authentication({
           color="primary"
           onClick={() => {
             submitUser();
+            router.push("/userPanel");
           }}
         >
           ثبت اطلاعات

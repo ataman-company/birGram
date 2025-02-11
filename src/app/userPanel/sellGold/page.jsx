@@ -11,7 +11,7 @@ import { ChevronRight, Info } from "lucide-react";
 import Link from "next/link";
 import TransactionLimitsModal from "../transfer/components/TransactionLimitsModal";
 
-const GoldPurchaseForm = () => {
+const SellGoldForm = () => {
   const {
     control,
     handleSubmit,
@@ -117,7 +117,7 @@ const GoldPurchaseForm = () => {
 
       // Create a FormData instance and append only the modified field plus type.
       const formData = new FormData();
-      formData.append("type", "buy");
+      formData.append("type", "sell");
 
       if (lastChanged === "price") {
         formData.append("price", price);
@@ -188,7 +188,7 @@ const GoldPurchaseForm = () => {
       if (!token) return;
 
       // Build payload with type "buy" and only the field the user typed.
-      let payload = { type: "buy" };
+      let payload = { type: "sell" };
 
       if (lastChanged === "price") {
         payload.price = data.price;
@@ -225,7 +225,7 @@ const GoldPurchaseForm = () => {
         <Link href="/userPanel/wallet">
           <ChevronRight className="w-5 h-5 text-gray-700 cursor-pointer" />
         </Link>
-        <h1 className="text-md font-bold">خرید میلی</h1>
+        <h1 className="text-md font-bold">فروش میلی</h1>
 
         {/* 🔹 Info Icon to Open Modal */}
         <button onClick={() => setIsModalOpen(true)}>
@@ -245,79 +245,80 @@ const GoldPurchaseForm = () => {
         {/* Payment Amount */}
         <div className="flex flex-col grow py-2">
           <div className="my-2">
-            <label
-              htmlFor="price"
-              className="block text-sm font-medium text-gray-700"
-            >
-              مبلغ پرداختی به ریال
-            </label>
-            <Controller
-              name="price"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: "این فیلد الزامی است",
-                pattern: {
-                  value: /^[0-9]*$/,
-                  message: "مقدار باید عدد باشد",
-                },
-                // Note: The min rule below isn't dynamic—validation in calcTrade is used instead.
-              }}
-              render={({ field }) => (
-                <input
-                  {...field}
-                  id="price"
-                  type="number"
-                  onChange={(e) => {
-                    field.onChange(e);
-                    setLastChanged("price");
-                  }}
-                  className="mt-1 p-3 w-full border border-gray-300 rounded-lg"
-                />
+            <div>
+              <label
+                htmlFor="gold"
+                className="my-3 block text-sm font-medium text-gray-700"
+              >
+                مقدار طلا به میلی گرم
+              </label>
+              <Controller
+                name="gold"
+                control={control}
+                defaultValue=""
+                rules={{
+                  required: "این فیلد الزامی است",
+                  min: {
+                    value: 0.1,
+                    message: "حداقل مقدار باید 0.1 گرم باشد",
+                  },
+                }}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    id="gold"
+                    type="number"
+                    step="0.01"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      setLastChanged("gold");
+                    }}
+                    className="p-3 w-full border border-gray-300 rounded-lg"
+                  />
+                )}
+              />
+              {errors.gold && (
+                <p className="text-sm text-red-500">{errors.gold.message}</p>
               )}
-            />
-            {errors.price && (
-              <p className="text-sm text-red-500">{errors.price.message}</p>
-            )}
+
+              <label
+                htmlFor="price"
+                className="my-3 block text-sm font-medium text-gray-700"
+              >
+                مبلغ دریافتی به ریال
+              </label>
+              <Controller
+                name="price"
+                control={control}
+                defaultValue=""
+                rules={{
+                  required: "این فیلد الزامی است",
+                  pattern: {
+                    value: /^[0-9]*$/,
+                    message: "مقدار باید عدد باشد",
+                  },
+                  // Note: The min rule below isn't dynamic—validation in calcTrade is used instead.
+                }}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    id="price"
+                    type="number"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      setLastChanged("price");
+                    }}
+                    className="p-3 w-full border border-gray-300 rounded-lg"
+                  />
+                )}
+              />
+              {errors.price && (
+                <p className="text-sm text-red-500">{errors.price.message}</p>
+              )}
+            </div>
           </div>
 
           {/* Gold Weight */}
-          <div>
-            <label
-              htmlFor="gold"
-              className="block text-sm font-medium text-gray-700"
-            >
-              مقدار طلا به گرم
-            </label>
-            <Controller
-              name="gold"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: "این فیلد الزامی است",
-                min: {
-                  value: 0.1,
-                  message: "حداقل مقدار باید 0.1 گرم باشد",
-                },
-              }}
-              render={({ field }) => (
-                <input
-                  {...field}
-                  id="gold"
-                  type="number"
-                  step="0.01"
-                  onChange={(e) => {
-                    field.onChange(e);
-                    setLastChanged("gold");
-                  }}
-                  className="mt-1 p-3 w-full border border-gray-300 rounded-lg"
-                />
-              )}
-            />
-            {errors.gold && (
-              <p className="text-sm text-red-500">{errors.gold.message}</p>
-            )}
-          </div>
 
           {/* Balance Section */}
           <div className="flex justify-between items-center my-4 p-4 border border-gray-200 rounded-xl bg-white">
@@ -327,14 +328,6 @@ const GoldPurchaseForm = () => {
                 {serverData?.user.wallet} ریال
               </p>
             </div>
-            <button
-              type="button"
-              onClick={() => router.push("/userPanel/walletDeposit")}
-              className="text-blue-600 flex items-center justify-center space-x-1"
-            >
-              <span className="text-lg ml-1">+</span>
-              <span className="text-xs font-medium">شارژ کیف پول</span>
-            </button>
           </div>
         </div>
 
@@ -352,4 +345,4 @@ const GoldPurchaseForm = () => {
   );
 };
 
-export default GoldPurchaseForm;
+export default SellGoldForm;
