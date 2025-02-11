@@ -121,7 +121,7 @@ const Wallet = () => {
             <span className="text-sm mt-2">واریز</span>
           </button>
           <button
-            onClick={() => router.push("/userPanel/walletDeposit")}
+            onClick={() => router.push("/userPanel/withdraw")}
             className="flex flex-col items-center"
           >
             <Withdraw />

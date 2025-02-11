@@ -14,21 +14,6 @@ const WalletRecharge = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // 🔹 Modal State
 
   const [data, setData] = useState(false);
-  const [currentPrice, setCurrentPrice] = useState(0);
-  // State to control visibility of sensitive data
-  const [isBalanceVisible, setIsBalanceVisible] = useState(false);
-
-  const handleCopyHesab = () => {
-    if (!user?.hesab) return;
-    navigator.clipboard
-      .writeText(user.hesab)
-      .then(() => {
-        toast.success("حساب کپی شد!");
-      })
-      .catch(() => {
-        toast.error("خطا در کپی کردن حساب");
-      });
-  };
 
   const serverdata = async () => {
     try {
@@ -44,7 +29,6 @@ const WalletRecharge = () => {
 
       if (res.data.code === 1) {
         setData(res.data);
-        setCurrentPrice(res.data.current_price);
       } else if (res.data.code === 401) {
         // goto login
         localStorage.removeItem("token");
@@ -63,23 +47,9 @@ const WalletRecharge = () => {
 
   useEffect(() => {
     serverdata();
-    const interval = setInterval(getCurrentPrice, 5000);
-    return () => {
-      clearInterval(interval);
-    };
+
     // eslint-disable-next-line
   }, []);
-
-  const getCurrentPrice = async () => {
-    try {
-      const res = await axios.get(`${Config.apiUrl}/lastprice`);
-      if (res.data.code === 1) {
-        setCurrentPrice(res.data.current_price);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
 
   const {
     register,
