@@ -131,7 +131,7 @@ const GoldPurchaseForm = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            // Removing Content-Type lets Axios set the proper multipart boundary.
+            // Let Axios set the Content-Type automatically.
           },
         }
       );
@@ -180,6 +180,27 @@ const GoldPurchaseForm = () => {
   };
 
   // -------------------------
+  // Compute whether the submit button should be disabled.
+  // -------------------------
+  // We disable submit if:
+  // - No field has been modified yet (lastChanged is null)
+  // - The modified field is empty
+  // - There is a validation error on the modified field
+  const valueForSubmission =
+    lastChanged === "price"
+      ? watchedPrice
+      : lastChanged === "gold"
+      ? watchedGold
+      : "";
+  const fieldError =
+    lastChanged === "price"
+      ? errors.price
+      : lastChanged === "gold"
+      ? errors.gold
+      : undefined;
+  const isSubmitDisabled = !lastChanged || !valueForSubmission || !!fieldError;
+
+  // -------------------------
   // Submit the Trade (Buy)
   // -------------------------
   const onSubmit = async (data) => {
@@ -187,28 +208,33 @@ const GoldPurchaseForm = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      // Build payload with type "buy" and only the field the user typed.
-      let payload = { type: "buy" };
+      // Build FormData with type "buy" and only the field the user typed.
+      const formData = new FormData();
+      formData.append("type", "buy");
 
       if (lastChanged === "price") {
-        payload.price = data.price;
+        formData.append("price", data.price);
       } else if (lastChanged === "gold") {
-        payload.gold = data.gold;
+        formData.append("gold", data.gold);
       } else {
         console.error("No field was modified for submission");
         return;
       }
 
-      const res = await axios.post(`${Config.apiUrl}/user/trade/buy`, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await axios.post(
+        `${Config.apiUrl}/user/trade/buy`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // Let Axios set the Content-Type automatically.
+          },
+        }
+      );
 
       if (res.data.code === 1) {
         console.log("Trade purchase successful:", res.data);
-        // Optionally, you can add further handling (e.g., redirection or a success message)
+        // Optionally, handle success (e.g., redirect or display a message)
       } else {
         console.error("Trade purchase error:", res.data.message);
       }
@@ -342,7 +368,8 @@ const GoldPurchaseForm = () => {
         <div className="flex justify-center mt-4">
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg"
+            disabled={isSubmitDisabled}
+            className="w-full bg-blue-600 text-white py-3 rounded-lg disabled:opacity-50"
           >
             تایید و ادامه
           </button>

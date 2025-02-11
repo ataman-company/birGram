@@ -3,12 +3,12 @@
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
 import Config from "@/components/config";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { useForm, Controller, useWatch } from "react-hook-form";
-import Header from "../Header/Header";
 import { ChevronRight, Info } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Controller, useForm, useWatch } from "react-hook-form";
+import Header from "../Header/Header";
 import TransactionLimitsModal from "../transfer/components/TransactionLimitsModal";
 
 const SellGoldForm = () => {
@@ -19,8 +19,10 @@ const SellGoldForm = () => {
     getValues,
     setError,
     clearErrors,
-    formState: { errors },
-  } = useForm();
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "onChange", // Enables real-time validation
+  });
 
   useAuthRedirect();
 
@@ -102,17 +104,20 @@ const SellGoldForm = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      // Validate the price field if it was the one modified.
+      // Guard: if the modified field is invalid, skip calling the API.
       if (lastChanged === "price") {
-        if (Number(price) < Number(currentPrice)) {
-          setError("price", {
-            type: "min",
-            message: `مبلغ پرداختی باید حداقل ${currentPrice} ریال باشد.`,
-          });
-          return; // Do not proceed with the API call.
-        } else {
-          clearErrors("price");
-        }
+        const priceNum = Number(price);
+        if (priceNum < Number(currentPrice)) return;
+        if (
+          serverData?.user?.gold &&
+          priceNum > Number(currentPrice) * Number(serverData.user.gold)
+        )
+          return;
+      } else if (lastChanged === "gold") {
+        const goldNum = Number(gold);
+        if (goldNum < 1) return;
+        if (serverData?.user?.gold && goldNum > Number(serverData.user.gold))
+          return;
       }
 
       // Create a FormData instance and append only the modified field plus type.
@@ -180,14 +185,14 @@ const SellGoldForm = () => {
   };
 
   // -------------------------
-  // Submit the Trade (Buy)
+  // Submit the Trade (Sell)
   // -------------------------
   const onSubmit = async (data) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      // Build payload with type "buy" and only the field the user typed.
+      // Build payload with type "sell" and only the field the user typed.
       let payload = { type: "sell" };
 
       if (lastChanged === "price") {
@@ -242,10 +247,10 @@ const SellGoldForm = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col mx-2 mt-3 space-y-6 h-full grow"
       >
-        {/* Payment Amount */}
         <div className="flex flex-col grow py-2">
           <div className="my-2">
             <div>
+              {/* Gold Input */}
               <label
                 htmlFor="gold"
                 className="my-3 block text-sm font-medium text-gray-700"
@@ -259,8 +264,17 @@ const SellGoldForm = () => {
                 rules={{
                   required: "این فیلد الزامی است",
                   min: {
-                    value: 0.1,
-                    message: "حداقل مقدار باید 0.1 گرم باشد",
+                    value: 1,
+                    message: "حداقل مقدار باید 1 میلی گرم باشد",
+                  },
+                  validate: (value) => {
+                    if (
+                      serverData?.user?.gold &&
+                      Number(value) > Number(serverData.user.gold)
+                    ) {
+                      return `حداکثر مقدار مجاز ${serverData.user.gold} میلی گرم است`;
+                    }
+                    return true;
                   },
                 }}
                 render={({ field }) => (
@@ -281,6 +295,7 @@ const SellGoldForm = () => {
                 <p className="text-sm text-red-500">{errors.gold.message}</p>
               )}
 
+              {/* Price Input */}
               <label
                 htmlFor="price"
                 className="my-3 block text-sm font-medium text-gray-700"
@@ -297,7 +312,22 @@ const SellGoldForm = () => {
                     value: /^[0-9]*$/,
                     message: "مقدار باید عدد باشد",
                   },
-                  // Note: The min rule below isn't dynamic—validation in calcTrade is used instead.
+                  validate: (value) => {
+                    const priceNum = Number(value);
+                    if (priceNum < Number(currentPrice)) {
+                      return `مبلغ پرداختی باید حداقل ${currentPrice} ریال باشد.`;
+                    }
+                    if (
+                      serverData?.user?.gold &&
+                      priceNum >
+                        Number(currentPrice) * Number(serverData.user.gold)
+                    ) {
+                      return `مبلغ پرداختی باید حداکثر ${
+                        currentPrice * serverData.user.gold
+                      } ریال باشد.`;
+                    }
+                    return true;
+                  },
                 }}
                 render={({ field }) => (
                   <input
@@ -318,14 +348,12 @@ const SellGoldForm = () => {
             </div>
           </div>
 
-          {/* Gold Weight */}
-
           {/* Balance Section */}
           <div className="flex justify-between items-center my-4 p-4 border border-gray-200 rounded-xl bg-white">
             <div className="text-right">
               <p className="text-gray-500 text-xs mb-2">موجودی</p>
               <p className="text-blue-800 font-bold text-xs">
-                {serverData?.user.wallet} ریال
+                {serverData?.user.gold} میلی
               </p>
             </div>
           </div>
@@ -335,7 +363,10 @@ const SellGoldForm = () => {
         <div className="flex justify-center mt-4">
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg"
+            disabled={!isValid} // Button is disabled if form is invalid
+            className={`w-full py-3 rounded-lg ${
+              isValid ? "bg-blue-600 text-white" : "bg-gray-400 text-gray-700"
+            }`}
           >
             تایید و ادامه
           </button>
