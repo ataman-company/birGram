@@ -167,7 +167,10 @@ function UserPanel() {
               <p className="text-sm">خرید</p>
             </Link>
 
-            <Link href={"#"} className="flex flex-col gap-1 items-center">
+            <Link
+              href={"/userPanel/sellGold"}
+              className="flex flex-col gap-1 items-center"
+            >
               <div className="size-12 rounded-full bg-gray-100 flex justify-center items-center">
                 <SellIcon />
               </div>

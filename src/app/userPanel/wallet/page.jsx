@@ -101,12 +101,14 @@ const Wallet = () => {
           </div>
           <div className="mt-4">
             <p className="text-sm font-bold">
-              {showBalance ? "۱۲,۳۴۵,۶۷۸ ریال" : "*****"}
+              {showBalance ? `${user.wallet} ریال` : "*****"}
             </p>
           </div>
           <div className="mt-2">
             <p className="text-sm">معادل</p>
-            <p className="text-sm">{showBalance ? "۰.۲۱ گرم طلا" : "*****"}</p>
+            <p className="text-sm">
+              {showBalance ? `${user.gold} ریال` : "*****"}
+            </p>
           </div>
         </div>
         {/* Actions */}
