@@ -153,7 +153,7 @@ const WalletRecharge = () => {
                       مبلغ پرداختی در درگاه:
                     </span>
                     <span className="text-sm text-blue-900">
-                      ۱۰,۰۰۰,۰۰۰ ریال
+                      {priceValue} ریال
                     </span>
                   </div>
                 </div>

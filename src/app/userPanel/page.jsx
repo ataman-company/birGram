@@ -6,20 +6,17 @@ import UserPanelGoldInformation from "@/components/userPanel/UserPanelGoldInform
 import Copy from "@icons/userPanel/copy.svg";
 import Down from "@icons/userPanel/down.svg";
 import Eye from "@icons/userPanel/eye.svg";
-import History from "@icons/userPanel/history.svg";
-import More from "@icons/userPanel/more.svg";
 import Support from "@icons/userPanel/support.svg";
-import Uparrow from "@icons/userPanel/up-arrow.svg";
+import BuyIcon from "@public/icons/userPanel/buy";
+import MoreIcon from "@public/icons/userPanel/more";
+import RequestIcon from "@public/icons/userPanel/request";
+import SellIcon from "@public/icons/userPanel/sell";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 import Header from "./Header/Header";
-import toast, { Toaster } from "react-hot-toast";
-import BuyIcon from "@public/icons/userPanel/buy";
-import SellIcon from "@public/icons/userPanel/sell";
-import RequestIcon from "@public/icons/userPanel/request";
-import MoreIcon from "@public/icons/userPanel/more";
 
 function UserPanel() {
   useAuthRedirect();
@@ -56,6 +53,10 @@ function UserPanel() {
       if (res.data.code === 1) {
         setData(res.data);
         setCurrentPrice(res.data.current_price);
+        localStorage.setItem(
+          "currentPrice",
+          JSON.stringify(res.data.current_price)
+        );
       } else if (res.data.code === 401) {
         // goto login
         localStorage.removeItem("token");
@@ -74,6 +75,7 @@ function UserPanel() {
 
   useEffect(() => {
     serverdata();
+
     const interval = setInterval(getCurrentPrice, 5000);
     return () => {
       clearInterval(interval);
