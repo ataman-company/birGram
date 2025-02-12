@@ -135,11 +135,11 @@ function Profile() {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen pb-[80px] px-2 max-w-2xl mx-auto relative">
+      <div className="flex flex-col h-screen pb-[80px] px-2 max-w-2xl mx-auto relative">
         <Toaster position="top-left" reverseOrder={false} />
         <Header currentPrice={currentPrice} />
 
-        <div className="flex flex-col gap-2 mt-2">
+        <div className="flex flex-col gap-2 mt-2 h-full justify-between">
           {/* Top Section */}
           <div className="flex justify-between">
             <p className="text-lg font-bold">پروفایل</p>
@@ -182,8 +182,8 @@ function Profile() {
           </div>
 
           {/* Profile Settings */}
-          <div className="bg-white px-4 py-4 flex flex-col justify-between flex-1">
-            <div>
+          <div className="bg-white px-4 py-4 flex flex-col justify-between grow">
+            <div className="flex flex-col grow">
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <p className="text-base font-semibold text-gray-900">
@@ -233,10 +233,14 @@ function Profile() {
                     />
                   </label>
                 </div>
-                <div className="flex items-center justify-between py-4">
+                <button
+                  onClick={() => {
+                    console.log("updated");
+                  }}
+                  className="flex items-center justify-between w-full py-4"
+                >
                   <p className="text-gray-800">به‌روزرسانی</p>
-                  <ChevronLeftIcon className="text-gray-400 w-5 h-5" />
-                </div>
+                </button>
 
                 <div className="flex items-center justify-between py-4">
                   <p className="text-gray-800">اشتراک گذاری</p>
@@ -251,13 +255,15 @@ function Profile() {
             </div>
 
             {/* Logout Button */}
-            <button
-              onClick={handleLogout}
-              className="mt-4 w-full bg-pink-50 text-pink-600 py-3 rounded-lg text-center font-semibold flex items-center justify-center gap-2"
-            >
-              <LogoutIcon color="red" size={20} />
-              خروج از حساب کاربری
-            </button>
+            <div>
+              <button
+                onClick={handleLogout}
+                className="mt-4 w-full bg-pink-50 text-pink-600 py-3 rounded-lg text-center font-semibold flex items-center justify-center gap-2"
+              >
+                <LogoutIcon color="red" size={20} />
+                خروج از حساب کاربری
+              </button>
+            </div>
           </div>
         </div>
         <div className="fixed bottom-0 left-0 w-full bg-white border-gray-300 z-[9999]">
