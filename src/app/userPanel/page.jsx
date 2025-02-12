@@ -17,12 +17,14 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 import Header from "./Header/Header";
+import MoreModal from "@/components/userPanel/MoreModal";
 
 function UserPanel() {
   useAuthRedirect();
 
   const [data, setData] = useState(false);
   const [currentPrice, setCurrentPrice] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   // State to control visibility of sensitive data
   const [isBalanceVisible, setIsBalanceVisible] = useState(false);
 
@@ -186,12 +188,17 @@ function UserPanel() {
               <p className="text-sm">درخواست ها</p>
             </Link>
 
-            <Link href={"#"} className="flex flex-col gap-1 items-center">
+            <button
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
+              className="flex flex-col gap-1 items-center"
+            >
               <div className="size-12 rounded-full bg-gray-100 flex justify-center items-center">
                 <MoreIcon />
               </div>
               <p className="text-sm">بیشتر</p>
-            </Link>
+            </button>
           </div>
 
           {/* Swiper / Slider */}
@@ -218,6 +225,9 @@ function UserPanel() {
             currentPrice={currentPrice}
           />
         </div>
+        {isModalOpen && (
+          <MoreModal user={user} onClose={() => setIsModalOpen(false)} />
+        )}
         <div className="fixed bottom-0 left-0 w-full bg-white border-gray-300 z-[9999]">
           <div className="flex justify-center">
             <BottomNav />
