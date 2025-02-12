@@ -1,24 +1,30 @@
 // "use client";
+// import React, { useEffect, useState } from "react";
 // import Config from "@/components/config";
 // import ActivingCode from "@/components/register/ActivingCode";
 // import Authentication from "@/components/register/Authentication";
 // import Password from "@/components/register/Password";
-// import Signup from "@/components/register/Register";
+// import Register from "@/components/register/Register";
 // import axios from "axios";
 // import { useSearchParams } from "next/navigation";
-// import React, { useEffect, useState } from "react";
 // import toast, { Toaster } from "react-hot-toast";
 
-// function Signup() {
+// function SignUp() {
+//   const [isClient, setIsClient] = useState(false); // to check if the code is running on the client
+//   const [referral, setReferral] = useState("");
 //   const searchParams = useSearchParams();
-//   // Pull "referral" from the URL, default to empty string if null
-//   const referralFromURL = searchParams.get("referral") ?? "";
+
+//   // Set isClient to true when the component is mounted (client-side only)
+//   useEffect(() => {
+//     setIsClient(true);
+//     const referralFromURL = searchParams.get("referral") ?? "";
+//     setReferral(referralFromURL);
+//   }, [searchParams]);
 
 //   const [phone, setPhone] = useState(0);
 //   const [step, setStep] = useState(0);
 //   const [otpValue, setOtpValue] = useState("");
 //   const [password, setPassword] = useState("");
-//   const [referral, setreferral] = useState(referralFromURL);
 //   const [token, setToken] = useState(0);
 //   const [fName, setfName] = useState("");
 //   const [lName, setlName] = useState("");
@@ -45,6 +51,7 @@
 //       toast.error("Error fetching data:", error);
 //     }
 //   };
+
 //   const submitOtp = async () => {
 //     try {
 //       const formData = new FormData();
@@ -67,6 +74,7 @@
 //       console.error("Error verifying OTP:", error);
 //     }
 //   };
+
 //   const submitPassword = async () => {
 //     try {
 //       const formData = new FormData();
@@ -96,6 +104,7 @@
 //       console.error("Error verifying OTP:", error);
 //     }
 //   };
+
 //   const submitUser = async () => {
 //     try {
 //       const formData = new FormData();
@@ -126,15 +135,19 @@
 //     setOtpValue(otp);
 //   };
 
+//   if (!isClient) {
+//     return null; // Return nothing on the server side
+//   }
+
 //   return (
 //     <>
 //       <Toaster position="top-left" reverseOrder={false} />
 //       {step === 0 && (
-//         <Signup
+//         <Register
 //           setStep={setStep}
 //           setPhone={setPhone}
 //           postData={postData}
-//           setreferral={setreferral}
+//           setreferral={setReferral}
 //           referral={referral}
 //         />
 //       )}
@@ -163,10 +176,11 @@
 //     </>
 //   );
 // }
-// export default Signup;
+
+// export default SignUp;
 
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import Config from "@/components/config";
 import ActivingCode from "@/components/register/ActivingCode";
 import Authentication from "@/components/register/Authentication";
@@ -177,11 +191,10 @@ import { useSearchParams } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 
 function SignUp() {
-  const [isClient, setIsClient] = useState(false); // to check if the code is running on the client
+  const [isClient, setIsClient] = useState(false);
   const [referral, setReferral] = useState("");
   const searchParams = useSearchParams();
 
-  // Set isClient to true when the component is mounted (client-side only)
   useEffect(() => {
     setIsClient(true);
     const referralFromURL = searchParams.get("referral") ?? "";
@@ -222,8 +235,8 @@ function SignUp() {
   const submitOtp = async () => {
     try {
       const formData = new FormData();
-      formData.append("code", otpValue); // اضافه کردن OTP به فرم
-      formData.append("phone", phone); // در صورت نیاز، شماره تلفن را نیز ارسال کنید
+      formData.append("code", otpValue);
+      formData.append("phone", phone);
 
       const res = await axios.post(`${Config.apiUrl}/auth/code`, formData, {
         headers: {
@@ -303,7 +316,7 @@ function SignUp() {
   };
 
   if (!isClient) {
-    return null; // Return nothing on the server side
+    return null;
   }
 
   return (
@@ -344,4 +357,10 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignUp />
+    </Suspense>
+  );
+}
