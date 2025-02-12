@@ -179,10 +179,9 @@ export default function MoneyTransfer() {
         {/* Form */}
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="mt-6 flex flex-col gap-4"
+          className="flex flex-col mx-2 mt-3 space-y-6 h-full grow"
         >
-          {/* Destination Account Input */}
-          <div>
+          <div className="my-2">
             <input
               type="text"
               placeholder="آدرس حساب مقصد"
@@ -212,106 +211,97 @@ export default function MoneyTransfer() {
           {apiData && (
             <>
               {/* Account Number Display */}
-              <div className="text-gray-900 text-sm font-bold">
-                شماره حساب مقصد:
-                <span className="text-gray-700 font-medium ml-2">
-                  {apiData.accountNumber}
-                </span>
-              </div>
-
-              {/* Save Account Checkbox */}
-              <label className="flex items-center gap-2">
-                <input type="checkbox" className="form-checkbox" />
-                <span className="text-gray-700 text-sm">
-                  آدرس حساب میلی ذخیره شود.
-                </span>
-              </label>
-
-              {/* Amount Input */}
-              <div>
-                <label className="text-blue-900 font-bold mb-2">
-                  مقدار طلایی که می‌خواهید انتقال بدهید:
+              <div className="flex flex-col grow py-2">
+                {/* Save Account Checkbox */}
+                <label className="flex items-center gap-2 mb-3">
+                  <input type="checkbox" className="form-checkbox" />
+                  <span className="text-gray-700 text-sm">
+                    آدرس حساب میلی ذخیره شود.
+                  </span>
                 </label>
-                <input
-                  type="number"
-                  placeholder="مقدار طلا به میلی گرم"
-                  {...register("transferAmount", {
-                    required: "لطفاً مقدار را وارد کنید",
-                    min: { value: 1, message: "حداقل مقدار 1 گرم است" },
-                  })}
-                  className={`w-full p-3 mt-2 border rounded-xl focus:outline-none ${
-                    balanceError
-                      ? "border-red-500 focus:ring-red-400"
-                      : "border-gray-300 focus:ring-gray-400"
-                  }`}
-                />
-                {balanceError && (
-                  <p className="text-red-500 text-sm mt-1">
-                    موجودی میلی کافی نمی‌باشد
-                  </p>
+                {/* Amount Input */}
+                <div>
+                  <label className="text-blue-900 font-bold mb-2 ">
+                    مقدار طلایی که می‌خواهید انتقال بدهید:
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="مقدار طلا به میلی گرم"
+                    {...register("transferAmount", {
+                      required: "لطفاً مقدار را وارد کنید",
+                      min: { value: 1, message: "حداقل مقدار 1 گرم است" },
+                    })}
+                    className={`w-full h-[50px] p-3 mt-2 border rounded-xl focus:outline-none ${
+                      balanceError
+                        ? "border-red-500 focus:ring-red-400"
+                        : "border-gray-300 focus:ring-gray-400"
+                    }`}
+                  />
+                  {balanceError && (
+                    <p className="text-red-500 text-sm mt-1">
+                      موجودی میلی کافی نمی‌باشد
+                    </p>
+                  )}
+                </div>
+                {/* Balance Information */}
+                <div className="flex justify-between text-gray-800 text-sm mt-4 p-3 border border-gray-300 rounded-xl h-[50px]">
+                  <span>موجودی حساب میلی:</span>
+                  <span>{user.gold} میلی</span>
+                </div>
+                {/* Fee Information */}
+                {transferAmount && (
+                  <div className="space-y-4 mt-5">
+                    <div className="flex justify-between items-center border-b border-gray-300 pb-2 mt-3">
+                      <span className="text-sm text-gray-900">
+                        کارمزد درگاه بانکی:
+                      </span>
+                      {freeFee > 0 ? (
+                        <span className="text-sm text-blue-900">0 میلی</span>
+                      ) : (
+                        <span className="text-sm text-blue-900">
+                          {(fee / 100) * transferAmount} میلی
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex justify-between items-center border-b border-gray-300 pb-2">
+                      <span className="text-sm text-gray-900">
+                        مبلغ پرداختی در درگاه:
+                      </span>
+                      {freeFee > 0 ? (
+                        <span className="text-sm text-blue-900">
+                          {transferAmount} میلی
+                        </span>
+                      ) : (
+                        <span className="text-sm text-blue-900">
+                          {(1 + fee / 100) * transferAmount} میلی
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 )}
-              </div>
-
-              {/* Balance Information */}
-              <div className="flex justify-between text-gray-800 text-sm mt-2 p-3 border border-gray-300 rounded-xl">
-                <span>موجودی حساب میلی:</span>
-                <span>{user.gold} میلی</span>
-              </div>
-
-              {/* Fee Information */}
-
-              {transferAmount && (
-                <div className="space-y-4 mt-5">
-                  <div className="flex justify-between items-center border-b border-gray-300 pb-2">
-                    <span className="text-sm text-gray-900">
-                      کارمزد درگاه بانکی:
-                    </span>
-                    {freeFee > 0 ? (
-                      <span className="text-sm text-blue-900">0 میلی</span>
-                    ) : (
-                      <span className="text-sm text-blue-900">
-                        {(fee / 100) * transferAmount} میلی
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="flex justify-between items-center border-b border-gray-300 pb-2">
-                    <span className="text-sm text-gray-900">
-                      مبلغ پرداختی در درگاه:
-                    </span>
-
-                    {freeFee > 0 ? (
-                      <span className="text-sm text-blue-900">
-                        {transferAmount} میلی
-                      </span>
-                    ) : (
-                      <span className="text-sm text-blue-900">
-                        {(1 + fee / 100) * transferAmount} میلی
-                      </span>
-                    )}
+                <div className="relative my-5 py-3">
+                  <div className="absolute -top-2 left-0 bg-gray-700 text-white text-xs p-2 rounded-lg">
+                    تعداد کارمزد رایگان باقی‌مانده: {user.freefee || 0} از ۲۰
                   </div>
                 </div>
-              )}
-
-              {/* Free Fee Tooltip */}
-              <div className="relative my-3">
-                <div className="absolute -top-2 left-0 bg-gray-700 text-white text-xs p-2 rounded-lg">
-                  تعداد کارمزد رایگان باقی‌مانده: {user.freefee || 0} از ۲۰
-                </div>
               </div>
 
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={balanceError}
-                className={`w-full p-3 rounded-xl transition ${
-                  balanceError
-                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : "bg-blue-600 text-white hover:bg-blue-700"
-                }`}
-              >
-                تایید و ادامه
-              </button>
+              <div>
+                {/* Free Fee Tooltip */}
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={balanceError}
+                  className={`w-full p-3 rounded-xl transition ${
+                    balanceError
+                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "bg-blue-600 text-white hover:bg-blue-700"
+                  }`}
+                >
+                  تایید و ادامه
+                </button>
+              </div>
             </>
           )}
         </form>
