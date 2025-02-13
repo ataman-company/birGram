@@ -20,7 +20,7 @@ function UserPanelDatePicker({ setdate }) {
   };
 
   return (
-    <div className="w-full mt-2">
+    <div className="w-full">
       <DatePicker
         render={<InputIcon />}
         minDate={new DateObject({ calendar: persian }).set({
