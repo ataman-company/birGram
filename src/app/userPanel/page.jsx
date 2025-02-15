@@ -28,18 +28,6 @@ function UserPanel() {
   // State to control visibility of sensitive data
   const [isBalanceVisible, setIsBalanceVisible] = useState(false);
 
-  // const handleCopyHesab = () => {
-  //   if (!user?.hesab) return;
-  //   navigator.clipboard
-  //     .writeText(user.hesab)
-  //     .then(() => {
-  //       toast.success("حساب کپی شد!");
-  //     })
-  //     .catch(() => {
-  //       toast.error("خطا در کپی کردن حساب");
-  //     });
-  // };
-
   const handleCopyHesab = () => {
     if (!user?.hesab) return;
 

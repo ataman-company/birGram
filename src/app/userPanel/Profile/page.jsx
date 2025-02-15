@@ -237,19 +237,6 @@ function Profile() {
                     />
                   </label>
                 </div>
-                <button
-                  onClick={() => {
-                    console.log("updated");
-                  }}
-                  className="flex items-center justify-between w-full py-4"
-                >
-                  <p className="text-gray-800">به‌روزرسانی</p>
-                </button>
-
-                <div className="flex items-center justify-between py-4">
-                  <p className="text-gray-800">اشتراک گذاری</p>
-                  <ChevronLeftIcon className="text-gray-400 w-5 h-5" />
-                </div>
 
                 <div className="flex items-center justify-between py-4">
                   <p className="text-gray-800">درباره میلی</p>

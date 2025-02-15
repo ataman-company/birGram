@@ -67,7 +67,7 @@ function OtpCodeLogin({ isOpen, onClose, phone, password }) {
 
         localStorage.setItem("token", res.data.token);
 
-        router.push("/userPanel/Profile");
+        router.push("/userPanel");
       } else {
         alert(res.data.error);
       }

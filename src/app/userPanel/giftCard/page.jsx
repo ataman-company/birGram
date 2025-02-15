@@ -47,9 +47,11 @@ export default function GiftCard() {
 
       {/* Buttons */}
       <div className="flex flex-col gap-3 mt-6">
-        <button className="w-full bg-yellow-400 text-black p-4 rounded-xl text-center font-semibold">
-          می‌خواهم میلی هدیه بدهم
-        </button>
+        <Link href="/userPanel/shop">
+          <p className="w-full bg-yellow-400 text-black p-4 rounded-xl text-center font-semibold">
+            می‌خواهم میلی هدیه بدهم
+          </p>
+        </Link>
         <button className="w-full bg-blue-900 text-white p-4 rounded-xl text-center font-semibold">
           هدیه گرفته‌ام
         </button>

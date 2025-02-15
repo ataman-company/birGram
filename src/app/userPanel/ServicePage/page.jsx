@@ -96,11 +96,8 @@ function UserPanel() {
       </div>
       <div className="space-y-3">
         {menuItems.map((item, index) => (
-          <Link className="p-1 my-1" href={item.pathTo}>
-            <div
-              key={index}
-              className="flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm border border-gray-200"
-            >
+          <Link key={index} className="p-1 my-1" href={item.pathTo}>
+            <div className="flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm border border-gray-200">
               {/* Icon + Text Wrapper */}
               <div className="flex items-center gap-2 flex-grow">
                 <img src={item.icon} alt={item.text} className="w-5 h-5" />
