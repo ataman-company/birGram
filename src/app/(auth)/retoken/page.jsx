@@ -1,14 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Config from "@/components/config";
 import toast, { Toaster } from "react-hot-toast";
 
 const Retoken = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  // Get token from the URL query parameters
+  const tokenParam = searchParams.get("token");
+
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -17,25 +21,16 @@ const Retoken = () => {
     formState: { errors },
   } = useForm();
 
-  useEffect(() => {
-    // اگر توکن در localStorage نباشد، کاربر را به صفحه ورود هدایت می‌کنیم
-    const token = localStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-    }
-  }, [router]);
-
   const onSubmit = async ({ password }) => {
-    // توکن را از localStorage دریافت می‌کنیم
-    const token = localStorage.getItem("token");
-
+    // Use the token from the URL parameter
+    const token = tokenParam;
     if (!token) {
       router.push("/login");
       return;
     }
 
     try {
-      // ارسال داده‌ها به عنوان FormData
+      // Create FormData and append password and token
       const formData = new FormData();
       formData.append("password", password);
       formData.append("token", token);
@@ -50,14 +45,12 @@ const Retoken = () => {
         }
       );
 
-      // بررسی پاسخ سرور
+      // Check server response
       if (response.data.code === 1) {
-        // در صورت موفقیت، تغییر مسیر به /userpanel
         toast.success("با موفقیت وارد شدید");
         localStorage.setItem("token", response.data.token);
         router.push("/userPanel");
       } else {
-        // در صورت عدم موفقیت، نمایش پیغام خطا
         alert(response.data.error || "خطایی رخ داده است.");
       }
     } catch (error) {
@@ -80,7 +73,6 @@ const Retoken = () => {
             لطفا رمز عبور خود را وارد کنید
           </h1>
 
-          {/* فیلد رمز عبور با قابلیت نمایش/مخفی‌سازی */}
           <div>
             <label className="block mb-1 text-sm font-medium text-gray-700">
               رمز عبور
@@ -97,7 +89,7 @@ const Retoken = () => {
                 className="absolute inset-y-0 left-2 flex items-center pr-3 text-gray-400 hover:text-gray-600"
               >
                 {showPassword ? (
-                  // آیکن چشم بسته
+                  // Icon for hidden password (closed eye)
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -118,7 +110,7 @@ const Retoken = () => {
                     />
                   </svg>
                 ) : (
-                  // آیکن چشم باز
+                  // Icon for visible password (open eye)
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -148,7 +140,6 @@ const Retoken = () => {
             )}
           </div>
 
-          {/* دکمه ارسال */}
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200"
