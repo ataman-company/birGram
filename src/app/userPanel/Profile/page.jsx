@@ -12,6 +12,7 @@ import Image from "next/image";
 import toast, { Toaster } from "react-hot-toast";
 import Header from "../Header/Header";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 function Profile() {
   useAuthRedirect();
@@ -208,10 +209,13 @@ function Profile() {
                   <p className="text-gray-800">دریافت هدیه</p>
                   <ChevronLeftIcon className="text-gray-400 w-5 h-5" />
                 </div>
-                <div className="flex items-center justify-between py-4">
+                <Link
+                  href="/userPanel/setting"
+                  className="flex items-center justify-between py-4"
+                >
                   <p className="text-gray-800">تنظیمات امنیتی</p>
                   <ChevronLeftIcon className="text-gray-400 w-5 h-5" />
-                </div>
+                </Link>
                 <div className="flex items-center justify-between py-4">
                   <p className="text-gray-800">
                     پنهان کردن موجودی در زمان ورود
