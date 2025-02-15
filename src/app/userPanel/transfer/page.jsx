@@ -10,6 +10,7 @@ import useAuthRedirect from "@/app/hooks/useAuthRedirect";
 // 1) Import the toast utilities
 import { Toaster, toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import TransactionLimitsModal from "./components/TransactionLimitsModal";
 
 export default function MoneyTransfer() {
   const {
@@ -32,6 +33,7 @@ export default function MoneyTransfer() {
   // Watch input changes
   const destinationAccount = watch("destinationAccount", "");
   const transferAmount = watch("transferAmount");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 2) When the user types the account number, fetch its details if it’s fully typed
   useEffect(() => {
@@ -165,7 +167,7 @@ export default function MoneyTransfer() {
       {/* 4) Hot Toast container, can be placed anywhere globally, typically in layout */}
       <Toaster position="top-left" reverseOrder={false} />
 
-      <div className="h-screen max-w-2xl mx-auto flex flex-col p-4 ">
+      <div className="h-[90vh] max-w-2xl mx-auto flex flex-col p-2 ">
         {/* Top Bar */}
         <div className="flex justify-between items-center py-3 border-b border-gray-200">
           <Link href="/userPanel/ServicePage">
@@ -173,7 +175,9 @@ export default function MoneyTransfer() {
           </Link>
           <h1 className="text-md font-bold">انتقال مبلغ</h1>
 
-          <Info className="w-5 h-5 text-gray-700" />
+          <button onClick={() => setIsModalOpen(true)}>
+            <Info className="w-5 h-5 text-gray-700 cursor-pointer" />
+          </button>
         </div>
 
         {/* Form */}
@@ -305,6 +309,9 @@ export default function MoneyTransfer() {
             </>
           )}
         </form>
+        {isModalOpen && (
+          <TransactionLimitsModal onClose={() => setIsModalOpen(false)} />
+        )}
       </div>
     </>
   );

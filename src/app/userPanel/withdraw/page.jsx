@@ -91,7 +91,7 @@ const Withdraw = () => {
   const watchedShaba = useWatch({ control, name: "shaba" });
 
   return (
-    <div className="h-screen max-w-2xl mx-auto flex flex-col p-4 bg-white relative">
+    <div className="h-[90vh] max-w-2xl mx-auto flex flex-col p-2 bg-white relative">
       {/* Header */}
       <div className="flex justify-between items-center mx-2 py-3 border-b border-gray-200">
         <Link href="/userPanel/wallet">

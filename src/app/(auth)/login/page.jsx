@@ -1,4 +1,5 @@
 "use client";
+import Header from "@/app/userPanel/Header/Header";
 import Config from "@/components/config";
 import { Input } from "@nextui-org/react";
 import axios from "axios";
@@ -121,17 +122,7 @@ function Login() {
       <Toaster position="top-right" />
       <div className="flex flex-col py-5 px-2 h-screen justify-between max-w-2xl mx-auto">
         <div className="flex flex-col gap-4">
-          <div className="flex justify-between bg-blue-100 p-2 text-sm text-blue-900">
-            <div className="flex items-center gap-1">
-              <Image width={50} height={20} src={"/images/2.png"} alt="gold" />
-              <h6 className="">قیمت لحظه‌ای ۱ میلی گرم طلای ۱۸ عیار:</h6>
-            </div>
-            <p>
-              {currentPrice
-                ? currentPrice + " ریال "
-                : "در حال برآورد قیمت ..."}
-            </p>
-          </div>
+          <Header currentPrice={currentPrice} />
           <div className="flex gap-2 bg-yellow-50 p-3 items-center">
             <Image
               width={25}

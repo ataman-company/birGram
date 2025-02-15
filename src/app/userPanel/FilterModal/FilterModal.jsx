@@ -69,7 +69,7 @@ const FilterModal = ({ onClose }) => {
       dir="rtl"
     >
       <div
-        className="bg-white rounded-xl p-6 w-full h-[70%] relative overflow-y-auto"
+        className="bg-white rounded-xl p-6 w-full h-[75%] relative overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
@@ -181,7 +181,10 @@ const FilterModal = ({ onClose }) => {
           <div className="flex flex-col justify-end gap-4">
             <button
               type="button"
-              onClick={() => router.push("/userPanel/transactions")}
+              onClick={() => {
+                onClose();
+                router.push("/userPanel/transactions");
+              }}
               className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md"
             >
               حذف فیلتر

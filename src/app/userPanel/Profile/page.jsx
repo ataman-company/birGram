@@ -154,32 +154,32 @@ function Profile() {
           </div>
 
           {/* Invite Section */}
-          <div className="w-full rounded-xl bg-[#001A80] p-3 flex flex-row-reverse items-center justify-between">
-            <button
-              onClick={() => router.push("/userPanel/referral")}
-              className="text-white flex-shrink-0"
-            >
+          <button
+            onClick={() => router.push("/userPanel/referral")}
+            className="text-white flex-shrink-0"
+          >
+            <div className="w-full rounded-xl bg-[#001A80] p-3 flex flex-row-reverse items-center justify-between">
               <ChevronLeftIcon fill="white" size={20} />
-            </button>
-            <div className="flex flex-row-reverse">
-              <div className="flex flex-col items-start text-right text-white mr-2">
-                <div className="flex items-center gap-1">
-                  <p className="font-semibold">دعوت از دوستان</p>
+              <div className="flex flex-row-reverse">
+                <div className="flex flex-col items-start text-right text-white mr-2">
+                  <div className="flex items-center gap-1">
+                    <p className="font-semibold">دعوت از دوستان</p>
+                  </div>
+                  <p className="text-xs text-gray-400 mt-1">
+                    با معرفی هر دوست ۵ میلی جایزه بگیرید.
+                  </p>
                 </div>
-                <p className="text-xs text-gray-400 mt-1">
-                  با معرفی هر دوست ۵ میلی جایزه بگیرید.
-                </p>
-              </div>
-              <div className="flex items-center justify-center">
-                <Image
-                  src="/images/userPanel/star.png"
-                  alt="Star"
-                  width={36}
-                  height={36}
-                />
+                <div className="flex items-center justify-center">
+                  <Image
+                    src="/images/userPanel/star.png"
+                    alt="Star"
+                    width={36}
+                    height={36}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          </button>
 
           {/* Profile Settings */}
           <div className="bg-white px-4 py-4 flex flex-col justify-between grow">
@@ -248,7 +248,7 @@ function Profile() {
                 </div>
 
                 <div className="flex items-center justify-between py-4">
-                  <p className="text-gray-800">درباره مبلی</p>
+                  <p className="text-gray-800">درباره میلی</p>
                   <ChevronLeftIcon className="text-gray-400 w-5 h-5" />
                 </div>
               </div>

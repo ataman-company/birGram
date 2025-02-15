@@ -156,7 +156,7 @@ export default function ReceiveGold() {
     }
   };
   return (
-    <div className="h-screen max-w-2xl mx-auto flex flex-col p-4 bg-white relative">
+    <div className="h-[90vh] max-w-2xl mx-auto flex flex-col p-2 bg-white relative">
       {/* Top Navigation */}
       <div className="flex justify-between items-center mb-1 py-3 ">
         <Link href="/userPanel/ServicePage">
@@ -167,7 +167,7 @@ export default function ReceiveGold() {
         </h1>
       </div>
 
-      <div className="flex justify-between border-b border-gray-200 pb-3">
+      <div className="flex justify-between border-b border-gray-200 px-1 pb-3">
         <Link href="/userPanel/requests" className="text-sm text-gray-500">
           مشاهده لیست درخواست‌ها
         </Link>

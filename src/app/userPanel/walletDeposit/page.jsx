@@ -70,8 +70,8 @@ const WalletRecharge = () => {
   if (!user) return null;
 
   return (
-    <div className="h-screen max-w-2xl mx-auto flex flex-col p-4 bg-white relative">
-      <div className="h-screen max-w-2xl mx-auto flex flex-col p-4">
+    <div className="h-[90vh] max-w-2xl mx-auto flex flex-col p-2 bg-white relative">
+      <div className="h-screen max-w-2xl mx-auto flex flex-col p-2">
         {/* Header */}
         <div className="flex justify-between items-center py-3 border-b border-gray-200">
           <Link href="/userPanel/wallet">

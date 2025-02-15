@@ -58,14 +58,38 @@ import toast, { Toaster } from "react-hot-toast";
 const MoreModal = ({ onClose, user }) => {
   const handleCopyHesab = () => {
     if (!user?.hesab) return;
-    navigator.clipboard
-      .writeText(user.hesab)
-      .then(() => {
-        toast.success("حساب کپی شد!");
-      })
-      .catch(() => {
+
+    if (navigator.clipboard) {
+      navigator.clipboard
+        .writeText(user.hesab)
+        .then(() => {
+          toast.success("حساب کپی شد!");
+        })
+        .catch(() => {
+          toast.error("خطا در کپی کردن حساب");
+        });
+    } else {
+      // Fallback: create a temporary textarea and use execCommand
+      const textarea = document.createElement("textarea");
+      textarea.value = user.hesab;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      try {
+        const successful = document.execCommand("copy");
+        if (successful) {
+          toast.success("حساب کپی شد!");
+        } else {
+          toast.error("خطا در کپی کردن حساب");
+        }
+      } catch (err) {
         toast.error("خطا در کپی کردن حساب");
-      });
+      }
+      document.body.removeChild(textarea);
+    }
   };
 
   // Handles closing when clicking outside the modal content

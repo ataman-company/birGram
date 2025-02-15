@@ -244,7 +244,7 @@ const GoldPurchaseForm = () => {
   };
 
   return (
-    <div className="h-screen max-w-2xl mx-auto flex flex-col p-4 bg-white relative">
+    <div className="h-[90vh] max-w-2xl mx-auto flex flex-col px-2 bg-white relative">
       <Header currentPrice={currentPrice} />
 
       <div className="flex justify-between items-center mx-2 py-3 border-b border-gray-200">
@@ -266,7 +266,7 @@ const GoldPurchaseForm = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col mx-2 mt-3 space-y-6 h-full grow"
+        className="flex flex-col mx-2 mt-3 space-y-6 h-full pb-12 grow"
       >
         {/* Payment Amount */}
         <div className="flex flex-col grow py-2">
@@ -365,7 +365,7 @@ const GoldPurchaseForm = () => {
         </div>
 
         {/* Payment Button */}
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-0">
           <button
             type="submit"
             disabled={isSubmitDisabled}

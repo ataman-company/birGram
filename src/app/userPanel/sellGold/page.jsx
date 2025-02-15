@@ -223,7 +223,7 @@ const SellGoldForm = () => {
   };
 
   return (
-    <div className="h-screen max-w-2xl mx-auto flex flex-col p-4 bg-white relative">
+    <div className="h-[90vh] max-w-2xl mx-auto flex flex-col px-2 bg-white relative">
       <Header currentPrice={currentPrice} />
 
       <div className="flex justify-between items-center mx-2 py-3 border-b border-gray-200">
@@ -360,7 +360,7 @@ const SellGoldForm = () => {
         </div>
 
         {/* Payment Button */}
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-0">
           <button
             type="submit"
             disabled={!isValid} // Button is disabled if form is invalid

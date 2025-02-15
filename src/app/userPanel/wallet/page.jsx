@@ -65,7 +65,7 @@ const Wallet = () => {
   const { user } = data;
 
   return (
-    <div className="h-screen max-w-2xl mx-auto flex flex-col p-4 bg-white relative">
+    <div className="h-screen max-w-2xl mx-auto flex flex-col p-2 bg-white relative">
       {/* Header */}
       <Header currentPrice={currentPrice} />
 
@@ -73,8 +73,8 @@ const Wallet = () => {
       <div className="flex flex-col gap-2 mt-2">
         <div className="flex justify-between mt-2 max-w-2xl">
           <p className="text-sm font-bold mt-2">کیف پول</p>
-          <div className="text-sm py-1 px- bg-green-100 text-green-700 flex items-center rounded-lg relative">
-            <p className="text-green-700 text-sm">پشتیبانی</p>
+          <div className="text-sm py-1 px-2 bg-green-100 text-green-700 flex items-center rounded-lg relative">
+            <p className="text-green-700 text-xs">پشتیبانی</p>
             <Support width={24} height={24} fill="#3a5a40" />
             <span className="absolute flex size-3 top-0 left-0">
               <span className="absolute top-0 inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>

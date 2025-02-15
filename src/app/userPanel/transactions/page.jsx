@@ -2,7 +2,7 @@
 import Config from "@/components/config";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation"; // Import the useSearchParams hook
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
 import BottomNav from "@/components/userPanel/BottomNav";
@@ -121,4 +121,12 @@ const Transactions = () => {
   );
 };
 
-export default Transactions;
+// export default Transactions;
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Transactions />
+    </Suspense>
+  );
+}

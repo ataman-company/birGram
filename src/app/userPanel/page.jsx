@@ -28,16 +28,52 @@ function UserPanel() {
   // State to control visibility of sensitive data
   const [isBalanceVisible, setIsBalanceVisible] = useState(false);
 
+  // const handleCopyHesab = () => {
+  //   if (!user?.hesab) return;
+  //   navigator.clipboard
+  //     .writeText(user.hesab)
+  //     .then(() => {
+  //       toast.success("حساب کپی شد!");
+  //     })
+  //     .catch(() => {
+  //       toast.error("خطا در کپی کردن حساب");
+  //     });
+  // };
+
   const handleCopyHesab = () => {
     if (!user?.hesab) return;
-    navigator.clipboard
-      .writeText(user.hesab)
-      .then(() => {
-        toast.success("حساب کپی شد!");
-      })
-      .catch(() => {
+
+    if (navigator.clipboard) {
+      navigator.clipboard
+        .writeText(user.hesab)
+        .then(() => {
+          toast.success("حساب کپی شد!");
+        })
+        .catch(() => {
+          toast.error("خطا در کپی کردن حساب");
+        });
+    } else {
+      // Fallback: create a temporary textarea and use execCommand
+      const textarea = document.createElement("textarea");
+      textarea.value = user.hesab;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      try {
+        const successful = document.execCommand("copy");
+        if (successful) {
+          toast.success("حساب کپی شد!");
+        } else {
+          toast.error("خطا در کپی کردن حساب");
+        }
+      } catch (err) {
         toast.error("خطا در کپی کردن حساب");
-      });
+      }
+      document.body.removeChild(textarea);
+    }
   };
 
   const serverdata = async () => {
@@ -107,8 +143,8 @@ function UserPanel() {
 
   return (
     <>
-      <Toaster position="top-left" reverseOrder={false} />
       <div className="flex flex-col gap-2 pb-5 px-2 max-w-2xl mx-auto">
+        <Toaster position="top-left" reverseOrder={false} />
         <Header currentPrice={currentPrice} />
 
         <div className="flex flex-col gap-2">
