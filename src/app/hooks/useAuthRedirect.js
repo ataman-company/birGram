@@ -30,7 +30,7 @@ const useAuthRedirect = (apiUrl) => {
       })
       .then((res) => {
         // 4. Handle different response codes
-        if (res.data.code === 1) {
+        if (res.data.code === 1 || 321) {
           // success case
           setData(res.data);
           setCurrentPrice(res.data.current_price);

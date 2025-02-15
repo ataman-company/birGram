@@ -1,233 +1,288 @@
 // "use client";
-// import { useState, useEffect } from "react";
-// import { useForm } from "react-hook-form";
-// import useAuthRedirect from "@/app/hooks/useAuthRedirect";
-// import ChevronRightIcon from "@public/icons/userPanel/chevronRight";
-// import Link from "next/link";
+// import Image from "next/image";
+// import { Button, InputOtp } from "@nextui-org/react";
+// import React, { useState, useEffect } from "react";
 
-// export default function Otp() {
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors, isValid },
-//   } = useForm({ mode: "onChange" });
-
-//   useAuthRedirect();
-
-//   // Timer state (60 seconds)
+// function ActivingCode() {
+//   // دریافت تابع به عنوان prop
+//   const [value, setValue] = useState("");
+//   const [isVisible, setIsVisible] = useState(true);
 //   const [timeLeft, setTimeLeft] = useState(60);
+//   const [showNewDiv, setShowNewDiv] = useState(false);
+//   const [otpValue, setOtpValue] = useState("");
 
-//   // Loading state (for disabling the button if needed)
-//   const [isLoading, setIsLoading] = useState(false);
-
-//   // Decrement the timer each second until it reaches 0
 //   useEffect(() => {
-//     if (timeLeft <= 0) return;
-//     const timerId = setInterval(() => {
-//       setTimeLeft((prev) => prev - 1);
+//     const timer = setTimeout(() => {
+//       setIsVisible(false);
+//       setShowNewDiv(true);
+//     }, 60000);
+
+//     const countdown = setInterval(() => {
+//       setTimeLeft((prevTime) => {
+//         if (prevTime <= 1) {
+//           clearInterval(countdown);
+//           return 0;
+//         }
+//         return prevTime - 1;
+//       });
 //     }, 1000);
 
-//     // Clear interval on unmount or if timeLeft changes
-//     return () => clearInterval(timerId);
-//   }, [timeLeft]);
+//     return () => {
+//       clearTimeout(timer);
+//       clearInterval(countdown);
+//     };
+//   }, []);
+//   const submitOtp = async () => {
+//     try {
+//       const formData = new FormData();
+//       formData.append("code", otpValue);
 
-//   // Helper to format time as mm:ss
-//   const formatTime = (seconds) => {
-//     const m = String(Math.floor(seconds / 60)).padStart(2, "0");
-//     const s = String(seconds % 60).padStart(2, "0");
-//     return `${m}:${s}`;
+//       const res = await axios.post(
+//         `${Config.apiUrl}/user/activeauth`,
+//         formData,
+//         {
+//           headers: {
+//             "Content-Type": "multipart/form-data",
+//           },
+//         }
+//       );
+
+//       if (res.data.code === 1) {
+//         setStep(2);
+//         setToken(res.data.user.token);
+//       } else {
+//         alert(res.data.error);
+//       }
+//     } catch (error) {
+//       console.error("Error verifying OTP:", error);
+//     }
 //   };
 
-//   // Resend OTP logic
-//   const handleResend = () => {
-//     // Call your resend OTP API here if needed
-//     setTimeLeft(60); // Reset the timer to 60 seconds
-//   };
-
-//   // On form submission (OTP entered)
-//   const onSubmit = (data) => {
-//     // data.otp is the code user typed
-//     console.log("OTP Submitted:", data.otp);
-//     setIsLoading(true);
-
-//     // Example: call an API to verify OTP
-//     // await verifyOtpApi(data.otp);
-//     // setIsLoading(false);
-
-//     // handle success/error
+//   // فراخوانی تابع onOtpChange هنگام تغییر مقدار OTP
+//   useEffect(() => {
+//     onOtpChange(value); // ارسال مقدار OTP به کامپوننت پدر
+//   }, [value]);
+//   const onOtpChange = (otp) => {
+//     setOtpValue(otp);
 //   };
 
 //   return (
-//     <div className="h-[90vh] max-w-2xl mx-auto flex flex-col p-2 bg-white relative">
-//       {/* Top Navigation */}
-//       <div className="flex justify-between items-center mb-1 py-3">
-//         <Link href="/userPanel/Profile">
-//           <ChevronRightIcon className="w-5 h-5 text-gray-700 cursor-pointer" />
-//         </Link>
-//         <h1 className="flex justify-center grow text-md font-bold text-center">
-//           کد فعال سازی
-//         </h1>
-//       </div>
+//     <div className="flex flex-col py-5 px-2 h-screen justify-between max-w-2xl mx-auto">
+//       <div className="flex flex-col gap-6">
+//         <div className="relative h-4">
+//           <div className="absolute h-1 w-full ml-2 top-1/2 bg-gradient-to-l from-green-500 to-gray-400  to-40%"></div>
+//           <div className="absolute w-full flex justify-between items-center text-sm text-gray-400">
+//             <p className="pl-2 bg-white text-green-600">ثبت نام</p>
+//             <p className="px-4 bg-white text-black">کد فعال‌سازی</p>
+//             <p className="mx-2 px-4 bg-white">رمز عبور</p>
+//             <p className="px-4 bg-white">احراز هویت</p>
+//           </div>
+//         </div>
+//         <p className="text-lg">کد فعال‌سازی</p>
 
-//       {/* OTP Form and Timer */}
-//       <div className="flex flex-col items-center mt-6">
-//         <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-xs">
-//           <input
-//             type="text"
-//             placeholder="کد فعال سازی"
-//             {...register("otp", {
-//               required: "وارد کردن کد فعال سازی الزامی است",
-//             })}
-//             className="w-full border border-gray-300 rounded p-2 text-center"
+//         <button className="flex gap-2" onClick={() => setStep(0)}>
+//           <Image width={24} height={24} src={"/icons/edit.svg"} alt="edit" />
+//           <p className="text-sm text-indigo-600">ویرایش شماره</p>
+//         </button>
+//         <div dir="ltr" className="flex flex-col items-center gap-2">
+//           <InputOtp
+//             length={5}
+//             value={value}
+//             onValueChange={(val) => {
+//               setValue(val);
+//               onOtpChange(val); // ارسال مقدار OTP به کامپوننت پدر
+//             }}
+//             size="lg"
+//             variant="bordered"
 //           />
-//           {errors.otp && (
-//             <p className="text-red-500 text-sm mt-1">{errors.otp.message}</p>
-//           )}
 
+//           {isVisible ? (
+//             <div className="my-div">
+//               <p className="text-sm">زمان باقی‌مانده: {timeLeft} ثانیه</p>
+//             </div>
+//           ) : (
+//             showNewDiv && (
+//               <div className="flex gap-1 items-center">
+//                 <Button variant="bordered" color="primary">
+//                   ارسال مجدد
+//                   <Image
+//                     width={24}
+//                     height={24}
+//                     src={"/icons/again.svg"}
+//                     alt="again"
+//                   />
+//                 </Button>
+//                 <p className="text-sm text-red-400">کد شما منقضی شده است</p>
+//               </div>
+//             )
+//           )}
 //           <button
-//             type="submit"
-//             disabled={!isValid || isLoading}
-//             className="mt-4 w-full py-2 bg-blue-600 text-white rounded disabled:bg-gray-400"
+//             onClick={submitOtp}
+//             className="w-[100px] py-3 text-white font-semibold rounded-md bg-blue-600 hover:bg-blue-700 transition-all disabled:opacity-50"
 //           >
-//             تأیید
+//             ارسال کد
 //           </button>
-//         </form>
-
-//         {/* Countdown + Resend Button */}
-//         <div className="mt-4 flex items-center gap-2">
-//           <span className="text-sm text-gray-600">{formatTime(timeLeft)}</span>
-//           {timeLeft === 0 && (
-//             <button
-//               onClick={handleResend}
-//               className="text-blue-500 text-sm underline"
-//             >
-//               ارسال مجدد
-//             </button>
-//           )}
 //         </div>
 //       </div>
 //     </div>
 //   );
 // }
 
+// export default ActivingCode;
+
 "use client";
-import { useState, useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
-import useAuthRedirect from "@/app/hooks/useAuthRedirect";
-import ChevronRightIcon from "@public/icons/userPanel/chevronRight";
-import Link from "next/link";
+import Image from "next/image";
+import { Button, InputOtp } from "@nextui-org/react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Config from "@/components/config";
+import { useRouter } from "next/navigation";
 
-export default function Otp() {
-  useAuthRedirect();
-
-  // react-hook-form setup
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({ mode: "onChange" });
-
-  // Timer state (60 seconds)
+function ActivingCode() {
+  const router = useRouter();
+  const [value, setValue] = useState("");
+  const [isVisible, setIsVisible] = useState(true);
   const [timeLeft, setTimeLeft] = useState(60);
+  const [showNewDiv, setShowNewDiv] = useState(false);
+  const [otpValue, setOtpValue] = useState("");
+  const [isOtp, setIsOtp] = useState(false);
 
-  // Decrement the timer each second
+  // Start timer countdown and change view when time expires
   useEffect(() => {
-    if (timeLeft <= 0) return;
-    const timerId = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
-    return () => clearInterval(timerId);
-  }, [timeLeft]);
+    const timer = setTimeout(() => {
+      setIsVisible(false);
+      setShowNewDiv(true);
+    }, 60000);
 
-  // Format time as mm:ss
-  const formatTime = (seconds) => {
-    const m = String(Math.floor(seconds / 60)).padStart(2, "0");
-    const s = String(seconds % 60).padStart(2, "0");
-    return `${m}:${s}`;
+    const countdown = setInterval(() => {
+      setTimeLeft((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(countdown);
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+      clearInterval(countdown);
+    };
+  }, []);
+
+  // Function to send OTP for verification (called on "ارسال کد")
+  const submitOtp = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const formData = new FormData();
+      formData.append("code", otpValue);
+
+      const res = await axios.post(
+        `${Config.apiUrl}/user/activeauthlast`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (res.data.code === 1) {
+        // For example, proceed to the next step and set the
+
+        router.push("/userPanel/Profile");
+      } else {
+        alert(res.data.error);
+      }
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+    }
   };
 
-  // Resend OTP
-  const handleResend = () => {
-    // Call your resend OTP API if needed
-    setTimeLeft(60); // Reset timer
+  // Update otpValue whenever the InputOtp value changes
+  useEffect(() => {
+    onOtpChange(value);
+  }, [value]);
+
+  const onOtpChange = (otp) => {
+    setOtpValue(otp);
   };
 
-  // On form submit, combine the five digits
-  const onSubmit = (data) => {
-    // data.otp0, data.otp1, etc.
-    // Verify the OTP (API call, etc.)
-    // ...
+  // New: When the user clicks on the expired message area,
+  // send a GET request to /user/activewauth to resend the OTP.
+  const handleResendCode = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(`${Config.apiUrl}/user/activeauth`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.data.code === 1) {
+        // Optionally show a success message
+        // Reset the timer and show the OTP input again
+        setTimeLeft(60);
+        setIsVisible(true);
+        setShowNewDiv(false);
+      } else {
+        alert(res.data.error || "خطا در ارسال مجدد کد");
+      }
+    } catch (error) {
+      console.error("Error resending OTP:", error);
+    }
   };
 
   return (
-    <div className="h-[90vh] max-w-2xl mx-auto flex flex-col p-2 bg-white relative">
-      {/* Top Navigation */}
-      <div className="flex justify-between items-center mb-1 py-3">
-        <Link href="/userPanel/Profile">
-          <ChevronRightIcon className="w-5 h-5 text-gray-700 cursor-pointer" />
-        </Link>
-        <h1 className="flex justify-center grow text-md font-bold text-center">
-          کد فعال سازی
-        </h1>
-      </div>
+    <div className="flex flex-col py-5 px-2 h-screen justify-between max-w-2xl mx-auto">
+      <div className="flex flex-col gap-6">
+        <div dir="ltr" className="flex flex-col items-center gap-2">
+          <InputOtp
+            length={5}
+            value={value}
+            onValueChange={(val) => {
+              setValue(val);
+              onOtpChange(val);
+            }}
+            size="lg"
+            variant="bordered"
+          />
 
-      {/* OTP Form */}
-      <div className="flex flex-col items-center mt-6">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="w-full max-w-sm flex flex-col items-center"
-        >
-          {/* Digit Inputs */}
-          <div className="flex gap-2 mb-4">
-            {Array.from({ length: 5 }, (_, i) => (
-              <input
-                key={i}
-                type="text"
-                maxLength={1}
-                // Register each box separately: otp0, otp1, ...
-                {...register(`otp${i}`, {
-                  required: true,
-                  pattern: {
-                    value: /^[0-9]$/,
-                    message: "فقط عدد وارد کنید",
-                  },
-                })}
-                className="w-12 h-12 text-center rounded-md bg-gray-50 border border-gray-200 
-                           focus:outline-none focus:border-blue-500"
-              />
-            ))}
-          </div>
-
-          {/* Display any error if any digit is missing/invalid */}
-          {(errors.otp0 ||
-            errors.otp1 ||
-            errors.otp2 ||
-            errors.otp3 ||
-            errors.otp4) && (
-            <p className="text-red-500 text-sm mb-2">کد باید 5 رقم باشد</p>
+          {isVisible ? (
+            <div className="my-div">
+              <p className="text-sm">زمان باقی‌مانده: {timeLeft} ثانیه</p>
+            </div>
+          ) : (
+            showNewDiv && (
+              // Wrap the resend area with an onClick to trigger the GET request.
+              <div className="flex gap-1 items-center cursor-pointer">
+                <button
+                  onClick={handleResendCode}
+                  variant="bordered"
+                  color="primary"
+                >
+                  ارسال مجدد
+                  <Image
+                    width={24}
+                    height={24}
+                    src={"/icons/again.svg"}
+                    alt="again"
+                  />
+                </button>
+                <p className="text-sm text-red-400">کد شما منقضی شده است</p>
+              </div>
+            )
           )}
-
-          {/* Submit Button */}
           <button
-            type="submit"
-            disabled={!isValid}
-            className="w-full bg-blue-600 text-white py-2 rounded disabled:bg-gray-400"
+            onClick={submitOtp}
+            className="w-[100px] py-3 text-white font-semibold rounded-md bg-blue-600 hover:bg-blue-700 transition-all disabled:opacity-50"
           >
-            تأیید
+            ارسال کد
           </button>
-        </form>
-
-        {/* Countdown + Resend Button */}
-        <div className="mt-4 flex items-center gap-2">
-          <span className="text-sm text-gray-600">{formatTime(timeLeft)}</span>
-          {timeLeft === 0 && (
-            <button
-              onClick={handleResend}
-              className="text-blue-500 text-sm underline"
-            >
-              ارسال مجدد
-            </button>
-          )}
         </div>
       </div>
     </div>
   );
 }
+
+export default ActivingCode;
