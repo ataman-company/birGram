@@ -102,9 +102,9 @@ const useAuthRedirect = (apiUrl) => {
           localStorage.setItem("Options", JSON.stringify(res.data.options));
         } else if (code === 555) {
           // Code 555: token expired or requires retokenization
+          router.push(`/retoken?token=${token}`);
         } else if (code === 401) {
           // Invalid token, remove and redirect to login
-          router.push(`/retoken?token=${token}`);
         } else {
           // Some other error
           alert(res.data.error);

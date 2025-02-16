@@ -39,13 +39,13 @@ const Header = () => {
           </Link>
           <Link
             className="hover:border-b hover:border-b-white duration-200"
-            href={"#"}
+            href={"/help"}
           >
             راهنمای استفاده
           </Link>
           <Link
             className="hover:border-b hover:border-b-white duration-100"
-            href={"#"}
+            href={"/rules"}
           >
             قوانین مقررات
           </Link>
@@ -57,19 +57,13 @@ const Header = () => {
           </Link>
           <Link
             className="hover:border-b hover:border-b-white duration-100"
-            href={"#"}
-          >
-            میلی لنگ
-          </Link>
-          <Link
-            className="hover:border-b hover:border-b-white duration-100"
-            href={"#"}
+            href={"/contact-us"}
           >
             تماس با ما
           </Link>
           <Link
             className="hover:border-b hover:border-b-white duration-100"
-            href={"#"}
+            href={"giving-gold"}
           >
             دریافت طلا
           </Link>
