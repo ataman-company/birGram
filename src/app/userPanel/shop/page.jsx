@@ -10,6 +10,7 @@ import ShoppingCartIcon from "@public/icons/userPanel/shoppingIcon";
 import CardRenderer from "./component/CardRenderer";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Loading from "@/components/Loading";
 
 const GiftCardsList = () => {
   useAuthRedirect();
@@ -61,7 +62,7 @@ const GiftCardsList = () => {
     fetchData();
   }, [totalCount, totalPrice]);
 
-  if (!giftCarts || !cartData) return <div>Loading...</div>;
+  if (!giftCarts || !cartData) return <Loading />;
 
   const cartArray = cartData?.carts ? Object.values(cartData.carts) : [];
 
@@ -77,6 +78,7 @@ const GiftCardsList = () => {
     return 0;
   }
 
+  console.log("carts", giftCarts);
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
       {/* Title and Cart Info */}

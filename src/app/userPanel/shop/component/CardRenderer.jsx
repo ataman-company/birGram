@@ -16,7 +16,7 @@ const CardRenderer = ({ gift, count, onChange }) => {
 
     const token = localStorage.getItem("token");
     const formData = new FormData();
-    formData.append("gift_id", gift.id);
+    formData.append("gift_id", gift.id || gift.gift_id);
     formData.append("count", newCount);
 
     try {
@@ -52,7 +52,7 @@ const CardRenderer = ({ gift, count, onChange }) => {
 
     const token = localStorage.getItem("token");
     const formData = new FormData();
-    formData.append("gift_id", gift.id);
+    formData.append("gift_id", gift.id || gift.gift_id);
     formData.append("count", newCount);
 
     try {

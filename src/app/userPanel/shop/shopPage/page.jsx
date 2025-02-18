@@ -7,15 +7,15 @@ import axios from "axios";
 import Config from "@/components/config";
 import ChevronRightIcon from "@public/icons/userPanel/chevronRight";
 import Link from "next/link";
+import Loading from "@/components/Loading";
 
 const ShopPage = () => {
   useAuthRedirect();
   const router = useRouter();
 
-  const [giftCarts, setGiftCarts] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [cartData, setCartData] = useState(null);
+  const [cartData, setCartData] = useState([]);
 
   const fetchData = async () => {
     const token =
@@ -24,16 +24,6 @@ const ShopPage = () => {
 
     try {
       // --- (A) Fetch gift card definitions ---
-      const res1 = await axios.get(`${Config.apiUrl}/user/giftcart/cartlist`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (res1.data.code === 1) {
-        setGiftCarts(res1.data.giftcarts || []);
-        console.log("cartlist fetched successfully");
-      } else {
-        console.error("Server returned an error code (cartlist):", res1.data);
-      }
 
       // --- (B) Fetch the user’s current cart info ---
       const res2 = await axios.get(`${Config.apiUrl}/user/giftcart/carts`, {
@@ -55,25 +45,46 @@ const ShopPage = () => {
 
   useEffect(() => {
     fetchData();
+    // We can remove totalCount and totalPrice from dependencies if they trigger refetch unnecessarily
   }, [totalCount, totalPrice]);
 
-  if (!giftCarts || !cartData)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        Loading...
-      </div>
-    );
-
-  const cartArray = cartData?.carts ? Object.values(cartData.carts) : [];
+  if (!cartData) return <Loading />;
 
   function getCartCountByGiftId(giftId) {
     if (!cartData?.carts) {
-      return 0;
+      return <Loading />;
     }
     const itemsArray = Object.values(cartData.carts);
     const filteredItems = itemsArray.filter((item) => item.gift_id == giftId);
     return filteredItems.length > 0 ? filteredItems[0].count : 0;
   }
+
+  console.log("gift", cartData.carts);
+  const handleConfirmOrder = async () => {
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (!token) return;
+
+    try {
+      const res = await axios.get(`${Config.apiUrl}/user/giftcart/setorder`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (res.data.code === 1) {
+        // Show a success message
+        alert("سفارش شما با موفقیت ثبت شد!");
+      } else if (res.data.code === 110) {
+        // Redirect to wallet deposit page
+        router.push("/userPanel/walletDeposit");
+      } else {
+        // Optionally, handle other error codes
+        alert("خطا در ثبت سفارش، لطفاً دوباره امتحان کنید.");
+      }
+    } catch (err) {
+      console.error("Error confirming order:", err);
+      alert("خطایی رخ داده است. لطفاً دوباره امتحان کنید.");
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
@@ -94,28 +105,37 @@ const ShopPage = () => {
 
       {/* Cards Container */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-        {giftCarts.length > 0 ? (
-          giftCarts.map((gift) => {
-            const currentCount = getCartCountByGiftId(gift.id);
-
-            return (
+        {cartData?.carts && cartData.carts.length > 0 ? (
+          cartData.carts.map((gift) => {
+            const currentCount = getCartCountByGiftId(gift.gift_id);
+            // Only render if currentCount is more than 0
+            return currentCount > 0 ? (
               <CardRenderer
-                key={gift.id}
+                key={gift.gift_id}
                 gift={gift}
-                count={currentCount || 0}
+                count={currentCount}
                 onChange={setTotalCount}
                 totalCount={totalCount}
               />
-            );
+            ) : null;
           })
         ) : (
           <></>
         )}
       </div>
       <div className="flex w-full items-center justify-center mt-2">
-        <button className="w-full bg-blue-600 text-white py-3 rounded-lg disabled:opacity-50">
-          تایید کسر از کیف پول
-        </button>
+        {cartData.length > 0 ? (
+          <button
+            onClick={handleConfirmOrder}
+            className="w-full bg-blue-600 text-white py-3 rounded-lg disabled:opacity-50"
+          >
+            تایید کسر از کیف پول
+          </button>
+        ) : (
+          <div className="flex justify-center items-center w-full text-gray-300">
+            سبد خرید شما خالی است
+          </div>
+        )}
       </div>
     </div>
   );
