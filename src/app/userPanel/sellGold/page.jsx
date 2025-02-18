@@ -192,28 +192,33 @@ const SellGoldForm = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      // Build payload with type "sell" and only the field the user typed.
-      let payload = { type: "sell" };
+      // Build FormData with type "buy" and only the field the user typed.
+      const formData = new FormData();
+      formData.append("type", "sell");
 
       if (lastChanged === "price") {
-        payload.price = data.price;
+        formData.append("price", data.price);
       } else if (lastChanged === "gold") {
-        payload.gold = data.gold;
+        formData.append("gold", data.gold);
       } else {
         console.error("No field was modified for submission");
         return;
       }
 
-      const res = await axios.post(`${Config.apiUrl}/user/trade/buy`, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await axios.post(
+        `${Config.apiUrl}/user/trade/sell`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // Let Axios set the Content-Type automatically.
+          },
+        }
+      );
 
       if (res.data.code === 1) {
-        console.log("Trade purchase successful:", res.data);
-        // Optionally, you can add further handling (e.g., redirection or a success message)
+        router.push("/userPanel/transactions");
+        // Optionally, handle success (e.g., redirect or display a message)
       } else {
         console.error("Trade purchase error:", res.data.message);
       }

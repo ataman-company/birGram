@@ -233,7 +233,7 @@ const GoldPurchaseForm = () => {
       );
 
       if (res.data.code === 1) {
-        console.log("Trade purchase successful:", res.data);
+        router.push("/userPanel/transactions");
         // Optionally, handle success (e.g., redirect or display a message)
       } else {
         console.error("Trade purchase error:", res.data.message);

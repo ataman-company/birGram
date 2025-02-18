@@ -12,6 +12,7 @@ const ShoppingCartModal = ({
   const handleCloseModal = (e) => {
     onClose();
   };
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
@@ -30,7 +31,7 @@ const ShoppingCartModal = ({
           max-h-[80vh]
           overflow-y-auto
         "
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+        // Prevent closing when clicking inside
       >
         <h2 className="text-2xl font-bold mb-6 text-gray-800">سبد خرید</h2>
 
