@@ -61,8 +61,36 @@ const WalletRecharge = () => {
 
   const priceValue = watch("price");
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      // Build FormData with type "buy" and only the field the user typed.
+      const formData = new FormData();
+
+      formData.append("price", data.price);
+
+      const res = await axios.post(
+        `${Config.apiUrl}/user/wallet/deposit`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // Let Axios set the Content-Type automatically.
+          },
+        }
+      );
+
+      if (res.data.code === 1) {
+        window.location.href = res.data.gate;
+        // Optionally, handle success (e.g., redirect or display a message)
+      } else {
+        console.error("Trade purchase error:", res.data.message);
+      }
+    } catch (error) {
+      console.error("Error during trade purchase:", error);
+    }
   };
 
   const { user } = data;

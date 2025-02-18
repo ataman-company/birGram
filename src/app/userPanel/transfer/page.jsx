@@ -11,6 +11,7 @@ import useAuthRedirect from "@/app/hooks/useAuthRedirect";
 import { Toaster, toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import TransactionLimitsModal from "./components/TransactionLimitsModal";
+import Loading from "@/components/Loading";
 
 export default function MoneyTransfer() {
   const {
@@ -206,9 +207,7 @@ export default function MoneyTransfer() {
                 {errors.destinationAccount.message}
               </p>
             )}
-            {isLoading && (
-              <p className="text-blue-500 text-sm mt-1">در حال بررسی حساب...</p>
-            )}
+            {isLoading && <Loading />}
           </div>
 
           {/* Show additional fields if API response is valid */}

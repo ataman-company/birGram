@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import InformationOfGold from "./InformationOfGold";
 import axios from "axios";
 import Config from "../config";
+import Loading from "../Loading";
 const Content = () => {
   const [data, setData] = useState(false);
   const [currentPrice, setCurrentPrice] = useState(0);
@@ -87,7 +88,7 @@ const Content = () => {
         </>
       ) : (
         <>
-          <p>Loading...1</p>
+          <Loading />
         </>
       )}
     </>

@@ -18,11 +18,15 @@ import toast, { Toaster } from "react-hot-toast";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 import Header from "./Header/Header";
 import MoreModal from "@/components/userPanel/MoreModal";
+import Loading from "@/components/Loading";
+
+// Simple Loading component
 
 function UserPanel() {
   useAuthRedirect();
 
   const [data, setData] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   // State to control visibility of sensitive data
@@ -67,7 +71,10 @@ function UserPanel() {
   const serverdata = async () => {
     try {
       const token = localStorage.getItem("token");
-      if (!token) return;
+      if (!token) {
+        setIsLoading(false);
+        return;
+      }
 
       const res = await axios.get(`${Config.apiUrl}/user/home`, {
         headers: {
@@ -83,16 +90,11 @@ function UserPanel() {
           "currentPrice",
           JSON.stringify(res.data.current_price)
         );
-      } else if (res.data.code === 401) {
-        // goto login
-        localStorage.removeItem("token");
-        useAuthRedirect();
-      } else if (res.data.code === 555) {
-        // go to retoken
+      } else if (res.data.code === 401 || res.data.code === 555) {
         localStorage.removeItem("token");
         useAuthRedirect();
       } else {
-        alert(res.data.error);
+        console.error(res.data.error);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -100,13 +102,19 @@ function UserPanel() {
   };
 
   useEffect(() => {
-    serverdata();
+    const fetchData = async () => {
+      setIsLoading(true);
+      await serverdata();
+      setIsLoading(false);
+    };
+
+    fetchData();
 
     const interval = setInterval(getCurrentPrice, 5000);
     return () => {
       clearInterval(interval);
     };
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getCurrentPrice = async () => {
@@ -122,6 +130,12 @@ function UserPanel() {
 
   const { user } = data;
 
+  // If the data is loading, show the loading spinner
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  // If no user data is available (and not loading), you might return null or a fallback UI
   if (!user) return null;
 
   // Toggle the visibility of the balance details
@@ -205,7 +219,12 @@ function UserPanel() {
               <p className="text-sm">فروش</p>
             </Link>
 
-            <Link href={"#"} className="flex flex-col gap-1 items-center">
+            <Link
+              href={
+                "/userPanel/requests?type=physical&status=&startdate=&enddate="
+              }
+              className="flex flex-col gap-1 items-center"
+            >
               <div className="size-12 rounded-full bg-gray-100 flex justify-center items-center">
                 <RequestIcon />
               </div>

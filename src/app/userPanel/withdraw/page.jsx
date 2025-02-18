@@ -8,9 +8,11 @@ import TransactionLimitsModal from "../transfer/components/TransactionLimitsModa
 import Config from "@/components/config";
 import axios from "axios";
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
+import { useRouter } from "next/navigation";
 
 const Withdraw = () => {
   useAuthRedirect();
+  const router = useRouter();
 
   const {
     control,
@@ -63,20 +65,23 @@ const Withdraw = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const payload = {
-        amount: data.amount,
-        shaba: data.shaba,
-      };
+      const formData = new FormData();
+      formData.append("price", data.amount);
+      formData.append("shaba", `IR${data.shaba}`);
 
-      const res = await axios.post(`${Config.apiUrl}/user/withdraw`, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await axios.post(
+        `${Config.apiUrl}/user/wallet/withdraw`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (res.data.code === 1) {
-        console.log("Withdrawal request successful:", res.data);
+        router.push("/userPanel/transactions");
         // Optionally navigate or display a success message
       } else {
         console.error("Withdrawal error:", res.data.message);

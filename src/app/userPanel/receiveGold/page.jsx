@@ -1,6 +1,7 @@
 "use client";
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
 import Config from "@/components/config";
+import Loading from "@/components/Loading";
 import ChevronLeftIcon from "@public/icons/userPanel/chevronLeft";
 import ChevronRightIcon from "@public/icons/userPanel/chevronRight";
 import axios from "axios";
@@ -227,7 +228,7 @@ export default function ReceiveGold() {
               <p className="text-sm text-red-500">{errors.gold.message}</p>
             )}
             {isLoading && (
-              <span>در حال پردازش...</span> // Show loading text or spinner
+              <Loading /> // Show loading text or spinner
             )}
             {balanceError && (
               <p className="text-red-500 text-sm mt-1">
