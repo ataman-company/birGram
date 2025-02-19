@@ -1,29 +1,12 @@
 "use client";
 import React from "react";
 import { Accordion, AccordionItem } from "@nextui-org/react";
-import VideoPlayer from "./VideoPlayer";
 import Swiper from "./Swiper";
 import Faq from "./Faq";
 import ApplicationDownload from "./ApplicationDownload";
-
-
+import MyReactPlayer from "./Player";
 
 function BecomingGoldDigger() {
-  const videoJsOptions = {
-    width: "273",
-    height: "390",
-    muted: true,
-    autoplay: true,
-    responsive: true,
-    loop: true,
-    sources: [
-      {
-        src: "/videos/main-receive-gold.mp4",
-        type: "video/mp4",
-      },
-    ],
-  };
-
   return (
     <div className="bg-white w-full pt-10 mt-10">
       <div className="container flex flex-col gap-10 text-center mx-auto">
@@ -66,7 +49,7 @@ function BecomingGoldDigger() {
             </Accordion>
           </div>
           <div className="sm:w-1/2">
-            <VideoPlayer options={videoJsOptions} />
+            <MyReactPlayer src="/videos/main-receive-gold.mp4" />
           </div>
         </div>
         <h2 className="sm:text-2xl text-lg font-bold">مجوز ها</h2>

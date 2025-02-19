@@ -24,6 +24,7 @@
     "react-hot-toast": "^2.5.1",
     "react-multi-date-picker": "^4.5.2",
     "react-number-format": "^5.4.3",
+    "react-player": "^2.16.0",
     "recharts": "^2.15.0",
     "sonner": "^1.7.2",
     "swiper": "^11.2.1",
