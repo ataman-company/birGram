@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import VideoPlayer from "./VideoPlayer";
 import Config from "../config";
 import axios from "axios";
+import { Skeleton } from "@nextui-org/react";
 
 function BenefitsOfBuyingGold() {
   const [data, setData] = useState(false);
@@ -99,7 +100,45 @@ function BenefitsOfBuyingGold() {
       </div>
     </div>
   ) : (
-    <h1 className="text-4xl text-center">loading...</h1>
+    <div className="flex md:flex-row flex-col gap-10 sm:mt-20 mt-5 w-full">
+      {/* Left Section - Text Content Skeleton */}
+      <div className="flex flex-col gap-6 sm:w-1/2 w-full">
+        {/* First Heading Line */}
+        <div className="flex gap-2">
+          <Skeleton className="h-8 w-32 rounded-lg" />
+          <Skeleton className="h-8 w-24 rounded-lg" />
+        </div>
+
+        {/* Second Heading Line */}
+        <div className="flex gap-2">
+          <Skeleton className="h-12 w-64 rounded-lg" />
+          <Skeleton className="h-12 w-20 rounded-lg" />
+        </div>
+
+        {/* Description Paragraph */}
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-full rounded-lg" />
+          <Skeleton className="h-4 w-4/5 rounded-lg" />
+          <Skeleton className="h-4 w-3/5 rounded-lg" />
+        </div>
+
+        {/* Button Skeleton */}
+        <Skeleton className="h-12 w-48 rounded-xl" />
+      </div>
+
+      {/* Right Section - Gold Info Skeleton */}
+      <div className="xl:w-[500px] lg:w-[400px] md:w-[300px]">
+        <div className="flex flex-col gap-4 p-6 bg-white bg-opacity-5 rounded-3xl">
+          <Skeleton className="h-7 w-1/2 rounded-lg" />
+          <Skeleton className="h-16 w-full rounded-lg" />
+          <div className="grid grid-cols-2 gap-4">
+            <Skeleton className="h-12 rounded-lg" />
+            <Skeleton className="h-12 rounded-lg" />
+          </div>
+          <Skeleton className="h-12 w-full rounded-lg" />
+        </div>
+      </div>
+    </div>
   );
 }
 
