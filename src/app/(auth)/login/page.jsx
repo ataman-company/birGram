@@ -131,7 +131,7 @@ function Login() {
               type={isVisible ? "text" : "password"}
               variant="bordered"
             />
-            <Link href="#" className="text-blue-500">
+            <Link href="/forgetPassword" className="text-blue-500">
               رمز عبور خود را فراموش کرده اید؟
             </Link>
             <button

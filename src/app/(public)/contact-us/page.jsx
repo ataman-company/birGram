@@ -145,6 +145,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Config from "@/components/config";
+import Link from "next/link";
 
 function page() {
   const {
@@ -303,16 +304,18 @@ function page() {
               <p>021-91200150</p>
             </div>
             <div className="flex justify-evenly w-full">
-              <Button className="bg-blue-950 text-yellow-400" size="lg">
+              <Link
+                href="/userPanel/goldTrade"
+                className="flex justify-center items-center px-6 py-3 bg-white border border-blue-500 text-blue-500 rounded-lg text-sm font-medium text-center"
+              >
                 خرید طلای آب‌شده از بیرگرم
-              </Button>
-              <Button
-                variant="bordered"
-                className="border border-blue-950"
-                size="lg"
+              </Link>
+              <Link
+                href="#"
+                className="flex justify-center items-center px-6 py-3 bg-white border border-blue-500 text-blue-500 rounded-lg text-sm font-medium text-center"
               >
                 درباره بیرگرم
-              </Button>
+              </Link>
             </div>
           </div>
         </section>

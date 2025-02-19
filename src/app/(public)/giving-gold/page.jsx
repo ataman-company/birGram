@@ -5,6 +5,7 @@ import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import React from "react";
 import physicalGoldData from "../giving-gold/goldData/physicalGoldData.json"; // Adjust the path if needed
+import Link from "next/link";
 
 function Page() {
   return (
@@ -87,15 +88,18 @@ function Page() {
 
           {/* Call to Action Buttons */}
           <div className="flex w-full justify-around">
-            <Button className="bg-blue-900 text-yellow-400 sm:px-3 px-3 sm:py-8 py-3 sm:text-lg text-sm">
+            <Link
+              href="/userPanel/goldTrade"
+              className="flex justify-center items-center px-6 py-3 bg-white border border-blue-500 text-blue-500 rounded-lg text-sm font-medium text-center"
+            >
               {physicalGoldData.callToAction.buyButton}
-            </Button>
-            <Button
-              variant="bordered"
-              className="border-blue-900 text-blue-900 sm:text-lg text-sm sm:px-3 px-3 sm:py-8 py-3"
+            </Link>
+            <Link
+              href="#"
+              className="flex justify-center items-center px-6 py-3 bg-white border border-blue-500 text-blue-500 rounded-lg text-sm font-medium text-center"
             >
               {physicalGoldData.callToAction.licenseButton}
-            </Button>
+            </Link>
           </div>
         </div>
       </div>

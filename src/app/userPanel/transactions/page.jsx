@@ -51,6 +51,7 @@ const Transactions = () => {
 
       if (res.data.code === 1) {
         setData(res.data.transactions);
+        console.log(res.data);
         setCurrentPrice(currentPriceFromLS);
       }
     } catch (error) {
@@ -60,7 +61,7 @@ const Transactions = () => {
 
   useEffect(() => {
     serverdata();
-    let interval = setInterval(getCurrentPrice, 5000);
+    let interval = setInterval(getCurrentPrice, 1000);
     return () => clearInterval(interval); // Clean up the interval on unmount
   }, [searchParams]); // Trigger effect when searchParams change
 
