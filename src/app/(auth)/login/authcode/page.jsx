@@ -1,13 +1,13 @@
 "use client";
-import Image from "next/image";
-import { Button, InputOtp } from "@nextui-org/react";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import useRedirect from "@/app/hooks/useRedirect";
 import Config from "@/components/config";
-import { useRouter, useSearchParams } from "next/navigation";
+import { InputOtp } from "@nextui-org/react";
+import axios from "axios";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 function OtpCodeLogin({ isOpen, onClose, phone, password }) {
-  const router = useRouter();
+  const { redirectTo } = useRedirect();
 
   const [value, setValue] = useState("");
   const [isVisible, setIsVisible] = useState(true);
@@ -67,7 +67,7 @@ function OtpCodeLogin({ isOpen, onClose, phone, password }) {
 
         localStorage.setItem("token", res.data.token);
 
-        router.push("/userPanel");
+        redirectTo("/userPanel");
       } else {
         alert(res.data.error);
       }

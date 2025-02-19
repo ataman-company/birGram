@@ -1,9 +1,9 @@
 "use client";
 import { Button, Input } from "@nextui-org/react";
-import React, { useState } from "react";
-import MyDatePicker from "./MyDatePicker";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import MyDatePicker from "./MyDatePicker";
+import useRedirect from "@/app/hooks/useRedirect";
 
 function Authentication({
   phone,
@@ -13,7 +13,7 @@ function Authentication({
   setnCode,
   setDateBirth,
 }) {
-  const router = useRouter();
+  const { redirectTo } = useRedirect();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [nationalCode, setNationalCode] = useState("");
@@ -93,7 +93,7 @@ function Authentication({
           color="primary"
           onClick={() => {
             submitUser();
-            router.push("/userPanel");
+            redirectTo("/userPanel");
           }}
         >
           ثبت اطلاعات

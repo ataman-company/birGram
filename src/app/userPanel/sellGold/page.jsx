@@ -1,11 +1,11 @@
 "use client";
 
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
+import useRedirect from "@/app/hooks/useRedirect";
 import Config from "@/components/config";
 import axios from "axios";
 import { ChevronRight, Info } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import Header from "../Header/Header";
@@ -32,7 +32,7 @@ const SellGoldForm = () => {
   // Track which field the user modified last.
   const [lastChanged, setLastChanged] = useState(null);
 
-  const router = useRouter();
+  const { redirectTo } = useRedirect();
 
   // -------------------------
   // Fetch user data and current price
@@ -217,7 +217,7 @@ const SellGoldForm = () => {
       );
 
       if (res.data.code === 1) {
-        router.push("/userPanel/transactions");
+        redirectTo("/userPanel/transactions");
         // Optionally, handle success (e.g., redirect or display a message)
       } else {
         console.error("Trade purchase error:", res.data.message);

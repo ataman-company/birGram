@@ -1,17 +1,17 @@
 "use client";
-import { useEffect, useState } from "react";
+import useAuthRedirect from "@/app/hooks/useAuthRedirect";
 import Config from "@/components/config";
+import axios from "axios";
 import { ChevronRight, Info } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import useAuthRedirect from "@/app/hooks/useAuthRedirect";
 
 // 1) Import the toast utilities
-import { Toaster, toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import TransactionLimitsModal from "./components/TransactionLimitsModal";
 import Loading from "@/components/Loading";
+import { Toaster, toast } from "react-hot-toast";
+import TransactionLimitsModal from "./components/TransactionLimitsModal";
+import useRedirect from "@/app/hooks/useRedirect";
 
 export default function MoneyTransfer() {
   const {
@@ -23,7 +23,8 @@ export default function MoneyTransfer() {
   } = useForm();
 
   useAuthRedirect();
-  const router = useRouter();
+
+  const { redirectTo } = useRedirect();
 
   const [isLoading, setIsLoading] = useState(false);
   const [apiData, setApiData] = useState(null);
@@ -152,7 +153,7 @@ export default function MoneyTransfer() {
         // If the code is 1, it's a success
         console.log("Success:", response.data);
         toast.success("انتقال ثبت شد!");
-        router.push("/userPanel");
+        redirectTo("/userPanel");
       } else {
         // Handle non-success response code
         toast.error("خطا در ارسال اطلاعات.");

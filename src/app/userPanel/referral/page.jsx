@@ -1,14 +1,14 @@
 "use client";
+import useRedirect from "@/app/hooks/useRedirect";
 import Config from "@/components/config";
 import ChevronRightIcon from "@public/icons/userPanel/chevronRight";
 import { Copy } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 const InviteFriends = () => {
-  const router = useRouter();
+  const { goBack } = useRedirect();
   const [inviteCode, setInviteCode] = useState("");
 
   // Fetch user referral code when component mounts
@@ -65,7 +65,7 @@ const InviteFriends = () => {
 
       {/* Header Section */}
       <div className="flex justify-between items-center mb-6">
-        <button onClick={() => router.back()}>
+        <button onClick={() => goBack()}>
           <ChevronRightIcon fill="rgb(59 130 246 / .5)" size={24} />
         </button>
         <h2 className="text-lg font-semibold text-center w-full">

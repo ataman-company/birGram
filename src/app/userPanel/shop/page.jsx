@@ -1,20 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
+import useRedirect from "@/app/hooks/useRedirect";
 import Config from "@/components/config";
+import Loading from "@/components/Loading";
 import ChevronRightIcon from "@public/icons/userPanel/chevronRight";
 import ShoppingCartIcon from "@public/icons/userPanel/shoppingIcon";
-import CardRenderer from "./component/CardRenderer";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Loading from "@/components/Loading";
+import CardRenderer from "./component/CardRenderer";
 
 const GiftCardsList = () => {
   useAuthRedirect();
-  const router = useRouter();
+
+  const { redirectTo } = useRedirect();
 
   const [giftCarts, setGiftCarts] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
@@ -97,7 +98,7 @@ const GiftCardsList = () => {
         <div
           className="flex items-center space-x-2 cursor-pointer"
           onClick={() => {
-            router.push("/userPanel/shop/shopPage");
+            redirectTo("/userPanel/shop/shopPage");
           }}
         >
           <ShoppingCartIcon />

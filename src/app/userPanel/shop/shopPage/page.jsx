@@ -1,17 +1,18 @@
 "use client";
-import { useRouter } from "next/navigation";
-import CardRenderer from "../component/CardRenderer";
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import useRedirect from "@/app/hooks/useRedirect";
 import Config from "@/components/config";
-import ChevronRightIcon from "@public/icons/userPanel/chevronRight";
-import Link from "next/link";
 import Loading from "@/components/Loading";
+import ChevronRightIcon from "@public/icons/userPanel/chevronRight";
+import axios from "axios";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import CardRenderer from "../component/CardRenderer";
 
 const ShopPage = () => {
   useAuthRedirect();
-  const router = useRouter();
+
+  const { redirectTo } = useRedirect();
 
   const [totalCount, setTotalCount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -75,7 +76,7 @@ const ShopPage = () => {
         alert("سفارش شما با موفقیت ثبت شد!");
       } else if (res.data.code === 110) {
         // Redirect to wallet deposit page
-        router.push("/userPanel/walletDeposit");
+        redirectTo("/userPanel/walletDeposit");
       } else {
         // Optionally, handle other error codes
         alert("خطا در ثبت سفارش، لطفاً دوباره امتحان کنید.");

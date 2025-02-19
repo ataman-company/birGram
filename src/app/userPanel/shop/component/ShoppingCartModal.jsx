@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import CardRenderer from "./CardRenderer";
 
 const ShoppingCartModal = ({
@@ -8,7 +7,6 @@ const ShoppingCartModal = ({
   onChange,
   totalCount,
 }) => {
-  const router = useRouter();
   const handleCloseModal = (e) => {
     onClose();
   };

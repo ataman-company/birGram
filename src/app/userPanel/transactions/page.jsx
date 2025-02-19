@@ -1,8 +1,8 @@
 "use client";
 import Config from "@/components/config";
 import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation"; // Import the useSearchParams hook
-import { useEffect, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation"; // Import the useSearchParams hook
+import { Suspense, useEffect, useState } from "react";
 
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
 import BottomNav from "@/components/userPanel/BottomNav";
@@ -10,11 +10,13 @@ import Image from "next/image";
 import FilterModal from "../FilterModal/FilterModal";
 import Header from "../Header/Header";
 
+import useRedirect from "@/app/hooks/useRedirect";
 import TransactionTable from "./components/TransactionsTable";
 
 const Transactions = () => {
   useAuthRedirect();
-  const router = useRouter();
+
+  const { redirectTo } = useRedirect();
 
   const [data, setData] = useState(false);
   const [currentPrice, setCurrentPrice] = useState(0);
@@ -88,7 +90,7 @@ const Transactions = () => {
             <button
               className="mx-2 p-1 min-w-0 bg-transparent shadow-none z-999"
               onClick={() => {
-                router.push("/userPanel/transactions");
+                redirectTo("/userPanel/transactions");
                 setIsModalOpen(true);
               }}
             >

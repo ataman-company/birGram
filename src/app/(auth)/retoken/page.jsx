@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
+import useRedirect from "@/app/hooks/useRedirect";
 import Config from "@/components/config";
+import axios from "axios";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 
 const Retoken = () => {
-  const router = useRouter();
+  const { redirectTo } = useRedirect();
   const searchParams = useSearchParams();
   // Get token from the URL query parameters
   const tokenParam = searchParams.get("token");
@@ -25,7 +26,7 @@ const Retoken = () => {
     // Use the token from the URL parameter
     const token = tokenParam;
     if (!token) {
-      router.push("/login");
+      redirectTo("/login");
       return;
     }
 
@@ -49,7 +50,6 @@ const Retoken = () => {
       if (response.data.code === 1) {
         toast.success("با موفقیت وارد شدید");
         localStorage.setItem("token", response.data.token);
-        router.push("/userPanel");
       } else {
         alert(response.data.error || "خطایی رخ داده است.");
       }

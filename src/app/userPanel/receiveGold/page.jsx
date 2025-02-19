@@ -1,12 +1,12 @@
 "use client";
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
+import useRedirect from "@/app/hooks/useRedirect";
 import Config from "@/components/config";
 import Loading from "@/components/Loading";
 import ChevronLeftIcon from "@public/icons/userPanel/chevronLeft";
 import ChevronRightIcon from "@public/icons/userPanel/chevronRight";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 
@@ -20,7 +20,8 @@ export default function ReceiveGold() {
   } = useForm({ mode: "onChange" }); // Enable validation on form value change
 
   useAuthRedirect();
-  const router = useRouter();
+
+  const { redirectTo } = useRedirect();
 
   const [isLoading, setIsLoading] = useState(false); // Track loading state
   const [balanceError, setBalanceError] = useState(false);
@@ -146,7 +147,7 @@ export default function ReceiveGold() {
 
       // Check if the response code is 1 and redirect to ServicePage
       if (res.data.code === 1) {
-        router.push("/userPanel/ServicePage"); // Redirect to the ServicePage
+        redirectTo("/userPanel/ServicePage"); // Redirect to the ServicePage
       } else {
         // Handle any other response codes (if needed)
         console.error("Error in response:", res.data);

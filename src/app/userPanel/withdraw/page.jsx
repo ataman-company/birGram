@@ -1,18 +1,19 @@
 "use client";
+import useAuthRedirect from "@/app/hooks/useAuthRedirect";
+import useRedirect from "@/app/hooks/useRedirect";
+import Config from "@/components/config";
 import AlertIcon from "@public/icons/userPanel/alertIcon";
+import axios from "axios";
 import { ChevronRight, Info } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react"; // Import useState and useEffect hooks
 import { Controller, useForm, useWatch } from "react-hook-form";
 import TransactionLimitsModal from "../transfer/components/TransactionLimitsModal";
-import Config from "@/components/config";
-import axios from "axios";
-import useAuthRedirect from "@/app/hooks/useAuthRedirect";
-import { useRouter } from "next/navigation";
 
 const Withdraw = () => {
   useAuthRedirect();
-  const router = useRouter();
+
+  const { redirectTo } = useRedirect();
 
   const {
     control,
@@ -81,7 +82,7 @@ const Withdraw = () => {
       );
 
       if (res.data.code === 1) {
-        router.push("/userPanel/transactions");
+        redirectTo("/userPanel/transactions");
         // Optionally navigate or display a success message
       } else {
         console.error("Withdrawal error:", res.data.message);

@@ -1,14 +1,14 @@
 "use client";
 
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
+import useRedirect from "@/app/hooks/useRedirect";
 import Config from "@/components/config";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { useForm, Controller, useWatch } from "react-hook-form";
-import Header from "../Header/Header";
 import { ChevronRight, Info } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Controller, useForm, useWatch } from "react-hook-form";
+import Header from "../Header/Header";
 import TransactionLimitsModal from "../transfer/components/TransactionLimitsModal";
 
 const GoldPurchaseForm = () => {
@@ -30,7 +30,7 @@ const GoldPurchaseForm = () => {
   // Track which field the user modified last.
   const [lastChanged, setLastChanged] = useState(null);
 
-  const router = useRouter();
+  const { redirectTo } = useRedirect();
 
   // -------------------------
   // Fetch user data and current price
@@ -233,7 +233,7 @@ const GoldPurchaseForm = () => {
       );
 
       if (res.data.code === 1) {
-        router.push("/userPanel/transactions");
+        redirectTo("/userPanel/transactions");
         // Optionally, handle success (e.g., redirect or display a message)
       } else {
         console.error("Trade purchase error:", res.data.message);
@@ -355,7 +355,7 @@ const GoldPurchaseForm = () => {
             </div>
             <button
               type="button"
-              onClick={() => router.push("/userPanel/walletDeposit")}
+              onClick={() => redirectTo("/userPanel/walletDeposit")}
               className="text-blue-600 flex items-center justify-center space-x-1"
             >
               <span className="text-lg ml-1">+</span>

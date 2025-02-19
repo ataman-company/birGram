@@ -1,7 +1,7 @@
 "use client";
 import Config from "@/components/config";
 import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation"; // Import the useSearchParams hook
+import { useSearchParams } from "next/navigation"; // Import the useSearchParams hook
 import { Suspense, useEffect, useState } from "react";
 
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
@@ -11,7 +11,6 @@ import TransactionTable from "../transactions/components/TransactionsTable";
 
 const Requests = () => {
   useAuthRedirect();
-  const router = useRouter();
 
   const [data, setData] = useState(false);
   const [currentPrice, setCurrentPrice] = useState(0);

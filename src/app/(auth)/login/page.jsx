@@ -1,17 +1,19 @@
 "use client";
+
 import Header from "@/app/userPanel/Header/Header";
 import Config from "@/components/config";
 import { Input } from "@nextui-org/react";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast, Toaster } from "sonner";
 import OtpCodeLogin from "./authcode/page";
+import useRedirect from "@/app/hooks/useRedirect";
+// Import the hook
 
 function Login() {
-  const router = useRouter();
+  const { redirectTo } = useRedirect(); // Use redirect function
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
   const [pass, setPass] = useState("");
@@ -30,7 +32,6 @@ function Login() {
     }
   };
 
-  // Correctly schedule the interval without invoking the function immediately.
   useEffect(() => {
     const interval = setInterval(() => {
       getCurrentPrice();
@@ -39,7 +40,7 @@ function Login() {
   }, []);
 
   const submitUser = async (event) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
     try {
       const formData = new FormData();
       formData.append("phone", phone);
@@ -52,28 +53,28 @@ function Login() {
       });
 
       if (res.data.code === 1) {
-        localStorage.setItem("token", res.data.user.token);
-        toast.success("به پنل کاربری خوش آمدید");
-        router.push("/userPanel");
+        redirectTo(
+          "/userPanel",
+          "به پنل کاربری خوش آمدید",
+          res.data.user.token
+        );
       } else if (res.data.code === 321) {
-        // Instead of redirecting, open the OTP modal.
         setIsOtpModalOpen(true);
       } else {
         toast.error(res.data.error);
       }
     } catch (error) {
-      toast.error("Error verifying OTP:", error);
+      toast.error("خطا در ورود به حساب:", error);
     }
   };
 
   return (
     <>
       <Toaster position="top-right" />
-      {/* Render the OTP modal (it will render only if isOtpModalOpen is true) */}
       <OtpCodeLogin
         isOpen={isOtpModalOpen}
         onClose={() => setIsOtpModalOpen(false)}
-        phone={phone} // Pass the phone number to the OTP modal if needed
+        phone={phone}
         password={pass}
       />
       <div className="flex flex-col py-5 px-2 h-screen justify-between max-w-2xl mx-auto">
@@ -109,33 +110,21 @@ function Login() {
                   onClick={toggleVisibility}
                 >
                   {isVisible ? (
-                    // Replace with your EyeSlashFilledIcon
                     <svg
                       aria-hidden="true"
                       fill="none"
-                      focusable="false"
-                      height="1em"
-                      role="presentation"
                       viewBox="0 0 24 24"
-                      width="1em"
                       className="text-2xl text-default-400 pointer-events-none"
                     >
-                      {/* SVG paths for eye slash icon */}
                       <path d="..." fill="currentColor" />
                     </svg>
                   ) : (
-                    // Replace with your EyeFilledIcon
                     <svg
                       aria-hidden="true"
                       fill="none"
-                      focusable="false"
-                      height="1em"
-                      role="presentation"
                       viewBox="0 0 24 24"
-                      width="1em"
                       className="text-2xl text-default-400 pointer-events-none"
                     >
-                      {/* SVG paths for eye icon */}
                       <path d="..." fill="currentColor" />
                     </svg>
                   )}
@@ -145,7 +134,7 @@ function Login() {
               type={isVisible ? "text" : "password"}
               variant="bordered"
             />
-            <Link href={"#"} className="text-blue-500">
+            <Link href="#" className="text-blue-500">
               رمز عبور خود را فراموش کرده اید؟
             </Link>
             <button
@@ -161,7 +150,7 @@ function Login() {
         <div className="flex flex-col gap-2">
           <div className="flex gap-1 justify-center">
             <p className="text-lg text-gray-400">حساب کاربری ندارید؟</p>
-            <Link href={"/register"} className="text-blue-500 text-lg">
+            <Link href="/register" className="text-blue-500 text-lg">
               ثبت نام
             </Link>
           </div>

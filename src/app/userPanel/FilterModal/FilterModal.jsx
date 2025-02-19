@@ -1,9 +1,9 @@
 "use client";
+import useRedirect from "@/app/hooks/useRedirect";
 import UserPanelDatePicker from "@/components/userPanel/UserPanelDatePicker";
 import { X } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 
 const FilterModal = ({ onClose }) => {
   const {
@@ -12,7 +12,7 @@ const FilterModal = ({ onClose }) => {
     formState: { errors },
   } = useForm();
 
-  const router = useRouter();
+  const { redirectTo } = useRedirect();
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
 
@@ -41,7 +41,7 @@ const FilterModal = ({ onClose }) => {
     const queryString = new URLSearchParams(queryParams).toString();
 
     // Update the URL with the new query parameters.
-    router.push(`?${queryString}`);
+    redirectTo(`?${queryString}`);
 
     onClose(); // Close the modal after submission
   };
@@ -183,7 +183,7 @@ const FilterModal = ({ onClose }) => {
               type="button"
               onClick={() => {
                 onClose();
-                router.push("/userPanel/transactions");
+                redirectTo("/userPanel/transactions");
               }}
               className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md"
             >

@@ -1,20 +1,21 @@
 "use client";
 
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
+import useRedirect from "@/app/hooks/useRedirect";
 import Config from "@/components/config";
 import BottomNav from "@/components/userPanel/BottomNav";
 import Support from "@icons/userPanel/support.svg";
-import axios from "axios";
-import { CreditCard, Eye, EyeOff, Plus } from "lucide-react";
-import { useEffect, useState } from "react";
-import Header from "../Header/Header";
 import Deposit from "@public/icons/userPanel/deposit";
 import Withdraw from "@public/icons/userPanel/withdraw";
-import { useRouter } from "next/navigation";
+import axios from "axios";
+import { Eye, EyeOff, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import Header from "../Header/Header";
 
 const Wallet = () => {
   useAuthRedirect();
-  const router = useRouter();
+
+  const { redirectTo } = useRedirect();
   const [showBalance, setShowBalance] = useState(false);
   const [data, setData] = useState(null); // Initialize with null instead of false
   const [currentPrice, setCurrentPrice] = useState(0);
@@ -92,7 +93,7 @@ const Wallet = () => {
               </button>
             </div>
             <button
-              onClick={() => router.push("/userPanel/walletDeposit")}
+              onClick={() => redirectTo("/userPanel/walletDeposit")}
               className="mt-4 flex items-center text-yellow-400 cursor-pointer"
             >
               <Plus size={18} />
@@ -114,14 +115,14 @@ const Wallet = () => {
         {/* Actions */}
         <div className="flex justify-around mt-6">
           <button
-            onClick={() => router.push("/userPanel/walletDeposit")}
+            onClick={() => redirectTo("/userPanel/walletDeposit")}
             className="flex flex-col items-center"
           >
             <Deposit />
             <span className="text-sm mt-2">واریز</span>
           </button>
           <button
-            onClick={() => router.push("/userPanel/withdraw")}
+            onClick={() => redirectTo("/userPanel/withdraw")}
             className="flex flex-col items-center"
           >
             <Withdraw />

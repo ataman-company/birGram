@@ -1,16 +1,16 @@
 "use client";
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
+import useRedirect from "@/app/hooks/useRedirect";
 import Config from "@/components/config";
 import ChevronLeftIcon from "@public/icons/userPanel/chevronLeft";
 import ChevronRightIcon from "@public/icons/userPanel/chevronRight";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function SecuritySettings() {
-  const router = useRouter();
+  const { redirectTo } = useRedirect();
 
   const {
     control,
@@ -68,7 +68,7 @@ export default function SecuritySettings() {
           },
         });
         if (response.status === 200 && response.data.code === 1) {
-          router.push("/userPanel/OtpLogin");
+          redirectTo("/userPanel/OtpLogin");
         } else {
           console.error(
             "Failed to activate OTP:",

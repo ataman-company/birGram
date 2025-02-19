@@ -115,7 +115,7 @@
 
 import CrossIcon from "@public/icons/userPanel/cross";
 import MenuIcon from "@public/icons/userPanel/menuIcon";
-import { PlusIcon } from "lucide-react";
+import PlusIcon from "@public/icons/userPanel/plus";
 
 export default function CardPrice() {
   return (
@@ -137,7 +137,7 @@ export default function CardPrice() {
             هزینه چاپ و بسته‌بندی
           </span>
         </div>
-        <PlusIcon className="hidden sm:block" color="#000" />
+        <PlusIcon className="sm:block" color="#FFBE00" />
 
         {/* Main Row with Flex */}
         <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-4">
@@ -167,28 +167,67 @@ export default function CardPrice() {
         صورت زیر می‌شود:
       </p>
 
-      <div className="grid grid-cols-2 sm:flex sm:flex-row gap-4 mt-6 justify-around items-center">
+      {/* <div className="sm:flex sm:flex-row gap-4 mt-6 sm:justify-center justify-around  items-center">
         <div className="bg-white shadow-md p-4 rounded-lg flex flex-col items-center justify-center">
           <span className="text-xs sm:text-sm text-center font-semibold">
             ۶/۱۶۸/۲۰۰ تومان
           </span>
         </div>
-        <MenuIcon className="hidden sm:block" />
+        <div className="flex justify-center items-center m-2">
+          <MenuIcon className="sm:block" />
+        </div>
         <div className="bg-white shadow-md p-4 rounded-lg flex flex-col items-center justify-center">
           <span className="text-xs sm:text-sm text-center font-semibold">
             ۵۰/۰۰۰
           </span>
         </div>
-        <PlusIcon className="hidden sm:block" color="#000" />
+
+        <div className="flex justify-center items-center m-2">
+          <PlusIcon className="sm:block" color="#FFBE00" />
+        </div>
         <div className="bg-white shadow-md p-4 rounded-lg flex flex-col items-center justify-center">
           <span className="text-xs sm:text-sm font-semibold">
             (۱/۰۰۵) * (۲/۸۲۰)
           </span>
         </div>
-        <CrossIcon className="hidden sm:block" />
+        <div className="flex justify-center items-center m-2">
+          <CrossIcon className="hidden sm:block" />
+        </div>
         <div className="bg-white shadow-md p-4 rounded-lg flex flex-col items-center justify-center">
           <span className="text-xs sm:text-sm text-center font-semibold">
             2000
+          </span>
+        </div>
+      </div> */}
+
+      <div className="sm:flex sm:flex-row-reverse gap-4 mt-6 sm:justify-center justify-around items-center">
+        <div className="bg-white shadow-md p-4 rounded-lg flex flex-col items-center justify-center">
+          <span className="text-xs sm:text-sm text-center font-semibold">
+            2000
+          </span>
+        </div>
+        <div className="flex justify-center items-center m-2">
+          <CrossIcon className="hidden sm:block" />
+        </div>
+        <div className="bg-white shadow-md p-4 rounded-lg flex flex-col items-center justify-center">
+          <span className="text-xs sm:text-sm font-semibold">
+            (۱/۰۰۵) * (۲/۸۲۰)
+          </span>
+        </div>
+        <div className="flex justify-center items-center m-2">
+          <PlusIcon className="sm:block" color="#FFBE00" />
+        </div>
+        <div className="bg-white shadow-md p-4 rounded-lg flex flex-col items-center justify-center">
+          <span className="text-xs sm:text-sm text-center font-semibold">
+            ۵۰/۰۰۰
+          </span>
+        </div>
+        <div className="flex justify-center items-center m-2">
+          <MenuIcon className="sm:block" />
+        </div>
+        <div className="bg-white shadow-md p-4 rounded-lg flex flex-col items-center justify-center">
+          <span className="text-xs sm:text-sm text-center font-semibold">
+            ۶/۱۶۸/۲۰۰ تومان
           </span>
         </div>
       </div>
