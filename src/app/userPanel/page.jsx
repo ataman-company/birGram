@@ -24,8 +24,12 @@ import Loading from "@/components/Loading";
 
 function UserPanel() {
   useAuthRedirect();
+  const formatNumber = (number) => {
+    return new Intl.NumberFormat("fa-IR").format(Number(number));
+  };
 
   const [data, setData] = useState(false);
+  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -85,6 +89,7 @@ function UserPanel() {
 
       if (res.data.code === 1) {
         setData(res.data);
+        setUser(res.data.user);
         setCurrentPrice(res.data.current_price);
         localStorage.setItem(
           "currentPrice",
@@ -128,7 +133,14 @@ function UserPanel() {
     }
   };
 
-  const { user } = data;
+  // const { user } = data;
+
+  // If the data is loading, show the loading spinner
+  useEffect(() => {
+    if (user?.display !== undefined) {
+      setIsBalanceVisible(user.display);
+    }
+  }, [user]);
 
   // If the data is loading, show the loading spinner
   if (isLoading) {
@@ -186,14 +198,17 @@ function UserPanel() {
 
             {/* موجودی طلا (Gold) */}
             <div className="flex gap-0.5 text-yellow-400">
-              <p>{isBalanceVisible ? user.gold : "***"} بیرگرم</p>
+              <p>{isBalanceVisible ? formatNumber(user.gold) : "***"} بیرگرم</p>
               <Down />
             </div>
 
             {/* معادل ریالی */}
             <p className="text-white">معادل</p>
             <p className="text-white">
-              {isBalanceVisible ? user.gold * currentPrice : "***"} ریال
+              {isBalanceVisible
+                ? formatNumber(user.gold * currentPrice)
+                : "***"}{" "}
+              ریال
             </p>
           </div>
 

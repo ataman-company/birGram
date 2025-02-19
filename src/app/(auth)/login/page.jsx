@@ -33,10 +33,7 @@ function Login() {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      getCurrentPrice();
-    }, 360000);
-    return () => clearInterval(interval);
+    getCurrentPrice();
   }, []);
 
   const submitUser = async (event) => {

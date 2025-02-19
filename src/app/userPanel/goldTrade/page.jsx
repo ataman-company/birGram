@@ -350,7 +350,8 @@ const GoldPurchaseForm = () => {
             <div className="text-right">
               <p className="text-gray-500 text-xs mb-2">موجودی</p>
               <p className="text-blue-800 font-bold text-xs">
-                {serverData?.user.wallet} ریال
+                {new Intl.NumberFormat("fa-IR").format(serverData?.user.wallet)}{" "}
+                ریال
               </p>
             </div>
             <button

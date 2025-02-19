@@ -125,7 +125,7 @@ const ShopPage = () => {
         )}
       </div>
       <div className="flex w-full items-center justify-center mt-2">
-        {cartData.length > 0 ? (
+        {cartData.carts.length > 0 ? (
           <button
             onClick={handleConfirmOrder}
             className="w-full bg-blue-600 text-white py-3 rounded-lg disabled:opacity-50"

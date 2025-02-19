@@ -112,7 +112,7 @@ function InformationOfGold({
             <Card>
               <CardBody>
                 <div className="flex">
-                  <CustomAreaChart width="100%" goldData={data.weekly} />
+                  <CustomAreaChart width="50%" goldData={data.weekly} />
                   <div className="flex flex-col gap-3 items-start w-28 pr-3">
                     <p className="lg:text-xl md:text-base text-indigo-900 font-semibold">
                       {formatted}ریال
@@ -162,7 +162,7 @@ function InformationOfGold({
             <Card>
               <CardBody>
                 <div className="flex">
-                  <CustomAreaChart width="100%" goldData={data.monthly} />
+                  <CustomAreaChart width="50%" goldData={data.monthly} />
                   <div className="flex flex-col gap-3 items-start w-28 pr-3">
                     <p className="lg:text-xl md:text-base text-indigo-900 font-semibold">
                       {formatted}ریال

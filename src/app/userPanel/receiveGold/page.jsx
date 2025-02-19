@@ -170,10 +170,13 @@ export default function ReceiveGold() {
       </div>
 
       <div className="flex justify-between border-b border-gray-200 px-1 pb-3">
-        <Link href="/userPanel/requests" className="text-sm text-gray-500">
-          مشاهده لیست درخواست‌ها
+        <Link
+          href="/userPanel/transactions?type=physical&status=&startdate=&enddate="
+          className="flex justify-between w-full text-sm text-gray-500"
+        >
+          <p>مشاهده لیست درخواست‌ها</p>
+          <ChevronLeftIcon className="w-5 h-5 text-gray-700 cursor-pointer" />
         </Link>
-        <ChevronLeftIcon className="w-5 h-5 text-gray-700 cursor-pointer" />
       </div>
 
       {/* Account Balance Section */}
@@ -264,7 +267,7 @@ export default function ReceiveGold() {
                 : "bg-blue-600 text-white hover:bg-blue-700"
             }`}
           >
-            "تایید و ادامه"
+            تایید و ادامه
           </button>
         </div>
       </form>

@@ -15,7 +15,7 @@
 //   return (
 //     <div className="w-full" dir="rtl">
 //       {/* Desktop Table (visible on small screens and up) */}
-//       <div className="hidden sm:block overflow-x-auto">
+//       <div className="hidden sm:block overflow-x-auto mx-auto">
 //         <table className="min-w-full divide-y divide-gray-200">
 //           <thead className="bg-gray-50">
 //             <tr>
@@ -26,7 +26,7 @@
 //                 مبلغ
 //               </th>
 //               <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-//                 طلا
+//                 میلی گرم
 //               </th>
 //               <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
 //                 تاریخ
@@ -39,27 +39,27 @@
 //           <tbody className="bg-white divide-y divide-gray-200">
 //             {transactions.map((transaction) => (
 //               <tr key={transaction.id}>
-//                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+//                 <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-900">
 //                   {transaction.text}
 //                 </td>
 //                 <td
-//                   className={`px-6 py-4 whitespace-nowrap text-sm ${getColorClass(
+//                   className={`px-6 py-4 whitespace-nowrap text-center text-sm ${getColorClass(
 //                     transaction.amount
 //                   )}`}
 //                 >
-//                   {transaction.amount}
+//                   {Math.abs(Number(transaction.amount))}
 //                 </td>
 //                 <td
-//                   className={`px-6 py-4 whitespace-nowrap text-sm ${getColorClass(
+//                   className={`px-6 py-4 whitespace-nowrap text-center text-sm ${getColorClass(
 //                     transaction.gold
 //                   )}`}
 //                 >
-//                   {transaction.gold}
+//                   {Math.abs(Number(transaction.gold))}
 //                 </td>
-//                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+//                 <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-900">
 //                   {formatDate(transaction.jdate)}
 //                 </td>
-//                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+//                 <td className="px-6 py-4 whitespace-nowrap  text-center text-sm text-gray-900">
 //                   {transaction.refid}
 //                 </td>
 //               </tr>
@@ -87,13 +87,13 @@
 //                   <dd
 //                     className={`text-sm ${getColorClass(transaction.amount)}`}
 //                   >
-//                     {transaction.amount}
+//                     {Math.abs(Number(transaction.amount))}
 //                   </dd>
 //                 </div>
 //                 <div className="bg-white p-2 rounded">
 //                   <dt className="text-xs font-medium text-gray-500">طلا</dt>
 //                   <dd className={`text-sm ${getColorClass(transaction.gold)}`}>
-//                     {transaction.gold}
+//                     {Math.abs(Number(transaction.gold))}
 //                   </dd>
 //                 </div>
 //                 <div className="bg-gray-50 p-2 rounded">
@@ -128,6 +128,11 @@ const TransactionTable = ({ transactions = [] }) => {
     return `${str.slice(0, 4)}/${str.slice(4, 6)}/${str.slice(6)}`;
   };
 
+  // Format numbers with commas for Persian users
+  const formatNumber = (number) => {
+    return new Intl.NumberFormat("fa-IR").format(Math.abs(Number(number)));
+  };
+
   // Returns a Tailwind color class based on the value
   const getColorClass = (value) => {
     return Number(value) < 0 ? "text-red-500" : "text-green-500";
@@ -135,24 +140,24 @@ const TransactionTable = ({ transactions = [] }) => {
 
   return (
     <div className="w-full" dir="rtl">
-      {/* Desktop Table (visible on small screens and up) */}
+      {/* Desktop Table */}
       <div className="hidden sm:block overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-2 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                 عنوان
               </th>
-              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-2 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                 مبلغ
               </th>
-              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                طلا
+              <th className="px-2 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                میلی گرم
               </th>
-              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-2 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                 تاریخ
               </th>
-              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-2 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                 گد رهگیری
               </th>
             </tr>
@@ -160,27 +165,27 @@ const TransactionTable = ({ transactions = [] }) => {
           <tbody className="bg-white divide-y divide-gray-200">
             {transactions.map((transaction) => (
               <tr key={transaction.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-2 py-4 whitespace-nowrap text-center text-sm text-gray-900">
                   {transaction.text}
                 </td>
                 <td
-                  className={`px-6 py-4 whitespace-nowrap text-sm ${getColorClass(
+                  className={`px-2 py-4 whitespace-nowrap text-center text-sm ${getColorClass(
                     transaction.amount
                   )}`}
                 >
-                  {Math.abs(Number(transaction.amount))}
+                  {formatNumber(transaction.amount)}
                 </td>
                 <td
-                  className={`px-6 py-4 whitespace-nowrap text-sm ${getColorClass(
+                  className={`px-2 py-4 whitespace-nowrap text-center text-sm ${getColorClass(
                     transaction.gold
                   )}`}
                 >
-                  {Math.abs(Number(transaction.gold))}
+                  {formatNumber(transaction.gold)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-2 py-4 whitespace-nowrap text-center text-sm text-gray-900">
                   {formatDate(transaction.jdate)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-2 py-4 whitespace-nowrap text-center text-sm text-gray-900">
                   {transaction.refid}
                 </td>
               </tr>
@@ -189,7 +194,7 @@ const TransactionTable = ({ transactions = [] }) => {
         </table>
       </div>
 
-      {/* Mobile Card Layout (visible on screens smaller than sm) */}
+      {/* Mobile Card Layout */}
       <div className="sm:hidden space-y-4">
         {transactions.map((transaction) => (
           <div
@@ -208,13 +213,13 @@ const TransactionTable = ({ transactions = [] }) => {
                   <dd
                     className={`text-sm ${getColorClass(transaction.amount)}`}
                   >
-                    {Math.abs(Number(transaction.amount))}
+                    {formatNumber(transaction.amount)}
                   </dd>
                 </div>
                 <div className="bg-white p-2 rounded">
                   <dt className="text-xs font-medium text-gray-500">طلا</dt>
                   <dd className={`text-sm ${getColorClass(transaction.gold)}`}>
-                    {Math.abs(Number(transaction.gold))}
+                    {formatNumber(transaction.gold)}
                   </dd>
                 </div>
                 <div className="bg-gray-50 p-2 rounded">

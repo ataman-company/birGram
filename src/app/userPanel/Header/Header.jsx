@@ -2,6 +2,10 @@ import Image from "next/image";
 import React from "react";
 
 const Header = ({ currentPrice }) => {
+  const formattedPrice = currentPrice
+    ? new Intl.NumberFormat("fa-IR").format(currentPrice) + " ریال "
+    : "در حال برآورد قیمت ...";
+
   return (
     <div className="flex justify-between bg-blue-100 p-2 text-sm text-blue-900">
       <div className="flex items-center gap-1">
@@ -10,9 +14,7 @@ const Header = ({ currentPrice }) => {
           قیمت لحظه‌ای ۱ میلی گرم طلای ۱۸ عیار:
         </h6>
       </div>
-      <p className="flex items-center text-xs sm:text-sm">
-        {currentPrice ? currentPrice + " ریال " : "در حال برآورد قیمت ..."}
-      </p>
+      <p className="flex items-center text-xs sm:text-sm">{formattedPrice}</p>
     </div>
   );
 };

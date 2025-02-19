@@ -358,7 +358,8 @@ const SellGoldForm = () => {
             <div className="text-right">
               <p className="text-gray-500 text-xs mb-2">موجودی</p>
               <p className="text-blue-800 font-bold text-xs">
-                {serverData?.user.gold} میلی
+                {new Intl.NumberFormat("fa-IR").format(serverData?.user.gold)}{" "}
+                میلی
               </p>
             </div>
           </div>

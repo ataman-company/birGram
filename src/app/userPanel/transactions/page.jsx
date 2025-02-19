@@ -83,9 +83,17 @@ const Transactions = () => {
         <Header currentPrice={currentPrice} />
         <div className="flex-col justify-between max-w-2xl pb-[100px]">
           <div className="flex justify-between">
-            <div className="inline-block text-md">
+            {/* <div className="inline-block text-md">
               موجودی : {user?.wallet} ریال
+            </div> */}
+            <div className="inline-block text-md">
+              موجودی :{" "}
+              {user?.wallet
+                ? new Intl.NumberFormat("fa-IR").format(user.wallet)
+                : "۰"}{" "}
+              ریال
             </div>
+
             {/* Open Modal on Button Click */}
             <button
               className="mx-2 p-1 min-w-0 bg-transparent shadow-none z-999"

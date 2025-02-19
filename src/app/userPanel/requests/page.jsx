@@ -83,7 +83,7 @@ const Requests = () => {
             {/* Open Modal on Button Click */}
           </div>
 
-          {data ? (
+          {data.length > 0 ? (
             <TransactionTable transactions={data} />
           ) : (
             <div className="flex justify-center items-center -full text-gray-500 text-lg font-medium p-4 shadow-sm">
