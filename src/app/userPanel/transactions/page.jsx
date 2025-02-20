@@ -31,7 +31,6 @@ const Transactions = () => {
       const currentPriceFromLS = JSON.parse(
         localStorage.getItem("currentPrice")
       );
-      setUser(JSON.parse(localStorage.getItem("userData")));
 
       // Build params using the query parameters from the URL, or use default values
       const params = {
@@ -51,7 +50,8 @@ const Transactions = () => {
 
       if (res.data.code === 1) {
         setData(res.data.transactions);
-        console.log(res.data);
+        setUser(res.data.user);
+
         setCurrentPrice(currentPriceFromLS);
       }
     } catch (error) {

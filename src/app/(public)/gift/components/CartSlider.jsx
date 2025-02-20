@@ -111,22 +111,9 @@ const ImageSlider = () => {
     const fetchGiftCarts = async () => {
       try {
         // Get the token from localStorage
-        const token = localStorage.getItem("token"); // Make sure your token is saved as 'token' in localStorage
-
-        if (!token) {
-          console.error("Token is missing");
-          return;
-        }
 
         // Set up the axios request with Bearer token
-        const response = await axios.get(
-          `${Config.apiUrl}/user/giftcart/cartlist`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${Config.apiUrl}/splash`);
 
         // Assuming the 'giftcarts' array contains the image, gold, and price information
         setGiftCarts(response.data.giftcarts);

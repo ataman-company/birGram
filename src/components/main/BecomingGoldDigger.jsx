@@ -49,7 +49,10 @@ function BecomingGoldDigger() {
             </Accordion>
           </div>
           <div className="sm:w-1/2">
-            <MyReactPlayer src="/videos/main-receive-gold.mp4" />
+            <MyReactPlayer
+              src="/videos/main-receive-gold.mp4"
+              controls={false}
+            />
           </div>
         </div>
         <h2 className="sm:text-2xl text-lg font-bold">مجوز ها</h2>

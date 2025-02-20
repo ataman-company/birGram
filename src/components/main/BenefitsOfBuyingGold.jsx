@@ -47,7 +47,10 @@ function BenefitsOfBuyingGold() {
         <div className="sm:w-1/2">
           {/* <VideoPlayer options={videoJsOptions} className="w-full" /> */}
 
-          <MyReactPlayer src="https://www.w3schools.com/html/mov_bbb.mp4" />
+          <MyReactPlayer
+            src="https://www.w3schools.com/html/mov_bbb.mp4"
+            controls={true}
+          />
         </div>
       </div>
       <div className="flex sm:flex-row flex-col gap-3 sm:justify-between">

@@ -85,7 +85,7 @@ function Login() {
               alt="warning"
             />
             <p className="text-sm">
-              مطمئن شوید در دامنه https://milli.gold هستید.
+              مطمئن شوید در دامنه {Config.baseUrl} هستید.
             </p>
           </div>
           <form onSubmit={submitUser} className="flex flex-col gap-4">

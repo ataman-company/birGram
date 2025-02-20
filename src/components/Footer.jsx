@@ -19,17 +19,13 @@ function Footer() {
   };
   useEffect(() => {
     serverdata();
-  }, [])
+  }, []);
   return (
     <div className="bg-gradient-to-r from-blue-950 to-blue-800">
       <div className="container mx-auto py-4 px-2">
         <div className="flex flex-col gap-3 text-white">
           <Image width={100} height={50} src={"/images/1.png"} alt="gold" />
-          <p>
-            {
-              data?.mini_description
-            }
-          </p>
+          <p>{data?.mini_description}</p>
 
           <div className="flex sm:flex-row flex-col sm:gap-32 gap-10">
             <div className="flex flex-col gap-4 w-64">
@@ -38,31 +34,7 @@ function Footer() {
               </h5>
               <div className="flex flex-col gap-2">
                 <Link
-                  href={"#"}
-                  className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
-                >
-                  <Image
-                    width={16}
-                    height={16}
-                    src={"/icons/left.svg"}
-                    alt="left"
-                  />
-                  مشتریان حقوقی
-                </Link>
-                <Link
-                  href={"#"}
-                  className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
-                >
-                  <Image
-                    width={16}
-                    height={16}
-                    src={"/icons/left.svg"}
-                    alt="left"
-                  />
-                  بیرگرم مگ
-                </Link>
-                <Link
-                  href={"#"}
+                  href={"/help"}
                   className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
                 >
                   <Image
@@ -81,7 +53,7 @@ function Footer() {
               </h5>
               <div className="flex flex-col gap-2">
                 <Link
-                  href={"#"}
+                  href={"/contact-us"}
                   className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
                 >
                   <Image
@@ -93,7 +65,7 @@ function Footer() {
                   تماس با ما
                 </Link>
                 <Link
-                  href={"#"}
+                  href={"/"}
                   className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
                 >
                   <Image
@@ -105,7 +77,7 @@ function Footer() {
                   درباره ما
                 </Link>
                 <Link
-                  href={"#"}
+                  href={"/rules"}
                   className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
                 >
                   <Image
@@ -117,7 +89,7 @@ function Footer() {
                   قوانین و مقررات
                 </Link>
                 <Link
-                  href={"#"}
+                  href={"/"}
                   className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
                 >
                   <Image
@@ -129,7 +101,7 @@ function Footer() {
                   مجوز ها
                 </Link>
                 <Link
-                  href={"#"}
+                  href={"/"}
                   className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
                 >
                   <Image
@@ -141,7 +113,7 @@ function Footer() {
                   کارمزد ها
                 </Link>
                 <Link
-                  href={"#"}
+                  href={"/"}
                   className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
                 >
                   <Image
@@ -282,7 +254,6 @@ function Footer() {
                     alt="namad"
                   />
                 </Link>
-
               </div>
             </div>
             <div className="flex flex-col gap-3">
@@ -327,20 +298,40 @@ function Footer() {
           </div>
           <div className="flex sm:flex-row flex-col sm:gap-20 gap-5">
             <div className="flex items-center gap-1">
-              <Image width={24} height={24} src={"/icons/location.svg"} alt="location" />
+              <Image
+                width={24}
+                height={24}
+                src={"/icons/location.svg"}
+                alt="location"
+              />
               <p className="text-sm">{data?.address}</p>
             </div>
             <Link href={"tel:021-91200150"} className="flex items-center gap-1">
-              <Image width={24} height={24} src={"/icons/phone.svg"} alt="phone" />
+              <Image
+                width={24}
+                height={24}
+                src={"/icons/phone.svg"}
+                alt="phone"
+              />
               <p className="text-sm">{data?.phone}</p>
             </Link>
-            <Link href={"mailto:birgeram.gmail.com"} className="flex items-center gap-1">
-              <Image width={24} height={24} src={"/icons/email.svg"} alt="phone" />
+            <Link
+              href={"mailto:birgeram.gmail.com"}
+              className="flex items-center gap-1"
+            >
+              <Image
+                width={24}
+                height={24}
+                src={"/icons/email.svg"}
+                alt="phone"
+              />
               <p className="text-sm">{data?.email}</p>
             </Link>
           </div>
           <Divider className="bg-white" />
-          <p className="text-center">&copy;همه حقوق مادی و معنوی برای شرکت سرمایه زرین ماندگار محفوظ است.</p>
+          <p className="text-center">
+            &copy;همه حقوق مادی و معنوی برای شرکت سرمایه زرین ماندگار محفوظ است.
+          </p>
         </div>
       </div>
     </div>
