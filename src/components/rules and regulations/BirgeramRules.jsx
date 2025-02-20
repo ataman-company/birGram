@@ -1449,8 +1449,9 @@ import React, { useEffect, useState } from "react";
 import { Accordion, AccordionItem, Divider } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
+import { rule } from "postcss";
 
-const BirgeramRules = () => {
+const BirgeramRules = ({ rules, siteName }) => {
   const [rulesData, setRulesData] = useState(null);
 
   useEffect(() => {
@@ -1464,43 +1465,23 @@ const BirgeramRules = () => {
     fetchData();
   }, []);
 
-  if (!rulesData) return <div>Loading...</div>;
+  if (!rules || rules.length === 0) {
+    return <div>No rules available.</div>; // Handle case when rules is empty or undefined
+  }
 
   return (
     <Accordion variant="splitted">
-      {rulesData.sections.map((section) => (
+      {rules.map((section) => (
         <AccordionItem
           key={section.id}
           title={
             <div className="flex text-lg font-semibold gap-1">
-              <p className="text-blue-900">{section.title.text1}</p>
-              <p className="text-yellow-400">{section.title.text2}</p>
+              <p className="text-blue-900">{section.q}</p>
             </div>
           }
         >
           <ul className="text-sm">
-            {section.content.map((item, index) => (
-              <li key={index}>
-                {item.label && (
-                  <span className="font-semibold text-blue-900">
-                    {item.label}
-                  </span>
-                )}
-                {item.text && <span>{item.text}</span>}
-                {item.type === "formula" && (
-                  <div className="bg-blue-100 text-blue-400 flex gap-3 p-3 rounded-lg mt-2">
-                    <Image
-                      width={24}
-                      height={24}
-                      src="/icons/rules/info.svg"
-                      alt="info"
-                    />
-                    <p>{item.formula}</p>
-                  </div>
-                )}
-                <Divider className="my-5" />
-              </li>
-            ))}
+            <li>{section.q}</li>
           </ul>
         </AccordionItem>
       ))}
