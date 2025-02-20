@@ -8,9 +8,13 @@ function TradeBox() {
         aria-label="Options"
         size="lg"
         variant="underlined"
-        classNames={{tab:"text-lg"}}
+        classNames={{ tab: "text-lg" }}
       >
-        <Tab key="buy" title="خرید" className="data-[selected=true]:text-green-400 [&>span]:data-[selected=true]:bg-green-400">
+        <Tab
+          key="buy"
+          title="خرید"
+          className="data-[selected=true]:text-green-400 [&>span]:data-[selected=true]:bg-green-400"
+        >
           <Card className="shadow-none">
             <CardBody>
               <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
@@ -33,7 +37,11 @@ function TradeBox() {
             </CardBody>
           </Card>
         </Tab>
-        <Tab key="sell" title="فروش" className="data-[selected=true]:text-red-400 [&>span]:data-[selected=true]:bg-red-400" >
+        <Tab
+          key="sell"
+          title="فروش"
+          className="data-[selected=true]:text-red-400 [&>span]:data-[selected=true]:bg-red-400"
+        >
           <Card className="shadow-none">
             <CardBody>
               <div className="flex w-full flex-wrap md:flex-nowrap gap-4">

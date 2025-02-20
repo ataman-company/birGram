@@ -2,57 +2,95 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import Config from "@/components/config";
+import useRedirect from "@/app/hooks/useRedirect";
 
 const ForgotPassword = () => {
+  const { redirectTo } = useRedirect();
   const [step, setStep] = useState(1);
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
+  const [token, setToken] = useState(null);
   const { register, handleSubmit, setError } = useForm();
 
   // Handle API call for step 1 (sending phone number)
   const sendPhoneNumber = async (data) => {
-    setPhone(data);
-    setStep(2);
-
-    // try {
-    //   const response = await axios.post("/auth/forgot", { phone: data.phone });
-    //   if (response.data.code === 1) {
+    // setPhone(data);
     // setStep(2);
-    //   }
-    // } catch (error) {
-    //   setError("phone", {
-    //     message: "خطا در ارسال شماره تلفن. لطفا دوباره تلاش کنید.",
-    //   });
-    // }
+
+    try {
+      const formData = new FormData();
+
+      formData.append("phone", data.phone);
+      const response = await axios.post(
+        `${Config.apiUrl}/auth/forgot`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.data.code === 1) {
+        setPhone(data.phone);
+        setStep(2);
+      }
+    } catch (error) {
+      setError("phone", {
+        message: "خطا در ارسال شماره تلفن. لطفا دوباره تلاش کنید.",
+      });
+    }
   };
 
   // Handle API call for step 2 (sending phone and OTP)
   const sendOTP = async (data) => {
-    setOtp(data.otp);
-    setStep(3);
+    try {
+      const formData = new FormData();
 
-    // try {
-    //   const response = await axios.post("/auth/forgotcode", {
-    //     phone: data.phone,
-    //     otp: data.otp,
-    //   });
-    //   if (response.data.code === 1) {
-    //     setStep(3);
-    //   }
-    // } catch (error) {
-    //   setError("otp", { message: "خطا در تایید کد OTP. لطفا دوباره تلاش کنید." });
-    // }
+      formData.append("phone", phone);
+      formData.append("code", data.otp);
+      const response = await axios.post(
+        `${Config.apiUrl}/auth/forgotcode`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.data.code === 1) {
+        setToken(response.data.token);
+        setStep(3);
+      }
+    } catch (error) {
+      setError("otp", {
+        message: "خطا در تایید کد OTP. لطفا دوباره تلاش کنید.",
+      });
+    }
   };
 
   // Handle API call for step 3 (saving new password)
   const savePassword = async (data) => {
     try {
-      const response = await axios.post("/auth/savepassword", {
-        token: data.token,
-        password: data.password,
-      });
+      const formData = new FormData();
+
+      formData.append("password", data.password);
+      formData.append("token", token);
+      const response = await axios.post(
+        `${Config.apiUrl}/auth/savepassword`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       if (response.data.code === 1) {
+        localStorage.setItem("token", response.data.user.token);
+
         alert("رمز عبور با موفقیت به‌روزرسانی شد!");
+        redirectTo("/userPanel");
       }
     } catch (error) {
       setError("password", {
@@ -124,17 +162,6 @@ const ForgotPassword = () => {
 
       {step === 3 && (
         <form onSubmit={handleSubmit(savePassword)} className="space-y-6">
-          <div>
-            <label className="block text-lg font-semibold text-gray-700 mb-2">
-              توکن را وارد کنید
-            </label>
-            <input
-              type="text"
-              placeholder="توکن"
-              {...register("token", { required: "توکن الزامی است" })}
-              className="w-full p-4 text-lg bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-300 placeholder-gray-500 transition duration-300 ease-in-out"
-            />
-          </div>
           <div>
             <label className="block text-lg font-semibold text-gray-700 mb-2">
               رمز عبور جدید را وارد کنید

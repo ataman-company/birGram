@@ -12,7 +12,7 @@ const Swipper = () => {
         modules={[Navigation, Pagination, Autoplay]} // افزودن ماژول‌ها
         spaceBetween={20} // فاصله بین اسلایدها
         slidesPerView={2} // تعداد اسلایدهای قابل مشاهده
-        navigation // دکمه‌های ناوبری
+        // دکمه‌های ناوبری
         // صفحه‌بندی قابل کلیک
         autoplay={{ delay: 3000 }} // اسلاید خودکار با تأخیر ۳ ثانیه
         loop // اسلاید به صورت لوپ

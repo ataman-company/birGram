@@ -23,7 +23,7 @@ import Loading from "@/components/Loading";
 // Simple Loading component
 
 function UserPanel() {
-  useAuthRedirect();
+  const auth = useAuthRedirect();
   const formatNumber = (number) => {
     return new Intl.NumberFormat("fa-IR").format(Number(number));
   };

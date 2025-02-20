@@ -7,8 +7,10 @@ import BenefitsOfBuyingGold from "../components/main/BenefitsOfBuyingGold";
 import BecomingGoldDigger from "../components/main/BecomingGoldDigger";
 import AboutUs from "../components/main/AboutUs";
 import Footer from "../components/Footer";
+import { useState } from "react";
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
   return (
     <>
       <div className="bg-blue-50">
@@ -16,15 +18,20 @@ export default function Home() {
           <div className="container sm:h-[700px] h-[900px] mx-auto relative px-3">
             <Header />
             <main>
-              <Content />
-              <TradeBox />
+              <Content setLoading={setLoading} loading={loading} />
+              {!loading && <TradeBox />}
             </main>
           </div>
         </div>
-        <BenefitsOfBuyingGold />
-        <BecomingGoldDigger />
-        <AboutUs />
-        <Footer />
+
+        {!loading && (
+          <>
+            <BenefitsOfBuyingGold />
+            <BecomingGoldDigger />
+            <AboutUs />
+            <Footer />
+          </>
+        )}
       </div>
     </>
   );
