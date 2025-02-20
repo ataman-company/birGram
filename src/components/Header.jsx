@@ -132,12 +132,20 @@ const Header = () => {
                   </ModalBody>
                   <ModalFooter>
                     {isLoggedIn ? (
-                      <button
-                        onClick={handleLogout}
-                        className="py-2 px-3 bg-red-500 text-white rounded-md text-sm lg:block "
-                      >
-                        خروج
-                      </button>
+                      <>
+                        <Link
+                          href="/userPanel"
+                          className=" py-2 px-3 bg-blue-400 text-white rounded-md text-sm lg:block "
+                        >
+                          ورود به پنل
+                        </Link>
+                        <button
+                          onClick={handleLogout}
+                          className="py-2 px-3 bg-red-500 text-white rounded-md text-sm lg:block "
+                        >
+                          خروج
+                        </button>
+                      </>
                     ) : (
                       <>
                         <Link
@@ -160,12 +168,20 @@ const Header = () => {
             </ModalContent>
           </Modal>
           {isLoggedIn ? (
-            <button
-              onClick={handleLogout}
-              className="py-2 px-3 bg-red-500 text-white rounded-md text-sm lg:block hidden"
-            >
-              خروج
-            </button>
+            <>
+              <button
+                onClick={handleLogout}
+                className="py-2 px-3 bg-red-500 text-white rounded-md text-sm lg:block hidden"
+              >
+                خروج
+              </button>
+              <Link
+                href="/userPanel"
+                className="py-2 px-3 bg-blue-400 text-white rounded-md text-sm lg:block hidden"
+              >
+                ورود به پنل
+              </Link>
+            </>
           ) : (
             <Link
               href={"/login"}

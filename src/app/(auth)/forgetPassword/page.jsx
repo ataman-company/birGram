@@ -136,6 +136,7 @@ const ForgotPassword = () => {
             <input
               type="text"
               placeholder="شماره تلفن"
+              disabled={true}
               {...register("phone", { required: "شماره تلفن الزامی است" })}
               className="w-full p-4 text-lg bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-300 placeholder-gray-500 transition duration-300 ease-in-out"
             />
