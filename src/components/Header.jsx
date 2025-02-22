@@ -33,6 +33,7 @@ const Header = () => {
           "current_price",
           JSON.stringify(response.data.current_price)
         );
+
         setOptions(data);
       })
       .catch((error) => {

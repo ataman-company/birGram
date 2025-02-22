@@ -7,6 +7,34 @@ import ApplicationDownload from "./ApplicationDownload";
 import MyReactPlayer from "./Player";
 
 function BecomingGoldDigger() {
+  const accordionData = [
+    {
+      key: 1,
+      ariaLabel: "Accordion 1",
+      title: "ثبت‌نام و احراز هویت",
+      content:
+        "در کمتر از ۲ دقیقه تو بیرگرم ثبت‌نام کن و احراز هویتت رو انجام بده",
+    },
+    {
+      key: 2,
+      ariaLabel: "Accordion 2",
+      title: "واریز به کیف پول",
+      content: "به میزان دلخواه و شبانه‌روزی، کیف‌پولت رو شارژ کن",
+    },
+    {
+      key: 3,
+      ariaLabel: "Accordion 3",
+      title: "خرید طلا",
+      content: "هر قدر که مایلی، به صورت آنی و بدون محدودیت زمانی طلا بخر",
+    },
+    {
+      key: 4,
+      ariaLabel: "Accordion 4",
+      title: "فروش یا دریافت فیزیکی طلا",
+      content:
+        "هر زمان که بخوای، می‌تونی موجودی طلای خودت رو بفروشی یا به صورت شمش‌های گرمی طلا تحویل بگیری",
+    },
+  ];
   return (
     <div className="bg-white w-full pt-10 mt-10">
       <div className="container flex flex-col gap-10 text-center mx-auto">
@@ -20,32 +48,15 @@ function BecomingGoldDigger() {
                 title: "sm:text-lg text-sm font-semibold",
               }}
             >
-              <AccordionItem
-                key="1"
-                aria-label="Accordion 1"
-                title="ثبت‌نام و احراز هویت"
-              >
-                در کمتر از ۲ دقیقه تو بیرگرم ثبت‌نام کن و احراز هویتت رو انجام
-                بده
-              </AccordionItem>
-              <AccordionItem
-                key="2"
-                aria-label="Accordion 2"
-                title="واریز به کیف پول"
-              >
-                به میزان دلخواه و شبانه‌روزی، کیف‌پولت رو شارژ کن
-              </AccordionItem>
-              <AccordionItem key="3" aria-label="Accordion 3" title="خرید طلا">
-                هر قدر که مایلی، به صورت آنی و بدون محدودیت زمانی طلا بخر
-              </AccordionItem>
-              <AccordionItem
-                key="4"
-                aria-label="Accordion 3"
-                title="فروش یا دریافت فیزیکی طلا"
-              >
-                هر زمان که بخوای، می‌تونی موجودی طلای خودت رو بفروشی یا به صورت
-                شمش‌های گرمی طلا تحویل بگیری
-              </AccordionItem>
+              {accordionData.map((item) => (
+                <AccordionItem
+                  key={item.key}
+                  aria-label={item.ariaLabel}
+                  title={item.title}
+                >
+                  {item.content}
+                </AccordionItem>
+              ))}
             </Accordion>
           </div>
           <div className="sm:w-1/2">
