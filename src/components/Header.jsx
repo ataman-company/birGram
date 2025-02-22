@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-
+import axios from "axios";
 import {
   Modal,
   ModalContent,
@@ -12,15 +12,33 @@ import {
   useDisclosure,
   Input,
   Divider,
-  ModalProps,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
+import Config from "./config";
+
 const Header = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [options, setOptions] = useState(null);
 
   useEffect(() => {
+    // Send GET request to /splash using axios
+    axios
+      .get(`${Config.apiUrl}/splash`)
+      .then((response) => {
+        const data = response.data.options;
+        // Store the options in localStorage
+        localStorage.setItem("Options", JSON.stringify(data));
+        localStorage.setItem(
+          "current_price",
+          JSON.stringify(response.data.current_price)
+        );
+        setOptions(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching splash data:", error);
+      });
+
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
   }, []);
@@ -30,12 +48,20 @@ const Header = () => {
     setIsLoggedIn(false);
     window.location.reload();
   };
+
+  if (!options) return null;
+
   return (
     <header className="text-white">
       <div className="flex items-center justify-between pt-3">
         <div className="md:flex items-center lg:gap-5 md:gap-3 text-sm hidden">
           <Link href={"/"}>
-            <Image width={80} height={10} src={"/images/1.png"} alt="gold" />
+            <Image
+              width={80}
+              height={10}
+              src={`${Config.baseUrl}/${options.logo}`}
+              alt="gold"
+            />
           </Link>
           <Link
             className="hover:border-b hover:border-b-white duration-200"
@@ -135,13 +161,13 @@ const Header = () => {
                       <>
                         <Link
                           href="/userPanel"
-                          className=" py-2 px-3 bg-blue-400 text-white rounded-md text-sm lg:block "
+                          className="py-2 px-3 bg-blue-400 text-white rounded-md text-sm lg:block"
                         >
                           ورود به پنل
                         </Link>
                         <button
                           onClick={handleLogout}
-                          className="py-2 px-3 bg-red-500 text-white rounded-md text-sm lg:block "
+                          className="py-2 px-3 bg-red-500 text-white rounded-md text-sm lg:block"
                         >
                           خروج
                         </button>
@@ -150,13 +176,13 @@ const Header = () => {
                       <>
                         <Link
                           href={"/login"}
-                          className="py-2 px-3 bg-blue-400 text-white rounded-md text-sm lg:block "
+                          className="py-2 px-3 bg-blue-400 text-white rounded-md text-sm lg:block"
                         >
                           ورود
                         </Link>
                         <Link
                           href={"/register"}
-                          className="py-2 px-3 bg-blue-400 text-white rounded-md text-sm lg:block "
+                          className="py-2 px-3 bg-blue-400 text-white rounded-md text-sm lg:block"
                         >
                           ثبت نام
                         </Link>
@@ -207,4 +233,5 @@ const Header = () => {
     </header>
   );
 };
+
 export default Header;

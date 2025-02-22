@@ -1,70 +1,165 @@
-import React from "react";
-import { Tabs, Tab, Card, CardBody, Input, Button } from "@nextui-org/react";
+import useRedirect from "@/app/hooks/useRedirect";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
 function TradeBox() {
+  const [activeTab, setActiveTab] = useState("buy");
+
+  const { redirectTo } = useRedirect();
+  // Ensure currentPrice is a number
+  const currentPrice = parseFloat(
+    JSON.parse(localStorage.getItem("current_price"))
+  );
+
+  // Buy form: include setValue from useForm
+  const {
+    register: registerBuy,
+    handleSubmit: handleSubmitBuy,
+    reset: resetBuy,
+    setValue: setValueBuy,
+  } = useForm();
+
+  // Sell form: include setValue from useForm
+  const {
+    register: registerSell,
+    handleSubmit: handleSubmitSell,
+    reset: resetSell,
+    setValue: setValueSell,
+  } = useForm();
+
+  const onSubmitBuy = (data) => {
+    console.log("Buy data:", data);
+    // TODO: Handle buy logic
+    redirectTo("/userPanel/goldTrade");
+  };
+
+  const onSubmitSell = (data) => {
+    console.log("Sell data:", data);
+    // TODO: Handle sell logic
+    redirectTo("/userPanel/sellGold");
+  };
+
   return (
     <div className="py-2 md:px-20 sm:px-10 lg:w-[98%] bg-white rounded-lg sm:absolute sm:-bottom-20 sm:shadow-lg sm:mt-0 mt-6">
-      <Tabs
-        aria-label="Options"
-        size="lg"
-        variant="underlined"
-        classNames={{ tab: "text-lg" }}
-      >
-        <Tab
-          key="buy"
-          title="خرید"
-          className="data-[selected=true]:text-green-400 [&>span]:data-[selected=true]:bg-green-400"
+      {/* Tabs Header */}
+      <div className="flex border-b mb-4">
+        <button
+          onClick={() => setActiveTab("buy")}
+          className={`py-2 px-4 font-medium text-lg focus:outline-none ${
+            activeTab === "buy"
+              ? "border-b-2 border-green-400 text-green-400"
+              : "text-gray-500"
+          }`}
         >
-          <Card className="shadow-none">
-            <CardBody>
-              <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-                <Input
-                  min={0}
-                  variant="bordered"
-                  label="مبلغ پرداختی به ریال"
-                  type="number"
-                />
-                <Input
-                  min={0}
-                  variant="bordered"
-                  label="مقدار طلا به بیرگرم گرم"
-                  type="number"
-                />
-                <Button color="" className="text-white bg-green-700" size="lg">
-                  خرید
-                </Button>
-              </div>
-            </CardBody>
-          </Card>
-        </Tab>
-        <Tab
-          key="sell"
-          title="فروش"
-          className="data-[selected=true]:text-red-400 [&>span]:data-[selected=true]:bg-red-400"
+          خرید
+        </button>
+        <button
+          onClick={() => setActiveTab("sell")}
+          className={`py-2 px-4 font-medium text-lg focus:outline-none ${
+            activeTab === "sell"
+              ? "border-b-2 border-red-400 text-red-400"
+              : "text-gray-500"
+          }`}
         >
-          <Card className="shadow-none">
-            <CardBody>
-              <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-                <Input
-                  min={0}
-                  variant="bordered"
-                  label="مقدار طلا به بیرگرم گرم"
-                  type="number"
-                />
-                <Input
-                  min={0}
-                  variant="bordered"
-                  label="مبلغ دریافتی به ریال"
-                  type="number"
-                />
-                <Button color="" className="text-white bg-red-700" size="lg">
-                  فروش
-                </Button>
-              </div>
-            </CardBody>
-          </Card>
-        </Tab>
-      </Tabs>
+          فروش
+        </button>
+      </div>
+
+      {/* Buy Tab Content */}
+      {activeTab === "buy" && (
+        <form onSubmit={handleSubmitBuy(onSubmitBuy)}>
+          <div className="flex flex-wrap md:flex-nowrap gap-4 mb-2">
+            <div className="flex-1">
+              <input
+                type="number"
+                placeholder="مبلغ پرداختی به ریال"
+                {...registerBuy("payment", {
+                  onChange: (e) => {
+                    const payment = parseFloat(e.target.value) || 0;
+                    if (currentPrice) {
+                      const computedGold = payment / currentPrice;
+                      setValueBuy("gold", computedGold);
+                    }
+                  },
+                })}
+                className="block w-full py-2 px-4 text-lg rounded-md border border-gray-300 shadow-sm focus:border-green-400 focus:ring-green-400"
+              />
+            </div>
+            <div className="flex-1">
+              <input
+                type="number"
+                placeholder="مقدار طلا به بیرگرم گرم"
+                {...registerBuy("gold", {
+                  onChange: (e) => {
+                    const gold = parseFloat(e.target.value) || 0;
+                    if (currentPrice) {
+                      const computedPayment = gold * currentPrice;
+                      setValueBuy("payment", computedPayment);
+                    }
+                  },
+                })}
+                className="block w-full py-2 px-4 text-lg rounded-md border border-gray-300 shadow-sm focus:border-green-400 focus:ring-green-400"
+              />
+            </div>
+            <div className="flex items-end">
+              <button
+                type="submit"
+                className="py-2 px-4 bg-green-700 text-white rounded-md text-lg"
+              >
+                خرید
+              </button>
+            </div>
+          </div>
+        </form>
+      )}
+
+      {/* Sell Tab Content */}
+      {activeTab === "sell" && (
+        <form onSubmit={handleSubmitSell(onSubmitSell)}>
+          <div className="flex flex-wrap md:flex-nowrap gap-4 mb-3">
+            <div className="flex-1">
+              <input
+                type="number"
+                placeholder="مقدار طلا به بیرگرم گرم"
+                {...registerSell("gold", {
+                  onChange: (e) => {
+                    const gold = parseFloat(e.target.value) || 0;
+                    if (currentPrice) {
+                      const computedPayment = gold * currentPrice;
+                      setValueSell("payment", computedPayment);
+                    }
+                  },
+                })}
+                className="block w-full py-2 px-4 text-lg rounded-md border border-gray-300 shadow-sm focus:border-red-400 focus:ring-red-400"
+              />
+            </div>
+            <div className="flex-1">
+              <input
+                type="number"
+                placeholder="مبلغ دریافتی به ریال"
+                {...registerSell("payment", {
+                  onChange: (e) => {
+                    const payment = parseFloat(e.target.value) || 0;
+                    if (currentPrice) {
+                      const computedGold = payment / currentPrice;
+                      setValueSell("gold", computedGold);
+                    }
+                  },
+                })}
+                className="block w-full py-2 px-4 text-lg rounded-md border border-gray-300 shadow-sm focus:border-red-400 focus:ring-red-400"
+              />
+            </div>
+            <div className="flex items-end">
+              <button
+                type="submit"
+                className="py-2 px-4 bg-red-700 text-white rounded-md text-lg"
+              >
+                فروش
+              </button>
+            </div>
+          </div>
+        </form>
+      )}
     </div>
   );
 }

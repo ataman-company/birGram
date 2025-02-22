@@ -12,6 +12,7 @@ function Footer() {
       const res = await axios.get(`${Config.apiUrl}/splash`);
       if (res.data.code === 1) {
         setData(res.data.options);
+        localStorage.setItem("Options", JSON.stringify(res.data.options));
       }
     } catch (error) {
       console.error("Error fetching data:", error);
