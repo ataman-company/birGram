@@ -37,6 +37,10 @@ const Header = () => {
           "siteName",
           JSON.stringify(response.data.options.sitename)
         );
+        localStorage.setItem(
+          "certificates",
+          JSON.stringify(response.data.certificates)
+        );
 
         setOptions(data);
       })

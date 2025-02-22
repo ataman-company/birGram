@@ -7,6 +7,7 @@ import RedirectIcon from "@public/icons/userPanel/redirect";
 
 export default function AboutMili() {
   const { redirectTo, goBack } = useRedirect(); // Use both redirect and goBack
+  const siteName = JSON.parse(localStorage.getItem("siteName"));
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col md:max-w-2xl">
@@ -16,7 +17,7 @@ export default function AboutMili() {
           <ChevronRightIcon size={24} color="#333" />
         </button>
         <h1 className="flex justify-center items-center w-full text-base sm:text-lg md:text-xl font-bold">
-          درباره میلی
+          درباره {siteName}
         </h1>
       </div>
 
@@ -28,7 +29,7 @@ export default function AboutMili() {
           onClick={() => redirectTo("/", "به وبسایت میلی خوش آمدید")}
         >
           <div className="flex items-center gap-2">
-            <span className="text-sm sm:text-base">وبسایت میلی</span>
+            <span className="text-sm sm:text-base">وبسایت {siteName}</span>
           </div>
           <RedirectIcon size={24} color="#666" />
         </div>

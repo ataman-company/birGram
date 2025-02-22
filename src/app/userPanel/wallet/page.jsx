@@ -165,6 +165,7 @@ import axios from "axios";
 import { Eye, EyeOff, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import Header from "../Header/Header";
+import Link from "next/link";
 
 const Wallet = () => {
   useAuthRedirect();
@@ -234,14 +235,16 @@ const Wallet = () => {
       <div className="flex flex-col gap-2 mt-2">
         <div className="flex justify-between mt-2 max-w-2xl">
           <p className="text-sm font-bold mt-2">کیف پول</p>
-          <div className="text-sm py-1 px-2 bg-green-100 text-green-700 flex items-center rounded-lg relative">
-            <p className="text-green-700 text-xs">پشتیبانی</p>
-            <Support width={24} height={24} fill="#3a5a40" />
-            <span className="absolute flex size-3 top-0 left-0">
-              <span className="absolute top-0 inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex size-3 rounded-full bg-red-500"></span>
-            </span>
-          </div>
+          <Link href={"/userPanel/ticket"} className="flex justify-between">
+            <div className="py-1 px-2 bg-green-100 text-green-700 flex items-center rounded-lg relative">
+              <p className="text-green-700 text-sm">پشتیبانی</p>
+              <Support width={24} height={24} fill="#3a5a40" />
+              <span className="absolute flex size-3 top-0 left-0">
+                <span className="absolute top-0 inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex size-3 rounded-full bg-red-500"></span>
+              </span>
+            </div>
+          </Link>
         </div>
 
         {/* Wallet Section */}

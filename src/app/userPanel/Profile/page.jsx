@@ -15,6 +15,7 @@ import useRedirect from "@/app/hooks/useRedirect";
 
 function Profile() {
   useAuthRedirect();
+  const [siteName, setSiteName] = useState("");
 
   const { redirectTo } = useRedirect();
 
@@ -42,6 +43,7 @@ function Profile() {
   const serverdata = async () => {
     try {
       const token = localStorage.getItem("token");
+
       if (!token) return;
 
       const res = await axios.get(`${Config.apiUrl}/user/home`, {
@@ -54,7 +56,7 @@ function Profile() {
       if (res.data.code === 1) {
         setData(res.data);
         setCurrentPrice(res.data.current_price);
-
+        setSiteName(JSON.parse(localStorage.getItem("siteName")));
         const isChecked = res.data.user.display == 1 ? true : false;
         setIsBalanceVisible(isChecked);
       } else if (res.data.code === 401) {
@@ -144,6 +146,7 @@ function Profile() {
 
     try {
       const token = localStorage.getItem("token");
+
       if (!token) {
         redirectTo("/login");
         return;
@@ -288,7 +291,7 @@ function Profile() {
                   href="/userPanel/about"
                   className="flex items-center justify-between py-4"
                 >
-                  <p className="text-gray-800">درباره میلی</p>
+                  <p className="text-gray-800">درباره {siteName}</p>
                   <ChevronLeftIcon className="text-gray-400 w-5 h-5" />
                 </Link>
               </div>

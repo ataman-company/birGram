@@ -29,104 +29,160 @@ function Footer() {
           <p>{data?.mini_description}</p>
 
           <div className="flex sm:flex-row flex-col sm:gap-32 gap-10">
-            <div className="flex flex-col gap-4 w-64">
-              <h5 className="text-lg pr-2 border-r-1 border-yellow-400 text-yellow-400 font-semibold">
-                دسترسی سریع
-              </h5>
-              <div className="flex flex-col gap-2">
-                <Link
-                  href={"/help"}
-                  className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
-                >
-                  <Image
-                    width={16}
-                    height={16}
-                    src={"/icons/left.svg"}
-                    alt="left"
-                  />
-                  راهنمای استفاده
-                </Link>
+            {data && (
+              <div className="flex flex-col gap-4 w-64">
+                <h5 className="text-lg pr-2 border-r-1 border-yellow-400 text-yellow-400 font-semibold">
+                  {data.footer_header1}
+                </h5>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href={data.footer_link1}
+                    className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
+                  >
+                    <Image
+                      width={16}
+                      height={16}
+                      src={"/icons/left.svg"}
+                      alt="left"
+                    />
+                    {data.footer_name1}
+                  </Link>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href={data.footer_link2}
+                    className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
+                  >
+                    <Image
+                      width={16}
+                      height={16}
+                      src={"/icons/left.svg"}
+                      alt="left"
+                    />
+                    {data.footer_name2}
+                  </Link>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href={data.footer_link3}
+                    className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-350"
+                  >
+                    <Image
+                      width={16}
+                      height={16}
+                      src={"/icons/left.svg"}
+                      alt="left"
+                    />
+                    {data.footer_name3}
+                  </Link>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href={data.footer_link4}
+                    className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-350"
+                  >
+                    <Image
+                      width={16}
+                      height={16}
+                      src={"/icons/left.svg"}
+                      alt="left"
+                    />
+                    {data.footer_name4}
+                  </Link>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href={data.footer_link5}
+                    className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-350"
+                  >
+                    <Image
+                      width={16}
+                      height={16}
+                      src={"/icons/left.svg"}
+                      alt="left"
+                    />
+                    {data.footer_name5}
+                  </Link>
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col gap-4 w-64">
-              <h5 className="text-lg pr-2 border-r-1 border-yellow-400 text-yellow-400 font-semibold">
-                بیرگرم
-              </h5>
-              <div className="flex flex-col gap-2">
-                <Link
-                  href={"/contact-us"}
-                  className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
-                >
-                  <Image
-                    width={16}
-                    height={16}
-                    src={"/icons/left.svg"}
-                    alt="left"
-                  />
-                  تماس با ما
-                </Link>
-                <Link
-                  href={"/"}
-                  className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
-                >
-                  <Image
-                    width={16}
-                    height={16}
-                    src={"/icons/left.svg"}
-                    alt="left"
-                  />
-                  درباره ما
-                </Link>
-                <Link
-                  href={"/rules"}
-                  className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
-                >
-                  <Image
-                    width={16}
-                    height={16}
-                    src={"/icons/left.svg"}
-                    alt="left"
-                  />
-                  قوانین و مقررات
-                </Link>
-                <Link
-                  href={"/"}
-                  className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
-                >
-                  <Image
-                    width={16}
-                    height={16}
-                    src={"/icons/left.svg"}
-                    alt="left"
-                  />
-                  مجوز ها
-                </Link>
-                <Link
-                  href={"/"}
-                  className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
-                >
-                  <Image
-                    width={16}
-                    height={16}
-                    src={"/icons/left.svg"}
-                    alt="left"
-                  />
-                  کارمزد ها
-                </Link>
-                <Link
-                  href={"/"}
-                  className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-250"
-                >
-                  <Image
-                    width={16}
-                    height={16}
-                    src={"/icons/left.svg"}
-                    alt="left"
-                  />
-                  امنیت، شفافیت و حریم خصوصی
-                </Link>
+            )}
+            {data && (
+              <div className="flex flex-col gap-4 w-64">
+                <h5 className="text-lg pr-2 border-r-1 border-yellow-400 text-yellow-400 font-semibold">
+                  {data.footer_header2}
+                </h5>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href={data.footer_link6}
+                    className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-350"
+                  >
+                    <Image
+                      width={16}
+                      height={16}
+                      src={"/icons/left.svg"}
+                      alt="left"
+                    />
+                    {data.footer_name6}
+                  </Link>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href={data.footer_link7}
+                    className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-350"
+                  >
+                    <Image
+                      width={16}
+                      height={16}
+                      src={"/icons/left.svg"}
+                      alt="left"
+                    />
+                    {data.footer_name7}
+                  </Link>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href={data.footer_link8}
+                    className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-350"
+                  >
+                    <Image
+                      width={16}
+                      height={16}
+                      src={"/icons/left.svg"}
+                      alt="left"
+                    />
+                    {data.footer_name8}
+                  </Link>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href={data.footer_link9}
+                    className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-350"
+                  >
+                    <Image
+                      width={16}
+                      height={16}
+                      src={"/icons/left.svg"}
+                      alt="left"
+                    />
+                    {data.footer_name9}
+                  </Link>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href={data.footer_link10}
+                    className="flex items-center gap-1 hover:text-yellow-400 hover:pr-3 duration-350"
+                  >
+                    <Image
+                      width={16}
+                      height={16}
+                      src={"/icons/left.svg"}
+                      alt="left"
+                    />
+                    {data.footer_name10}
+                  </Link>
+                </div>
               </div>
-            </div>
+            )}
             <div className="flex flex-col gap-4 w-72">
               <h5 className="text-lg pr-2 border-r-1 border-yellow-400 text-yellow-400 font-semibold">
                 اندروید
@@ -331,7 +387,8 @@ function Footer() {
           </div>
           <Divider className="bg-white" />
           <p className="text-center">
-            &copy;همه حقوق مادی و معنوی برای شرکت سرمایه زرین ماندگار محفوظ است.
+            &copy;همه حقوق مادی و معنوی برای شرکت فناوری اطلاعات آتامان ماندگار
+            محفوظ است.
           </p>
         </div>
       </div>

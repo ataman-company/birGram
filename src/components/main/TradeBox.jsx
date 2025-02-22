@@ -68,7 +68,7 @@ function TradeBox() {
       {/* Buy Tab Content */}
       {activeTab === "buy" && (
         <form onSubmit={handleSubmitBuy(onSubmitBuy)}>
-          <div className="flex flex-wrap md:flex-nowrap gap-4 mb-2">
+          <div className="flex flex-wrap md:flex-nowrap gap-4 mb-3">
             <div className="flex-1">
               <input
                 type="number"
@@ -103,7 +103,7 @@ function TradeBox() {
             </div>
             <div className="flex items-end">
               <button
-                type="submit"
+                onClick={onSubmitBuy}
                 className="py-2 px-4 bg-green-700 text-white rounded-md text-lg"
               >
                 خرید
@@ -151,7 +151,7 @@ function TradeBox() {
             </div>
             <div className="flex items-end">
               <button
-                type="submit"
+                onClick={onSubmitSell}
                 className="py-2 px-4 bg-red-700 text-white rounded-md text-lg"
               >
                 فروش

@@ -130,7 +130,7 @@ const Chatbox = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center px-4 w-full">
+    <div className="flex flex-col justify-center px-4 w-full max-w-2xl mx-auto">
       <Link
         className="border border-gray-300 my-2 w-[80px] p-2 text-center rounded-[5px] bg-gray-100 "
         href="/userPanel/ticket"

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Config from "@/components/config";
+import Link from "next/link";
 
 const Page = () => {
   const {
@@ -57,21 +58,22 @@ const Page = () => {
   };
 
   return (
-    <div className="p-8">
+    <div className="flex flex-col gap-2 pb-5 px-2 h-screen max-w-2xl mx-auto">
+      <div className="w-full text-bold text-center border-b my-3">
+        ایجاد تیکت
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label
             htmlFor="subject"
-            className="block text-sm font-medium text-gray-700"
-          >
-            عنوان
-          </label>
+            className="block text-sm font-medium text-gray-700 m-2"
+          ></label>
           <select
             id="subject"
             {...register("subject", { required: "این فیلد الزامی است" })}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
-            <option value="">واحد مربوطه</option>
+            <option value=""> دپارتمان مربوطه را انتخاب کنید</option>
             <option value="مالی">مالی</option>
             <option value="فنی">فنی</option>
           </select>
@@ -104,6 +106,12 @@ const Page = () => {
           ارسال تیکت
         </button>
       </form>
+      <Link
+        className=" mt-2 w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-center"
+        href="/userPanel/ticket"
+      >
+        بازگشت
+      </Link>
     </div>
   );
 };
