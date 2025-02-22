@@ -163,7 +163,7 @@ function UserPanel() {
 
         <div className="flex flex-col gap-2">
           {/* Top Section */}
-          <div className="flex justify-between">
+          <Link href={"/userPanel/ticket"} className="flex justify-between">
             <p className="text-lg font-bold">حساب بیرگرم</p>
             <div className="py-1 px-2 bg-green-100 text-green-700 flex items-center rounded-lg relative">
               <p className="text-green-700 text-sm">پشتیبانی</p>
@@ -173,7 +173,7 @@ function UserPanel() {
                 <span className="relative inline-flex size-3 rounded-full bg-red-500"></span>
               </span>
             </div>
-          </div>
+          </Link>
 
           {/* Balance Section */}
           <div className="w-full rounded-lg py-3 px-2 bg-panel flex flex-col gap-2">

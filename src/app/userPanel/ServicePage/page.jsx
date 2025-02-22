@@ -84,14 +84,16 @@ function UserPanel() {
       <div className="flex flex-col gap-2">
         <div className="flex justify-between">
           <p className="text-lg font-bold">حساب بیرگرم</p>
-          <div className="py-1 px-2 bg-green-100 text-green-700 flex items-center rounded-lg relative">
-            <p className="text-green-700 text-sm">پشتیبانی</p>
-            <Support width={24} height={24} fill="#3a5a40" />
-            <span className="absolute flex size-3 top-0 left-0">
-              <span className="absolute top-0 inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex size-3 rounded-full bg-red-500"></span>
-            </span>
-          </div>
+          <Link href={"/userPanel/ticket"} className="flex justify-between">
+            <div className="py-1 px-2 bg-green-100 text-green-700 flex items-center rounded-lg relative">
+              <p className="text-green-700 text-sm">پشتیبانی</p>
+              <Support width={24} height={24} fill="#3a5a40" />
+              <span className="absolute flex size-3 top-0 left-0">
+                <span className="absolute top-0 inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex size-3 rounded-full bg-red-500"></span>
+              </span>
+            </div>
+          </Link>
         </div>
       </div>
       <div className="space-y-3">

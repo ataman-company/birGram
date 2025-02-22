@@ -50,6 +50,7 @@ const Retoken = () => {
       if (response.data.code === 1) {
         toast.success("با موفقیت وارد شدید");
         localStorage.setItem("token", response.data.token);
+        redirectTo("/userPanel");
       } else {
         alert(response.data.error || "خطایی رخ داده است.");
       }

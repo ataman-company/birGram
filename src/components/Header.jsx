@@ -33,6 +33,10 @@ const Header = () => {
           "current_price",
           JSON.stringify(response.data.current_price)
         );
+        localStorage.setItem(
+          "siteName",
+          JSON.stringify(response.data.options.sitename)
+        );
 
         setOptions(data);
       })
@@ -66,7 +70,7 @@ const Header = () => {
           </Link>
           <Link
             className="hover:border-b hover:border-b-white duration-200"
-            href={"/help"}
+            href={"/help?category_id=&search="}
           >
             راهنمای استفاده
           </Link>
