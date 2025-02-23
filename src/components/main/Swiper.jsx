@@ -1,88 +1,77 @@
-// import React, { useState } from "react";
+// import React from "react";
 // import { Swiper, SwiperSlide } from "swiper/react";
 // import { Navigation, Pagination, Autoplay } from "swiper/modules";
-
 // import "swiper/swiper-bundle.css";
 // import Link from "next/link";
+// import Config from "../config";
+
+// const data = [
+//   {
+//     id: 1,
+//     title: "ای نماد",
+//     img: '<img alt="enamad" fetchpriority="high" src="https://trustseal.enamad.ir/logo.aspx?id=482424&amp;Code=RkFt8T4Jwng9WFLRe8vEqmOTzZtlrfYA" width="140" height="140" referrerpolicy="origin" style="cursor:pointer">',
+//     mini: 1,
+//     text: 1,
+//   },
+//   {
+//     id: 2,
+//     title: "samandehi",
+//     img: '<img alt="logo-samandehi" fetchpriority="high" src="https://logo.samandehi.ir/logo.aspx?id=366913&amp;p=qftiwlbqwlbqbsiynbpdqfti" width="140" height="140" referrerpolicy="origin" style="cursor:pointer">',
+//     mini: 1,
+//     text: 1,
+//   },
+//   {
+//     id: 3,
+//     title: "big",
+//     img: "images/certificates/1.png",
+//     mini: 1,
+//     text: 0,
+//   },
+//   {
+//     id: 4,
+//     title: "123",
+//     img: "321",
+//     mini: 1,
+//     text: 1,
+//   },
+// ];
 
 // const Swipper = () => {
 //   return (
 //     <div className="w-full">
 //       <Swiper
-//         modules={[Navigation, Pagination, Autoplay]} // افزودن ماژول‌ها
-//         spaceBetween={20} // فاصله بین اسلایدها
-//         slidesPerView={2} // تعداد اسلایدهای قابل مشاهده
-//         // دکمه‌های ناوبری
-//         // صفحه‌بندی قابل کلیک
-//         autoplay={{ delay: 3000 }} // اسلاید خودکار با تأخیر ۳ ثانیه
-//         loop // اسلاید به صورت لوپ
+//         modules={[Navigation, Pagination, Autoplay]}
+//         spaceBetween={20}
+//         slidesPerView={2}
+//         autoplay={{ delay: 3000 }}
+//         loop
 //         breakpoints={{
-//           // تنظیمات برای اندازه‌های مختلف صفحه نمایش
 //           640: {
-//             slidesPerView: 2, // تعداد اسلایدها در حالت موبایل
+//             slidesPerView: 2,
 //             spaceBetween: 20,
 //           },
 //           768: {
-//             slidesPerView: 3, // تعداد اسلایدها در حالت تبلت
+//             slidesPerView: 3,
 //             spaceBetween: 30,
 //           },
 //           1024: {
-//             slidesPerView: 4, // تعداد اسلایدها در حالت دسکتاپ
+//             slidesPerView: 4,
 //             spaceBetween: 40,
 //           },
 //         }}
 //       >
-//         {/* اسلایدها */}
-//         <SwiperSlide>
-//           <Link href={"#"}>
-//             <img
-//               src="/images/ettehadiyeh.png"
-//               alt="Slide 2"
-//               className="w-32 h-32"
-//             />
-//           </Link>
-//         </SwiperSlide>
-//         <SwiperSlide>
-//           <Link href={"#"}>
-//             <img
-//               src="/images/nezam-senfi.png"
-//               alt="Slide 3"
-//               className="w-32 h-32"
-//             />
-//           </Link>
-//         </SwiperSlide>
-//         <SwiperSlide>
-//           <Link href={"#"}>
-//             <img
-//               src="/images/otagh-bazargani.png"
-//               alt="Slide 4"
-//               className="w-32 h-32"
-//             />
-//           </Link>
-//         </SwiperSlide>
-//         <SwiperSlide>
-//           <Link href={"#"}>
-//             <img
-//               src="/images/samandehi.png"
-//               alt="Slide 5"
-//               className="w-32 h-32"
-//             />
-//           </Link>
-//         </SwiperSlide>
-//         <SwiperSlide>
-//           <Link href={"#"}>
-//             <img
-//               src="/images/vezarat-sanat.png"
-//               alt="Slide 6"
-//               className="w-32 h-32"
-//             />
-//           </Link>
-//         </SwiperSlide>
-//         <SwiperSlide>
-//           <Link href={"#"}>
-//             <img src="/images/namad2.png" alt="Slide 7" className="w-32 h-32" />
-//           </Link>
-//         </SwiperSlide>
+//         {data.map((item) => (
+//           <SwiperSlide key={item.id}>
+//             <Link href={"#"}>
+//               <img
+//                 src={`${Config.baseUrl}/${item.img}`}
+//                 alt="Slide 7"
+//                 className="w-32 h-32"
+//               />
+//               <span>{item.title}</span>
+//             </Link>
+//           </SwiperSlide>
+//         ))}
 //       </Swiper>
 //     </div>
 //   );
@@ -97,38 +86,25 @@ import "swiper/swiper-bundle.css";
 import Link from "next/link";
 import Config from "../config";
 
-const data = [
-  {
-    id: 1,
-    title: "ای نماد",
-    img: '<img alt="enamad" fetchpriority="high" src="https://trustseal.enamad.ir/logo.aspx?id=482424&amp;Code=RkFt8T4Jwng9WFLRe8vEqmOTzZtlrfYA" width="140" height="140" referrerpolicy="origin" style="cursor:pointer">',
-    mini: 1,
-    text: 1,
-  },
-  {
-    id: 2,
-    title: "samandehi",
-    img: '<img alt="logo-samandehi" fetchpriority="high" src="https://logo.samandehi.ir/logo.aspx?id=366913&amp;p=qftiwlbqwlbqbsiynbpdqfti" width="140" height="140" referrerpolicy="origin" style="cursor:pointer">',
-    mini: 1,
-    text: 1,
-  },
-  {
-    id: 3,
-    title: "big",
-    img: "images/certificates/1.png",
-    mini: 1,
-    text: 0,
-  },
-  {
-    id: 4,
-    title: "123",
-    img: "321",
-    mini: 1,
-    text: 1,
-  },
-];
+// const data = [
+//   {
+//     id: "6",
+//     title: "farzad",
+//     img: "images/certificate/67bac8c963250.png",
+//     mini: "1",
+//     text: "0",
+//   },
+//   {
+//     id: "8",
+//     title: "pa",
+//     img: '<picture><img alt="vezarat-sanat" fetchpriority="high" src="https://milli.s3.ir-thr-at1.arvanstorage.ir/images/certificates/vezarat-sanat.png" width="140" height="140"></picture>',
+//     mini: "1",
+//     text: "1",
+//   },
+// ];
 
 const Swipper = () => {
+  const data = JSON.parse(localStorage.getItem("certificates"));
   return (
     <div className="w-full">
       <Swiper
@@ -154,14 +130,26 @@ const Swipper = () => {
       >
         {data.map((item) => (
           <SwiperSlide key={item.id}>
-            <Link href={"#"}>
-              <img
-                src={`${Config.baseUrl}/${item.img}`}
-                alt="Slide 7"
-                className="w-32 h-32"
-              />
-              <span>{item.title}</span>
-            </Link>
+            {item.mini == 1 && (
+              <Link
+                className="flex flex-col items-center text-center"
+                href={"#"}
+              >
+                {item.text === "1" ? (
+                  <span
+                    dangerouslySetInnerHTML={{ __html: item.img }}
+                    className="w-32 h-32"
+                  />
+                ) : (
+                  <img
+                    src={`${Config.baseUrl}/${item.img}`}
+                    alt={item.title}
+                    className="w-32 h-32"
+                  />
+                )}
+                <span>{item.title}</span>
+              </Link>
+            )}
           </SwiperSlide>
         ))}
       </Swiper>

@@ -84,12 +84,12 @@ const Header = () => {
           >
             قوانین مقررات
           </Link>
-          <Link
+          {/* <Link
             className="hover:border-b hover:border-b-white duration-100"
             href={"#"}
           >
             مجوز ها
-          </Link>
+          </Link> */}
           <Link
             className="hover:border-b hover:border-b-white duration-100"
             href={"/contact-us"}
@@ -155,9 +155,8 @@ const Header = () => {
                       <Divider className="bg-white" />
                       <Link href={"#"}>قوانین و مقررات</Link>
                       <Divider className="bg-white" />
-                      <Link href={"#"}>مجوز ها</Link>
+                      {/* <Link href={"#"}>مجوز ها</Link> */}
                       <Divider className="bg-white" />
-                      <Link href={"#"}>بیرگرم مگ</Link>
                       <Divider className="bg-white" />
                       <Link href={"#"}>تماس با ما</Link>
                       <Divider className="bg-white" />

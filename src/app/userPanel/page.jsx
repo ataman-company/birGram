@@ -155,6 +155,7 @@ function UserPanel() {
     setIsBalanceVisible(!isBalanceVisible);
   };
 
+  const siteName = JSON.parse(localStorage.getItem("sitename"));
   return (
     <>
       <div className="flex flex-col gap-2 pb-5 px-2 max-w-2xl mx-auto">
@@ -164,7 +165,7 @@ function UserPanel() {
         <div className="flex flex-col gap-2">
           {/* Top Section */}
           <Link href={"/userPanel/ticket"} className="flex justify-between">
-            <p className="text-lg font-bold">حساب بیرگرم</p>
+            <p className="text-lg font-bold">حساب {siteName}</p>
             <div className="py-1 px-2 bg-green-100 text-green-700 flex items-center rounded-lg relative">
               <p className="text-green-700 text-sm">پشتیبانی</p>
               <Support width={24} height={24} fill="#3a5a40" />
@@ -198,7 +199,7 @@ function UserPanel() {
 
             {/* موجودی طلا (Gold) */}
             <div className="flex gap-0.5 text-yellow-400">
-              <p>{isBalanceVisible ? formatNumber(user.gold) : "***"} بیرگرم</p>
+              <p>{isBalanceVisible ? formatNumber(user.gold) : "***"} گرم</p>
               <Down />
             </div>
 

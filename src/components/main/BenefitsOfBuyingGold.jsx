@@ -7,6 +7,7 @@ import MyReactPlayer from "./Player";
 // import VideoPlayer from "./videoPlyr";
 
 function BenefitsOfBuyingGold() {
+  const siteName = JSON.parse(localStorage.getItem("sitename"));
   const [data, setData] = useState(false);
   const [h2items, setH2items] = useState([]);
   const serverdata = async () => {
@@ -28,7 +29,7 @@ function BenefitsOfBuyingGold() {
   return data ? (
     <div className="container flex flex-col mx-auto sm:gap-10 gap-5 text-center sm:mt-32 mt-16 px-2">
       <h2 className="font-bold sm:text-2xl text-lg">
-        مزایای خرید طلای آب‌ شده از بیرگرم
+        مزایای خرید طلای آب‌ شده از {siteName}
       </h2>
       <div className="flex sm:flex-row flex-col gap-5">
         <div className="sm:w-1/2 flex flex-col gap-4">

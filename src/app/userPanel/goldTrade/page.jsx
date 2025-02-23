@@ -1,3 +1,391 @@
+// "use client";
+
+// import useAuthRedirect from "@/app/hooks/useAuthRedirect";
+// import useRedirect from "@/app/hooks/useRedirect";
+// import Config from "@/components/config";
+// import axios from "axios";
+// import { ChevronRight, Info } from "lucide-react";
+// import Link from "next/link";
+// import { useEffect, useState } from "react";
+// import { Controller, useForm, useWatch } from "react-hook-form";
+// import Header from "../Header/Header";
+// import TransactionLimitsModal from "../transfer/components/TransactionLimitsModal";
+// import Num2persian from "num2persian";
+
+// const GoldPurchaseForm = () => {
+//   const {
+//     control,
+//     handleSubmit,
+//     setValue,
+//     getValues,
+//     setError,
+//     clearErrors,
+//     formState: { errors },
+//   } = useForm();
+
+//   useAuthRedirect();
+
+//   const [serverData, setServerData] = useState(null);
+//   const [currentPrice, setCurrentPrice] = useState(0);
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+//   // Track which field the user modified last.
+//   const [lastChanged, setLastChanged] = useState(null);
+//   const siteName = JSON.parse(localStorage.getItem("sitename"));
+
+//   const { redirectTo } = useRedirect();
+
+//   // -------------------------
+//   // Fetch user data and current price
+//   // -------------------------
+//   const fetchData = async () => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       if (!token) return;
+
+//       const res = await axios.get(`${Config.apiUrl}/user/home`, {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/json",
+//         },
+//       });
+
+//       if (res.data.code === 1) {
+//         setCurrentPrice(res.data.current_price);
+//         setServerData(res.data);
+//       } else {
+//         localStorage.removeItem("token");
+//         useAuthRedirect();
+//       }
+//     } catch (error) {
+//       console.error("Error fetching data:", error);
+//     }
+//   };
+//   let [amount, setAmount] = useState("");
+//   const getCurrentPrice = async () => {
+//     try {
+//       const res = await axios.get(`${Config.apiUrl}/lastprice`);
+//       if (res.data.code === 1) {
+//         setCurrentPrice(res.data.current_price);
+//       }
+//     } catch (error) {
+//       console.error("Error fetching current price:", error);
+//     }
+//   };
+//   let [num, setNum] = useState("");
+//   useEffect(() => {
+//     fetchData();
+//     const interval = setInterval(getCurrentPrice, 5000);
+//     return () => clearInterval(interval);
+//   }, []);
+
+//   // -------------------------
+//   // Watch fields and trigger calculation
+//   // -------------------------
+//   const watchedPrice = useWatch({ control, name: "price" });
+//   const watchedGold = useWatch({ control, name: "gold" });
+
+//   useEffect(() => {
+//     // If both fields are empty, do nothing.
+//     if (!watchedPrice && !watchedGold) return;
+
+//     // Debounce API call
+//     const delayDebounceFn = setTimeout(() => {
+//       calcTrade({ price: watchedPrice, gold: watchedGold });
+//     }, 500);
+
+//     return () => clearTimeout(delayDebounceFn);
+//   }, [watchedPrice, watchedGold]);
+
+//   // -------------------------
+//   // Call calc endpoint and update only the complementary field.
+//   // -------------------------
+//   const calcTrade = async ({ price, gold }) => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       if (!token) return;
+
+//       // Validate the price field if it was the one modified.
+//       if (lastChanged === "price") {
+//         if (Number(price) < Number(currentPrice)) {
+//           setError("price", {
+//             type: "min",
+//             message: `مبلغ پرداختی باید حداقل ${currentPrice} ریال باشد.`,
+//           });
+//           return; // Do not proceed with the API call.
+//         } else {
+//           clearErrors("price");
+//         }
+//       }
+
+//       // Create a FormData instance and append only the modified field plus type.
+//       const formData = new FormData();
+//       formData.append("type", "buy");
+
+//       if (lastChanged === "price") {
+//         formData.append("price", price);
+//       } else if (lastChanged === "gold") {
+//         formData.append("gold", gold);
+//       }
+
+//       const res = await axios.post(
+//         `${Config.apiUrl}/user/trade/calc`,
+//         formData,
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//             // Let Axios set the Content-Type automatically.
+//           },
+//         }
+//       );
+
+//       if (res.data.code === 1) {
+//         // When the user types in one field, update the complementary field.
+//         if (lastChanged === "price" && res.data.gold !== undefined) {
+//           if (getValues("gold") !== res.data.gold) {
+//             setValue("gold", res.data.gold, {
+//               shouldValidate: true,
+//               shouldDirty: true,
+//             });
+//           }
+//         } else if (lastChanged === "gold" && res.data.price !== undefined) {
+//           if (getValues("price") !== res.data.price) {
+//             setValue("price", res.data.price, {
+//               shouldValidate: true,
+//               shouldDirty: true,
+//             });
+//           }
+//         } else {
+//           // Fallback: update both fields if necessary.
+//           if (
+//             res.data.price !== undefined &&
+//             getValues("price") !== res.data.price
+//           ) {
+//             setValue("price", res.data.price, {
+//               shouldValidate: true,
+//               shouldDirty: true,
+//             });
+//           }
+//           if (
+//             res.data.gold !== undefined &&
+//             getValues("gold") !== res.data.gold
+//           ) {
+//             setValue("gold", res.data.gold, {
+//               shouldValidate: true,
+//               shouldDirty: true,
+//             });
+//           }
+//         }
+//       }
+//     } catch (error) {
+//       console.error("Error calculating trade:", error);
+//     }
+//   };
+
+//   // -------------------------
+//   // Compute whether the submit button should be disabled.
+//   // -------------------------
+//   // We disable submit if:
+//   // - No field has been modified yet (lastChanged is null)
+//   // - The modified field is empty
+//   // - There is a validation error on the modified field
+//   const valueForSubmission =
+//     lastChanged === "price"
+//       ? watchedPrice
+//       : lastChanged === "gold"
+//       ? watchedGold
+//       : "";
+//   const fieldError =
+//     lastChanged === "price"
+//       ? errors.price
+//       : lastChanged === "gold"
+//       ? errors.gold
+//       : undefined;
+//   const isSubmitDisabled = !lastChanged || !valueForSubmission || !!fieldError;
+
+//   // -------------------------
+//   // Submit the Trade (Buy)
+//   // -------------------------
+//   const onSubmit = async (data) => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       if (!token) return;
+
+//       // Build FormData with type "buy" and only the field the user typed.
+//       const formData = new FormData();
+//       formData.append("type", "buy");
+
+//       if (lastChanged === "price") {
+//         formData.append("price", data.price);
+//       } else if (lastChanged === "gold") {
+//         formData.append("gold", data.gold);
+//       } else {
+//         console.error("No field was modified for submission");
+//         return;
+//       }
+
+//       const res = await axios.post(
+//         `${Config.apiUrl}/user/trade/buy`,
+//         formData,
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//             // Let Axios set the Content-Type automatically.
+//           },
+//         }
+//       );
+
+//       if (res.data.code === 1) {
+//         redirectTo("/userPanel/transactions");
+//         // Optionally, handle success (e.g., redirect or display a message)
+//       } else {
+//         console.error("Trade purchase error:", res.data.message);
+//       }
+//     } catch (error) {
+//       console.error("Error during trade purchase:", error);
+//     }
+//   };
+
+//   return (
+//     <div className="h-[90vh] max-w-2xl mx-auto flex flex-col px-2 bg-white relative">
+//       <Header currentPrice={currentPrice} />
+
+//       <div className="flex justify-between items-center mx-2 py-3 border-b border-gray-200">
+//         <Link href="/userPanel/wallet">
+//           <ChevronRight className="w-5 h-5 text-gray-700 cursor-pointer" />
+//         </Link>
+//         <h1 className="text-md font-bold">خرید {siteName}</h1>
+
+//         {/* 🔹 Info Icon to Open Modal */}
+//         <button onClick={() => setIsModalOpen(true)}>
+//           <Info className="w-5 h-5 text-gray-700 cursor-pointer" />
+//         </button>
+//       </div>
+
+//       {/* 🔹 Modal Component */}
+//       {isModalOpen && (
+//         <TransactionLimitsModal onClose={() => setIsModalOpen(false)} />
+//       )}
+
+//       <form
+//         onSubmit={handleSubmit(onSubmit)}
+//         className="flex flex-col mx-2 mt-3 space-y-6 h-full pb-12 grow"
+//       >
+//         {/* Payment Amount */}
+//         <div className="flex flex-col grow py-2">
+//           <div className="my-2">
+//             <label
+//               htmlFor="price"
+//               className="block text-sm font-medium text-gray-700"
+//             >
+//               مبلغ پرداختی به ریال
+//             </label>
+//             <Controller
+//               name="price"
+//               control={control}
+//               defaultValue=""
+//               rules={{
+//                 required: "این فیلد الزامی است",
+//                 pattern: {
+//                   value: /^[0-9]*$/,
+//                   message: "مقدار باید عدد باشد",
+//                 },
+//                 // Note: The min rule below isn't dynamic—validation in calcTrade is used instead.
+//               }}
+//               render={({ field }) => (
+//                 <input
+//                   {...field}
+//                   id="price"
+//                   type="number"
+//                   onChange={(e) => {
+//                     field.onChange(e);
+//                     setLastChanged("price");
+//                   }}
+//                   className="mt-1 p-3 w-full border border-gray-300 rounded-lg"
+//                 />
+//               )}
+//             />
+//             {errors.price && (
+//               <p className="text-sm text-red-500">{errors.price.message}</p>
+//             )}
+//           </div>
+
+//           {/* Gold Weight */}
+//           <div>
+//             <label
+//               htmlFor="gold"
+//               className="block text-sm font-medium text-gray-700"
+//             >
+//               مقدار طلا به گرم
+//             </label>
+//             <Controller
+//               name="gold"
+//               control={control}
+//               defaultValue=""
+//               rules={{
+//                 required: "این فیلد الزامی است",
+//                 min: {
+//                   value: 0.1,
+//                   message: "حداقل مقدار باید 0.1 گرم باشد",
+//                 },
+//               }}
+//               render={({ field }) => (
+//                 <input
+//                   {...field}
+//                   id="gold"
+//                   type="number"
+//                   step="0.01"
+//                   onChange={(e) => {
+//                     field.onChange(e);
+//                     setLastChanged("gold");
+//                     // setNum(e.num2persian());
+//                     console.log("object", e);
+//                   }}
+//                   className="mt-1 p-3 w-full border border-gray-300 rounded-lg"
+//                 />
+//               )}
+//             />
+//             {errors.gold && (
+//               <p className="text-sm text-red-500">{errors.gold.message}</p>
+//             )}
+//           </div>
+
+//           {/* Balance Section */}
+//           <div className="flex justify-between items-center my-4 p-4 border border-gray-200 rounded-xl bg-white">
+//             <div className="text-right">
+//               <p className="text-gray-500 text-xs mb-2">موجودی</p>
+//               <p className="text-blue-800 font-bold text-xs">
+//                 {new Intl.NumberFormat("fa-IR").format(serverData?.user.wallet)}{" "}
+//                 ریال
+//               </p>
+//             </div>
+//             <button
+//               type="button"
+//               onClick={() => redirectTo("/userPanel/walletDeposit")}
+//               className="text-blue-600 flex items-center justify-center space-x-1"
+//             >
+//               <span className="text-lg ml-1">+</span>
+//               <span className="text-xs font-medium">شارژ کیف پول</span>
+//             </button>
+//           </div>
+//         </div>
+
+//         {/* Payment Button */}
+//         <div className="flex justify-center mt-0">
+//           <button
+//             type="submit"
+//             disabled={isSubmitDisabled}
+//             className="w-full bg-blue-600 text-white py-3 rounded-lg disabled:opacity-50"
+//           >
+//             تایید و ادامه
+//           </button>
+//         </div>
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default GoldPurchaseForm;
+
 "use client";
 
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
@@ -10,6 +398,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import Header from "../Header/Header";
 import TransactionLimitsModal from "../transfer/components/TransactionLimitsModal";
+import Num2persian from "num2persian";
 
 const GoldPurchaseForm = () => {
   const {
@@ -27,14 +416,13 @@ const GoldPurchaseForm = () => {
   const [serverData, setServerData] = useState(null);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // Track which field the user modified last.
   const [lastChanged, setLastChanged] = useState(null);
+  const [priceInPersian, setPriceInPersian] = useState(""); // Store Persian price
+  const [goldInPersian, setGoldInPersian] = useState(""); // Store Persian gold weight
+  const siteName = JSON.parse(localStorage.getItem("sitename"));
 
   const { redirectTo } = useRedirect();
 
-  // -------------------------
-  // Fetch user data and current price
-  // -------------------------
   const fetchData = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -50,6 +438,7 @@ const GoldPurchaseForm = () => {
       if (res.data.code === 1) {
         setCurrentPrice(res.data.current_price);
         setServerData(res.data);
+        // Set Persian values after the server response
       } else {
         localStorage.removeItem("token");
         useAuthRedirect();
@@ -64,6 +453,7 @@ const GoldPurchaseForm = () => {
       const res = await axios.get(`${Config.apiUrl}/lastprice`);
       if (res.data.code === 1) {
         setCurrentPrice(res.data.current_price);
+        // Update the Persian price on receiving the current price
       }
     } catch (error) {
       console.error("Error fetching current price:", error);
@@ -76,17 +466,12 @@ const GoldPurchaseForm = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // -------------------------
-  // Watch fields and trigger calculation
-  // -------------------------
   const watchedPrice = useWatch({ control, name: "price" });
   const watchedGold = useWatch({ control, name: "gold" });
 
   useEffect(() => {
-    // If both fields are empty, do nothing.
     if (!watchedPrice && !watchedGold) return;
 
-    // Debounce API call
     const delayDebounceFn = setTimeout(() => {
       calcTrade({ price: watchedPrice, gold: watchedGold });
     }, 500);
@@ -94,28 +479,23 @@ const GoldPurchaseForm = () => {
     return () => clearTimeout(delayDebounceFn);
   }, [watchedPrice, watchedGold]);
 
-  // -------------------------
-  // Call calc endpoint and update only the complementary field.
-  // -------------------------
   const calcTrade = async ({ price, gold }) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      // Validate the price field if it was the one modified.
       if (lastChanged === "price") {
         if (Number(price) < Number(currentPrice)) {
           setError("price", {
             type: "min",
             message: `مبلغ پرداختی باید حداقل ${currentPrice} ریال باشد.`,
           });
-          return; // Do not proceed with the API call.
+          return;
         } else {
           clearErrors("price");
         }
       }
 
-      // Create a FormData instance and append only the modified field plus type.
       const formData = new FormData();
       formData.append("type", "buy");
 
@@ -131,13 +511,11 @@ const GoldPurchaseForm = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            // Let Axios set the Content-Type automatically.
           },
         }
       );
 
       if (res.data.code === 1) {
-        // When the user types in one field, update the complementary field.
         if (lastChanged === "price" && res.data.gold !== undefined) {
           if (getValues("gold") !== res.data.gold) {
             setValue("gold", res.data.gold, {
@@ -153,7 +531,6 @@ const GoldPurchaseForm = () => {
             });
           }
         } else {
-          // Fallback: update both fields if necessary.
           if (
             res.data.price !== undefined &&
             getValues("price") !== res.data.price
@@ -173,19 +550,26 @@ const GoldPurchaseForm = () => {
             });
           }
         }
+
+        // Set Persian values dynamically after the calculation response
+        if (res.data.price) {
+          setPriceInPersian(Num2persian(res.data.price.toString()));
+          setGoldInPersian(
+            Num2persian((res.data.price / currentPrice).toString())
+          );
+        }
+        if (res.data.gold) {
+          setGoldInPersian(Num2persian(res.data.gold.toString()));
+          setPriceInPersian(
+            Num2persian((res.data.gold * currentPrice).toString())
+          );
+        }
       }
     } catch (error) {
       console.error("Error calculating trade:", error);
     }
   };
 
-  // -------------------------
-  // Compute whether the submit button should be disabled.
-  // -------------------------
-  // We disable submit if:
-  // - No field has been modified yet (lastChanged is null)
-  // - The modified field is empty
-  // - There is a validation error on the modified field
   const valueForSubmission =
     lastChanged === "price"
       ? watchedPrice
@@ -200,15 +584,11 @@ const GoldPurchaseForm = () => {
       : undefined;
   const isSubmitDisabled = !lastChanged || !valueForSubmission || !!fieldError;
 
-  // -------------------------
-  // Submit the Trade (Buy)
-  // -------------------------
   const onSubmit = async (data) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      // Build FormData with type "buy" and only the field the user typed.
       const formData = new FormData();
       formData.append("type", "buy");
 
@@ -227,14 +607,12 @@ const GoldPurchaseForm = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            // Let Axios set the Content-Type automatically.
           },
         }
       );
 
       if (res.data.code === 1) {
         redirectTo("/userPanel/transactions");
-        // Optionally, handle success (e.g., redirect or display a message)
       } else {
         console.error("Trade purchase error:", res.data.message);
       }
@@ -251,15 +629,13 @@ const GoldPurchaseForm = () => {
         <Link href="/userPanel/wallet">
           <ChevronRight className="w-5 h-5 text-gray-700 cursor-pointer" />
         </Link>
-        <h1 className="text-md font-bold">خرید میلی</h1>
+        <h1 className="text-md font-bold">خرید {siteName}</h1>
 
-        {/* 🔹 Info Icon to Open Modal */}
         <button onClick={() => setIsModalOpen(true)}>
           <Info className="w-5 h-5 text-gray-700 cursor-pointer" />
         </button>
       </div>
 
-      {/* 🔹 Modal Component */}
       {isModalOpen && (
         <TransactionLimitsModal onClose={() => setIsModalOpen(false)} />
       )}
@@ -268,7 +644,6 @@ const GoldPurchaseForm = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col mx-2 mt-3 space-y-6 h-full pb-12 grow"
       >
-        {/* Payment Amount */}
         <div className="flex flex-col grow py-2">
           <div className="my-2">
             <label
@@ -287,27 +662,33 @@ const GoldPurchaseForm = () => {
                   value: /^[0-9]*$/,
                   message: "مقدار باید عدد باشد",
                 },
-                // Note: The min rule below isn't dynamic—validation in calcTrade is used instead.
               }}
               render={({ field }) => (
-                <input
-                  {...field}
-                  id="price"
-                  type="number"
-                  onChange={(e) => {
-                    field.onChange(e);
-                    setLastChanged("price");
-                  }}
-                  className="mt-1 p-3 w-full border border-gray-300 rounded-lg"
-                />
+                <div>
+                  <input
+                    {...field}
+                    id="price"
+                    type="number"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      setLastChanged("price");
+                      setPriceInPersian(Num2persian(e.target.value));
+                    }}
+                    className="mt-1 p-3 w-full border border-gray-300 rounded-lg"
+                  />
+                  {errors.price && (
+                    <p className="text-sm text-red-500">
+                      {errors.price.message}
+                    </p>
+                  )}
+                  <p className="text-sm text-gray-500 mt-1">
+                    {priceInPersian} ریال
+                  </p>
+                </div>
               )}
             />
-            {errors.price && (
-              <p className="text-sm text-red-500">{errors.price.message}</p>
-            )}
           </div>
 
-          {/* Gold Weight */}
           <div>
             <label
               htmlFor="gold"
@@ -327,25 +708,32 @@ const GoldPurchaseForm = () => {
                 },
               }}
               render={({ field }) => (
-                <input
-                  {...field}
-                  id="gold"
-                  type="number"
-                  step="0.01"
-                  onChange={(e) => {
-                    field.onChange(e);
-                    setLastChanged("gold");
-                  }}
-                  className="mt-1 p-3 w-full border border-gray-300 rounded-lg"
-                />
+                <div>
+                  <input
+                    {...field}
+                    id="gold"
+                    type="number"
+                    step="0.01"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      setLastChanged("gold");
+                      setGoldInPersian(Num2persian(e.target.value));
+                    }}
+                    className="mt-1 p-3 w-full border border-gray-300 rounded-lg"
+                  />
+                  {errors.gold && (
+                    <p className="text-sm text-red-500">
+                      {errors.gold.message}
+                    </p>
+                  )}
+                  <p className="text-sm text-gray-500 mt-1">
+                    {goldInPersian} گرم
+                  </p>
+                </div>
               )}
             />
-            {errors.gold && (
-              <p className="text-sm text-red-500">{errors.gold.message}</p>
-            )}
           </div>
 
-          {/* Balance Section */}
           <div className="flex justify-between items-center my-4 p-4 border border-gray-200 rounded-xl bg-white">
             <div className="text-right">
               <p className="text-gray-500 text-xs mb-2">موجودی</p>
@@ -365,7 +753,6 @@ const GoldPurchaseForm = () => {
           </div>
         </div>
 
-        {/* Payment Button */}
         <div className="flex justify-center mt-0">
           <button
             type="submit"

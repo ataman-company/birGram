@@ -88,7 +88,7 @@ function TradeBox() {
             <div className="flex-1">
               <input
                 type="number"
-                placeholder="مقدار طلا به بیرگرم گرم"
+                placeholder="مقدار طلا به  گرم"
                 {...registerBuy("gold", {
                   onChange: (e) => {
                     const gold = parseFloat(e.target.value) || 0;
@@ -120,7 +120,7 @@ function TradeBox() {
             <div className="flex-1">
               <input
                 type="number"
-                placeholder="مقدار طلا به بیرگرم گرم"
+                placeholder="مقدار طلا به گرم"
                 {...registerSell("gold", {
                   onChange: (e) => {
                     const gold = parseFloat(e.target.value) || 0;

@@ -12,6 +12,7 @@ function Register({ setPhone, postData, setreferral, referral }) {
   const [checkbox, setCheckbox] = useState(false);
   const [value, setValue] = useState("");
   const [ref, setRef] = useState(referral);
+  const siteName = JSON.parse(localStorage.getItem("sitename"));
 
   // اعتبارسنجی شماره موبایل
   const validateNumber = (value) => value.match(/^0[0-9]{10}$/);
@@ -88,14 +89,14 @@ function Register({ setPhone, postData, setreferral, referral }) {
             classNames={{ label: "flex gap-1 items-center" }}
           >
             <span>
-              قوانین و شرایط استفاده از بیرگرم را خواندم و با آن موافقم
+              قوانین و شرایط استفاده از {siteName} را خواندم و با آن موافقم
             </span>
           </Checkbox>
           <Link
             className="underline underline-offset-8 text-blue-500 text-sm"
             href={"#"}
           >
-            قوانین و شرایط استفاده از بیرگرم
+            قوانین و شرایط استفاده از {siteName}
           </Link>
         </div>
         <Button

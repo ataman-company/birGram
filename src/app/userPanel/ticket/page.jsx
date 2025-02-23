@@ -49,6 +49,7 @@ const Transactions = () => {
     fetchTickets();
   }, []);
   if (!tickets) return null;
+  const sortedTickets = tickets.sort((a, b) => b.date - a.date);
 
   return (
     <>
@@ -69,7 +70,11 @@ const Transactions = () => {
         <div className="flex-col justify-between max-w-2xl pb-[100px]">
           {/* {isModalOpen && <FilterModal onClose={() => setIsModalOpen(false)} />} */}
           {tickets ? (
-            <TicketsTable tickets={tickets} loading={loading} error={error} />
+            <TicketsTable
+              tickets={sortedTickets}
+              loading={loading}
+              error={error}
+            />
           ) : (
             <div className="flex justify-center items-center -full text-gray-500 text-lg font-medium p-4 shadow-sm">
               <span>هیچ تیکتی وجود ندارد</span>

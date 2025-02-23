@@ -3,11 +3,12 @@ import Link from "next/link";
 import React from "react";
 
 function ApplicationDownload() {
+  const siteName = JSON.parse(localStorage.getItem("sitename"));
   return (
     <div className="flex gap-5 justify-between bg-blue-400 rounded-lg p-3 text-white relative mt-16">
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-1 items-start">
-          <h3 className="font-semibold">دانلود اپلیکیشن موبایل بیرگرم</h3>
+          <h3 className="font-semibold">دانلود اپلیکیشن موبایل {siteName}</h3>
           <p className="text-sm">با طلا قدرتمند شوید</p>
         </div>
         <div className="flex flex-col gap-2">

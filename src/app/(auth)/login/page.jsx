@@ -14,6 +14,7 @@ import useRedirect from "@/app/hooks/useRedirect";
 
 function Login() {
   const { redirectTo } = useRedirect(); // Use redirect function
+  const siteName = JSON.parse(localStorage.getItem("sitename"));
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
   const [pass, setPass] = useState("");
@@ -140,7 +141,7 @@ function Login() {
                 pass ? "bg-blue-900" : "bg-gray-300"
               }`}
             >
-              ورود به حساب بیرگرم
+              ورود به حساب {siteName}
             </button>
           </form>
         </div>

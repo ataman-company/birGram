@@ -5,6 +5,7 @@ import React from "react";
 
 function RecentQues({ faq, recent }) {
   if (faq.length === 0 || recent.length === 0) return <></>;
+  const siteName = JSON.parse(localStorage.getItem("sitename"));
   return (
     <>
       <div className="flex flex-col gap-5 container mx-auto">
@@ -72,7 +73,7 @@ function RecentQues({ faq, recent }) {
             چیزی که دنبالش بودی رو نیافتی؟
           </h4>
           <h6 className="text-lg">
-            همین حالا با پشتیبانی بیرگرم تماس بگیر و بپرس
+            همین حالا با پشتیبانی {siteName} تماس بگیر و بپرس
           </h6>
         </div>
         <Link

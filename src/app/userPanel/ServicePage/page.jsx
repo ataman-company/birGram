@@ -77,13 +77,14 @@ function UserPanel() {
   if (!data || !data.user) return null; // Make sure data is fetched and user is available
 
   const { user } = data;
+  const siteName = JSON.parse(localStorage.getItem("sitename"));
 
   return (
     <div className="flex flex-col gap-2 pb-5 px-2 h-screen max-w-2xl mx-auto">
       <Header currentPrice={currentPrice} />
       <div className="flex flex-col gap-2">
         <div className="flex justify-between">
-          <p className="text-lg font-bold">حساب بیرگرم</p>
+          <p className="text-lg font-bold">حساب {siteName}</p>
           <Link href={"/userPanel/ticket"} className="flex justify-between">
             <div className="py-1 px-2 bg-green-100 text-green-700 flex items-center rounded-lg relative">
               <p className="text-green-700 text-sm">پشتیبانی</p>

@@ -2,11 +2,12 @@
 import TickIcon from "@public/icons/userPanel/tickIcon";
 
 const FeaturesSection = () => {
+  const siteName = JSON.parse(localStorage.getItem("sitename"));
   return (
     <div className="bg-blue-100 py-12">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center text-blue-950 mb-8">
-          خرید طلا از بیرگرم چه مزایایی دارد؟
+          خرید طلا از {siteName} چه مزایایی دارد؟
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
