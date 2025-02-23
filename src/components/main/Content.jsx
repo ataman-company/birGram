@@ -6,11 +6,13 @@ import InformationOfGold from "./InformationOfGold";
 import axios from "axios";
 import Config from "../config";
 import { Skeleton } from "@nextui-org/react"; // Import Skeleton from NextUI
+import { useRouter } from "next/navigation";
 
 const Content = ({ loading, setLoading }) => {
   const [data, setData] = useState(null);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [token, setToken] = useState(null);
+  const router = useRouter();
   // const [loading, setLoading] = useState(true);
 
   // Check if token exists in localStorage
@@ -72,6 +74,7 @@ const Content = ({ loading, setLoading }) => {
   // Handle logout
   const handleLogout = () => {
     localStorage.removeItem("token");
+    window.location.href = "/";
     setToken(null);
   };
 

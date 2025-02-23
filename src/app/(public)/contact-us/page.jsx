@@ -8,34 +8,44 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import Config from "@/components/config";
 import Link from "next/link";
+import toast, { Toaster } from "react-hot-toast";
 
 function page() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const siteName = JSON.parse(localStorage.getItem("sitename"));
-  const onSubmit = async (formData) => {
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append("phone", data.phone);
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+    formData.append("text", data.message);
+
     try {
       const response = await axios.post(
         `${Config.apiUrl}/sendcontact`,
         formData
       );
-      if (response.status === 200) {
-        alert("پیام شما با موفقیت ارسال شد.");
+      if (response.data.code === 1) {
+        toast.success("پیام شما با موفقیت ارسال شد.");
+        reset();
       } else {
         alert("خطا در ارسال پیام. لطفا دوباره تلاش کنید.");
       }
     } catch (error) {
       console.error("Error sending contact form:", error);
-      alert("خطای سیستمی رخ داده است. لطفا بعدا تلاش کنید.");
+      toast.error("خطای سیستمی رخ داده است. لطفا بعدا تلاش کنید.");
     }
   };
 
   return (
     <>
+      <Toaster position="top-left" reverseOrder={false} />
       <div className="bg-blue-50">
         <div className="bg-gradient-to-r from-blue-950 to-blue-800">
           <div className="container pb-3 mx-auto relative px-3">
@@ -81,7 +91,7 @@ function page() {
               type="email"
               classNames={{ inputWrapper: "bg-white border" }}
               label="ایمیل"
-              {...register("email", { required: "ایمیل الزامی است" })}
+              {...register("email", {})}
             />
             {errors.email && (
               <p className="text-red-500">{errors.email.message}</p>

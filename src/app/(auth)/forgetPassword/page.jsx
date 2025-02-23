@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import Config from "@/components/config";
 import useRedirect from "@/app/hooks/useRedirect";
+import toast, { Toaster } from "react-hot-toast";
 
 const ForgotPassword = () => {
   const { redirectTo } = useRedirect();
@@ -89,7 +90,7 @@ const ForgotPassword = () => {
       if (response.data.code === 1) {
         localStorage.setItem("token", response.data.user.token);
 
-        alert("رمز عبور با موفقیت به‌روزرسانی شد!");
+        toast.success("رمز عبور با موفقیت به‌روزرسانی شد!");
         redirectTo("/userPanel");
       }
     } catch (error) {
@@ -101,6 +102,7 @@ const ForgotPassword = () => {
 
   return (
     <div className="max-w-lg mx-auto p-6 sm:p-8 bg-white rounded-3xl shadow-lg">
+      <Toaster position="top-left" reverseOrder={false} />
       <h2 className="text-3xl text-center font-bold text-teal-700 mb-8">
         فراموشی رمز عبور
       </h2>

@@ -99,7 +99,7 @@ function Authentication({
           ثبت اطلاعات
         </Button>
         <Link
-          href={"/register"}
+          href={"/userPanel"}
           className="bg-gray-300 p-2 rounded-lg text-center text-sm"
         >
           رد کردن
