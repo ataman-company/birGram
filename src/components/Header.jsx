@@ -41,6 +41,10 @@ const Header = () => {
           "certificates",
           JSON.stringify(response.data.certificates)
         );
+        localStorage.setItem(
+          "stepgold",
+          JSON.stringify(response.data.stepgold)
+        );
 
         setOptions(data);
       })
@@ -84,12 +88,12 @@ const Header = () => {
           >
             قوانین مقررات
           </Link>
-          {/* <Link
+          <Link
             className="hover:border-b hover:border-b-white duration-100"
-            href={"#"}
+            href={"/certificates"}
           >
             مجوز ها
-          </Link> */}
+          </Link>
           <Link
             className="hover:border-b hover:border-b-white duration-100"
             href={"/contact-us"}
@@ -98,7 +102,7 @@ const Header = () => {
           </Link>
           <Link
             className="hover:border-b hover:border-b-white duration-100"
-            href={"giving-gold"}
+            href={"/giving-gold"}
           >
             دریافت طلا
           </Link>
@@ -151,18 +155,18 @@ const Header = () => {
                   </ModalHeader>
                   <ModalBody>
                     <div className="w-full flex flex-col gap-3 text-sm">
-                      <Link href={"#"}>راهنمای استفاده</Link>
+                      <Link href={"/help?category_id=&search="}>
+                        راهنمای استفاده
+                      </Link>
                       <Divider className="bg-white" />
-                      <Link href={"#"}>قوانین و مقررات</Link>
+                      <Link href={"/rules"}>قوانین و مقررات</Link>
                       <Divider className="bg-white" />
-                      {/* <Link href={"#"}>مجوز ها</Link> */}
+                      <Link href={"/certificates"}>مجوز ها</Link>
                       <Divider className="bg-white" />
+                      <Link href={"/contact-us"}>تماس با ما</Link>
                       <Divider className="bg-white" />
-                      <Link href={"#"}>تماس با ما</Link>
-                      <Divider className="bg-white" />
-                      <Link href={"#"}>دریافت طلا</Link>
+                      <Link href={"/giving-gold"}>دریافت طلا</Link>
                     </div>
-                    <Link href={""} />
                   </ModalBody>
                   <ModalFooter>
                     {isLoggedIn ? (

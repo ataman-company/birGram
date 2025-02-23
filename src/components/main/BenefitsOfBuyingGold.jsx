@@ -8,6 +8,7 @@ import MyReactPlayer from "./Player";
 
 function BenefitsOfBuyingGold() {
   const siteName = JSON.parse(localStorage.getItem("sitename"));
+  const options = JSON.parse(localStorage.getItem("Options"));
   const [data, setData] = useState(false);
   const [h2items, setH2items] = useState([]);
   const serverdata = async () => {
@@ -32,7 +33,7 @@ function BenefitsOfBuyingGold() {
         مزایای خرید طلای آب‌ شده از {siteName}
       </h2>
       <div className="flex sm:flex-row flex-col gap-5">
-        <div className="sm:w-1/2 flex flex-col gap-4">
+        <div className="sm:w-1/2 flex flex-col gap-3">
           {h2items.map((item, index) => (
             <div key={index} className="flex items-center gap-4">
               <Image
@@ -48,13 +49,10 @@ function BenefitsOfBuyingGold() {
         <div className="sm:w-1/2">
           {/* <VideoPlayer options={videoJsOptions} className="w-full" /> */}
 
-          <MyReactPlayer
-            src="https://www.w3schools.com/html/mov_bbb.mp4"
-            controls={true}
-          />
+          <MyReactPlayer src={options.h2_video} controls={true} />
         </div>
       </div>
-      <div className="flex sm:flex-row flex-col gap-3 sm:justify-between">
+      {/* <div className="flex sm:flex-row flex-col gap-3 sm:justify-between">
         <div className="bg-white p-3 flex flex-col gap-3 items-center rounded-2xl sm:w-96 w-full">
           <div className="rounded-full bg-red-100 w-12 h-12 flex justify-center items-center">
             <picture
@@ -93,7 +91,7 @@ function BenefitsOfBuyingGold() {
           </div>
           <p className="text-sm">{data?.options?.h2_cart_des3}</p>
         </div>
-      </div>
+      </div> */}
     </div>
   ) : (
     <div className="flex md:flex-row flex-col gap-10 sm:mt-20 mt-5 w-full">

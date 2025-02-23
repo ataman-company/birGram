@@ -1,13 +1,12 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import { ScrollShadow } from "@nextui-org/react";
 import axios from "axios";
 import Config from "../config";
 
-
-
 function AboutUs() {
   const [data, setData] = useState(false);
+  const siteName = JSON.parse(localStorage.getItem("siteName"));
   const serverdata = async () => {
     try {
       const res = await axios.get(`${Config.apiUrl}/splash`);
@@ -20,16 +19,20 @@ function AboutUs() {
   };
   useEffect(() => {
     serverdata();
-  }, [])
-  return (
-    data ?
-      <div className="bg-white">
-        <article className="container mx-auto sm:py-20 py-5 flex flex-col gap-3">
-          <h1 className="text-gray-700 text-xl text-center">درباره بیرگرم</h1>
-          <ScrollShadow hideScrollBar className="w-full h-[300px] text-gray-400 text-sm leading-6">
+  }, []);
+  return data ? (
+    <div className="bg-white">
+      <article className="container mx-auto sm:py-20 py-5 flex flex-col gap-3 px-3">
+        <h1 className="text-gray-700 text-xl text-center">
+          درباره <span className="text-[#ffbe00]">{siteName}</span>
+        </h1>
+        <ScrollShadow
+          hideScrollBar
+          className="w-full h-[300px] text-gray-400 text-sm leading-6"
+        >
           <div dangerouslySetInnerHTML={{ __html: data?.description }} />
-            
-            {/* <p>
+
+          {/* <p>
               همه ما به دنبال راه‌هایی برای سرمایه‌گذاری مطمئن و کم‌ریسک هستیم و
               طلا، علاوه بر زیبایی و کاربرد زینتی، همیشه به عنوان یک سرمایه امن و
               سپر محکمی در برابر تورم شناخته شده است. به همین دلیل، طلا در ایران
@@ -112,9 +115,11 @@ function AboutUs() {
                 هرگونه مشکل یا سوال، به شما کمک می‌کند.
               </li>
             </ul> */}
-          </ScrollShadow>
-        </article>
-      </div > : <div>loading...</div>
-  )
+        </ScrollShadow>
+      </article>
+    </div>
+  ) : (
+    <div>loading...</div>
+  );
 }
 export default AboutUs;

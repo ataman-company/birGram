@@ -5,64 +5,37 @@ import Swiper from "./Swiper";
 import Faq from "./Faq";
 import ApplicationDownload from "./ApplicationDownload";
 import MyReactPlayer from "./Player";
+import Config from "../config";
 
 function BecomingGoldDigger() {
-  const accordionData = [
-    {
-      key: 1,
-      ariaLabel: "Accordion 1",
-      title: "ثبت‌نام و احراز هویت",
-      content:
-        "در کمتر از ۲ دقیقه تو بیرگرم ثبت‌نام کن و احراز هویتت رو انجام بده",
-    },
-    {
-      key: 2,
-      ariaLabel: "Accordion 2",
-      title: "واریز به کیف پول",
-      content: "به میزان دلخواه و شبانه‌روزی، کیف‌پولت رو شارژ کن",
-    },
-    {
-      key: 3,
-      ariaLabel: "Accordion 3",
-      title: "خرید طلا",
-      content: "هر قدر که مایلی، به صورت آنی و بدون محدودیت زمانی طلا بخر",
-    },
-    {
-      key: 4,
-      ariaLabel: "Accordion 4",
-      title: "فروش یا دریافت فیزیکی طلا",
-      content:
-        "هر زمان که بخوای، می‌تونی موجودی طلای خودت رو بفروشی یا به صورت شمش‌های گرمی طلا تحویل بگیری",
-    },
-  ];
+  const stepgold = JSON.parse(localStorage.getItem("stepgold"));
+  const options = JSON.parse(localStorage.getItem("Options"));
+
   return (
     <div className="bg-white w-full pt-10 mt-10">
       <div className="container flex flex-col gap-10 text-center mx-auto">
         <h2 className="sm:text-2xl text-lg font-bold">چند قدم تا طلادار شدن</h2>
-        <div className="flex sm:flex-row flex-col gap-5">
-          <div className="sm:w-1/2 sm:h-80 ">
+        <div className="flex sm:flex-row flex-col justify-between w-full items-center">
+          <div className="w-full sm:h-80 px-3">
             <Accordion
               itemClasses={{
                 content: "text-right text-sm sm:text-base",
                 indicator: "rtl:rotate-90 [&>svg]:rotate-180",
-                title: "sm:text-lg text-sm font-semibold",
+                title: "sm:text-2xl md:text-3xl text-sm font-semibold my-2",
               }}
             >
-              {accordionData.map((item) => (
-                <AccordionItem
-                  key={item.key}
-                  aria-label={item.ariaLabel}
-                  title={item.title}
-                >
-                  {item.content}
+              {stepgold.map((item) => (
+                <AccordionItem key={item.id} title={item.q}>
+                  {item.answer}
                 </AccordionItem>
               ))}
             </Accordion>
           </div>
-          <div className="sm:w-1/2">
-            <MyReactPlayer
-              src="/videos/main-receive-gold.mp4"
-              controls={false}
+          <div className="hidden sm:flex items-center justify-center w-full ">
+            <img
+              src={`${Config.baseUrl}/${options.digger_image}`}
+              alt="image"
+              className="  w-[250px]"
             />
           </div>
         </div>
