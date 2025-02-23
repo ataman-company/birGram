@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import MyDatePicker from "./MyDatePicker";
 import useRedirect from "@/app/hooks/useRedirect";
+import UserPanelDatePicker from "../userPanel/UserPanelDatePicker";
 
 function Authentication({
   phone,
@@ -62,10 +63,7 @@ function Authentication({
         />
         <div className="w-full flex">
           <p>تاریخ تولد:</p>
-          <MyDatePicker
-            setDateOfBirth={setDateOfBirth}
-            setDateBirth={setDateBirth}
-          />
+          <UserPanelDatePicker setdate={setDateBirth} />
         </div>
         <Input
           type="number"

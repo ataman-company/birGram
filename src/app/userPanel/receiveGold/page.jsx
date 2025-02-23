@@ -9,6 +9,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function ReceiveGold() {
   const {
@@ -147,9 +148,13 @@ export default function ReceiveGold() {
 
       // Check if the response code is 1 and redirect to ServicePage
       if (res.data.code === 1) {
-        redirectTo("/userPanel/ServicePage"); // Redirect to the ServicePage
+        toast.success("عملیات با موفقیت انجام شد");
+        redirectTo(
+          "/userPanel/transactions?type=physical&status=&startdate=&enddate="
+        ); // Redirect to the ServicePage
       } else {
         // Handle any other response codes (if needed)
+        toast.error("عملیات با خطا مواجه شده است");
         console.error("Error in response:", res.data);
       }
     } catch (error) {
@@ -159,6 +164,9 @@ export default function ReceiveGold() {
   };
   return (
     <div className="h-[90vh] max-w-2xl mx-auto flex flex-col p-2 bg-white relative">
+      <div>
+        <Toaster position="top-left" reverseOrder={false} />
+      </div>
       {/* Top Navigation */}
       <div className="flex justify-between items-center mb-1 py-3 ">
         <Link href="/userPanel/ServicePage">

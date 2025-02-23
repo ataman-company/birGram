@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 
 export default function GiftCard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const siteName = localStorage.getItem("siteName");
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -38,7 +39,7 @@ export default function GiftCard() {
 
       {/* Description */}
       <p className="text-center text-gray-700 mt-4 leading-relaxed">
-        با کارت هدیه میلی، بدون دردسر به دوستان و عزیزان خود طلا هدیه دهید.
+        با کارت هدیه {siteName} بدون دردسر به دوستان و عزیزان خود طلا هدیه دهید.
       </p>
 
       {/* Learn More */}
@@ -59,7 +60,7 @@ export default function GiftCard() {
       <div className="flex flex-col gap-3 mt-6">
         <Link href="/userPanel/shop">
           <p className="w-full bg-yellow-400 text-black p-4 rounded-xl text-center font-semibold">
-            می‌خواهم میلی هدیه بدهم
+            می‌خواهم {siteName} هدیه بدهم
           </p>
         </Link>
         <button

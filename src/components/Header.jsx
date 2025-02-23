@@ -107,20 +107,14 @@ const Header = () => {
             دریافت طلا
           </Link>
         </div>
-        <div className="flex items-center lg:gap-3 lg:grow-0 justify-end grow sm:p-0">
+        <div className="flex items-center lg:gap-3 lg:grow-0 justify-between grow sm:p-0">
           <Button
             className="bg-transparent lg:hidden md:hidden px-0 justify-start min-w-5"
             onPress={onOpen}
           >
             <Image width={34} height={34} src={"/icons/menu.svg"} alt="menu" />
           </Button>
-          <Image
-            width={80}
-            height={20}
-            src={"/images/2.png"}
-            className="md:hidden ml-auto"
-            alt="gold"
-          />
+
           <Modal
             isOpen={isOpen}
             onOpenChange={onOpenChange}
@@ -133,10 +127,10 @@ const Header = () => {
                     <Image
                       width={100}
                       height={20}
-                      src={"/images/2.png"}
+                      src={`${Config.baseUrl}/${options.logo}`}
                       alt="gold"
                     />
-                    <h4 className="text-lg">Gold Powered</h4>
+                    <h4 className="text-lg"></h4>
                     <Input
                       variant="bordered"
                       classNames={{ inputWrapper: "bg-black" }}
@@ -228,19 +222,19 @@ const Header = () => {
               ورود
             </Link>
           )}
-          <Link
-            href={"#"}
-            className="py-2 px-3 bg-yellow-400 text-black rounded-md flex items-center gap-1 text-sm"
-          >
-            <Image
-              width={20}
-              height={16}
-              src={"/icons/download.svg"}
-              alt="icon"
-            />
-            نصب اپلیکیشن
-          </Link>
         </div>
+        <Link
+          href={"#"}
+          className="py-2 px-3 bg-yellow-400 text-black rounded-md flex items-center gap-1 text-sm"
+        >
+          <Image
+            width={20}
+            height={16}
+            src={"/icons/download.svg"}
+            alt="icon"
+          />
+          نصب اپلیکیشن
+        </Link>
       </div>
     </header>
   );

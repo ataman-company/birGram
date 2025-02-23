@@ -18,7 +18,7 @@ function page() {
     formState: { errors },
   } = useForm();
 
-  const siteName = JSON.parse(localStorage.getItem("sitename"));
+  const siteName = JSON.parse(localStorage.getItem("siteName"));
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("phone", data.phone);
@@ -179,18 +179,12 @@ function page() {
               </h1>
               <p>021-91200150</p>
             </div>
-            <div className="flex justify-evenly w-full">
+            <div className="flex justify-center w-full">
               <Link
                 href="/userPanel/goldTrade"
                 className="flex justify-center items-center px-6 py-3 bg-white border border-blue-500 text-blue-500 rounded-lg text-sm font-medium text-center"
               >
                 خرید طلای آب‌شده از {siteName}
-              </Link>
-              <Link
-                href="#"
-                className="flex justify-center items-center px-6 py-3 bg-white border border-blue-500 text-blue-500 rounded-lg text-sm font-medium text-center"
-              >
-                درباره {siteName}
               </Link>
             </div>
           </div>

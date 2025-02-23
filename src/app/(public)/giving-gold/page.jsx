@@ -95,7 +95,7 @@ function Page() {
               {physicalGoldData.callToAction.buyButton}
             </Link>
             <Link
-              href="#"
+              href="/certificates"
               className="flex justify-center items-center px-6 py-3 bg-white border border-blue-500 text-blue-500 rounded-lg text-sm font-medium text-center"
             >
               {physicalGoldData.callToAction.licenseButton}

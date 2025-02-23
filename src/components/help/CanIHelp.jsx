@@ -1,8 +1,6 @@
-import { Input } from "@nextui-org/react";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useRouter } from "next/navigation"; // Import useRouter from Next.js
-import Config from "../config";
+import { useRouter } from "next/navigation";
 
 const SearchIcon = ({ onClick }) => {
   return (
@@ -35,43 +33,94 @@ const SearchIcon = ({ onClick }) => {
   );
 };
 
+const ClearIcon = ({ onClick }) => {
+  return (
+    <svg
+      aria-hidden="true"
+      fill="none"
+      focusable="false"
+      height="1.5em"
+      width="1.5em"
+      role="presentation"
+      viewBox="0 0 24 24"
+      onClick={onClick}
+      className="cursor-pointer"
+    >
+      <path
+        d="M6 18L18 6M6 6L18 18"
+        stroke="#808080"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+};
+
 function CanIHelp() {
-  const { control, setValue, watch } = useForm();
-  const router = useRouter(); // Initialize useRouter
+  const { control, handleSubmit, watch, setValue, reset } = useForm();
+  const router = useRouter();
+  const siteName = JSON.parse(localStorage.getItem("siteName"));
+  const onSubmit = (data) => {
+    const currentSearchTerm = data.searchTerm;
 
-  const handleSearchIconClick = () => {
-    const currentSearchTerm = watch("searchTerm");
-
-    // Set the query parameters in the URL
-    if (currentSearchTerm.length > 0)
+    if (currentSearchTerm.length > 0) {
       router.push(`/help/?category_id=&search=${currentSearchTerm}`);
+    } else {
+      router.push(`/help/?category_id=&search=`);
+    }
+  };
+
+  const clearSearchTerm = () => {
+    setValue("searchTerm", "");
+    router.push(`/help/?category_id=&search=`);
   };
 
   return (
     <div className="flex flex-col gap-5 text-white items-center py-20">
       <h1 className="text-3xl">چطور میتونم کمکتون کنم؟</h1>
-      <p>پاسخ سوالات خود دربارۀ محصول میلی را در اینجا پیدا کنید</p>
+      <p>پاسخ سوالات خود دربارۀ محصول {siteName} را در اینجا پیدا کنید</p>
 
-      <div className="sm:w-1/2 w-full">
-        <Controller
-          name="searchTerm"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <Input
-              {...field}
-              type="search"
-              label="جستجو"
-              clearable
-              endContent={
-                <div className="flex items-center justify-center h-full">
-                  <SearchIcon onClick={handleSearchIconClick} />
-                </div>
-              }
-              className="w-full"
-            />
+      <div className="sm:w-1/2 w-full ">
+        <form onSubmit={handleSubmit(onSubmit)} className="relative">
+          <Controller
+            name="searchTerm"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <input
+                {...field}
+                placeholder="جستجو"
+                className="w-full p-2 border rounded-md text-black h-[50px]"
+                onChange={(e) => setValue("searchTerm", e.target.value)} // Update form state on input change
+              />
+            )}
+          />
+
+          {watch("searchTerm") ? (
+            <>
+              <div
+                onClick={handleSubmit(onSubmit)}
+                className={`absolute top-1/2 left-8 transform -translate-y-1/2 cursor-pointer`}
+              >
+                <SearchIcon />
+              </div>
+              <div
+                onClick={clearSearchTerm}
+                className="absolute top-1/2 left-2 transform -translate-y-1/2 cursor-pointer"
+              >
+                <ClearIcon />
+              </div>
+            </>
+          ) : (
+            <div
+              onClick={handleSubmit(onSubmit)}
+              className={`absolute top-1/2 left-4 transform -translate-y-1/2 cursor-pointer`}
+            >
+              <SearchIcon />
+            </div>
           )}
-        />
+        </form>
       </div>
     </div>
   );
