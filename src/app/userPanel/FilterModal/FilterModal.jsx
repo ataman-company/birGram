@@ -59,7 +59,13 @@ const FilterModal = ({ onClose }) => {
     { name: "سیستمی", value: "system" },
   ];
 
-  const transactionStatusTypes = ["موفق", "ناموفق", "در حال انجام"];
+  const transactionStatusTypes = [
+    { name: "در انتظار", value: "0" },
+    { name: "موفق", value: "100" },
+    { name: "در حال ضرب", value: "101" },
+    { name: "آماده تحویل", value: "102" },
+    { name: "تحویل داده شده", value: "103" },
+  ];
 
   return (
     <div
@@ -138,8 +144,8 @@ const FilterModal = ({ onClose }) => {
               >
                 <option value="">انتخاب کنید</option>
                 {transactionStatusTypes.map((status) => (
-                  <option key={status} value={status}>
-                    {status}
+                  <option key={status.value} value={status.value}>
+                    {status.name}
                   </option>
                 ))}
               </select>

@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import Header from "../Header/Header";
 import TransactionLimitsModal from "../transfer/components/TransactionLimitsModal";
+import Num2persian from "num2persian";
 
 const SellGoldForm = () => {
   const {
@@ -31,6 +32,8 @@ const SellGoldForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // Track which field the user modified last.
   const [lastChanged, setLastChanged] = useState(null);
+  const [priceInPersian, setPriceInPersian] = useState(""); // Store Persian price
+  const [goldInPersian, setGoldInPersian] = useState("");
 
   const { redirectTo } = useRedirect();
 
@@ -178,6 +181,18 @@ const SellGoldForm = () => {
             });
           }
         }
+        if (res.data.price) {
+          setPriceInPersian(Num2persian(res.data.price.toString()));
+          setGoldInPersian(
+            Num2persian((res.data.price / currentPrice).toString())
+          );
+        }
+        if (res.data.gold) {
+          setGoldInPersian(Num2persian(res.data.gold.toString()));
+          setPriceInPersian(
+            Num2persian((res.data.gold * currentPrice).toString())
+          );
+        }
       }
     } catch (error) {
       console.error("Error calculating trade:", error);
@@ -291,6 +306,7 @@ const SellGoldForm = () => {
                     onChange={(e) => {
                       field.onChange(e);
                       setLastChanged("gold");
+                      setGoldInPersian(Num2persian(e.target.value));
                     }}
                     className="p-3 w-full border border-gray-300 rounded-lg"
                   />
@@ -299,7 +315,7 @@ const SellGoldForm = () => {
               {errors.gold && (
                 <p className="text-sm text-red-500">{errors.gold.message}</p>
               )}
-
+              <p className="text-sm text-gray-500 mt-1">{goldInPersian} گرم</p>
               {/* Price Input */}
               <label
                 htmlFor="price"
@@ -342,6 +358,7 @@ const SellGoldForm = () => {
                     onChange={(e) => {
                       field.onChange(e);
                       setLastChanged("price");
+                      setPriceInPersian(Num2persian(e.target.value));
                     }}
                     className="p-3 w-full border border-gray-300 rounded-lg"
                   />
@@ -350,6 +367,9 @@ const SellGoldForm = () => {
               {errors.price && (
                 <p className="text-sm text-red-500">{errors.price.message}</p>
               )}
+              <p className="text-sm text-gray-500 mt-1">
+                {priceInPersian} ریال
+              </p>
             </div>
           </div>
 
