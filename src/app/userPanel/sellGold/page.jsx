@@ -14,6 +14,9 @@ import Num2persian from "num2persian";
 import useCheckAuth from "@/app/hooks/useCheckAuth";
 
 const SellGoldForm = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
   const {
     control,
     handleSubmit,

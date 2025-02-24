@@ -11,6 +11,9 @@ import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 
 function page() {
+  if (typeof window === "undefined") {
+    return null;
+  }
   const {
     register,
     handleSubmit,

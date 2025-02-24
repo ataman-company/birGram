@@ -4,7 +4,7 @@ import useRedirect from "@/app/hooks/useRedirect";
 import Config from "@/components/config";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -153,4 +153,10 @@ const Retoken = () => {
   );
 };
 
-export default Retoken;
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Retoken />
+    </Suspense>
+  );
+}

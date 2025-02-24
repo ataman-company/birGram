@@ -154,11 +154,12 @@ function Profile() {
 
       // Example request to your server
       const res = await axios.post(
-        `${Config.apiUrl}/gift`,
-        { code: giftCode },
+        `${Config.apiUrl}/user/giftcart/sendserial`,
+        { serial: giftCode },
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multimultipart/form-data",
           },
         }
       );

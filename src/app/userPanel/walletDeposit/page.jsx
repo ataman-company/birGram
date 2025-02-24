@@ -137,8 +137,8 @@ const WalletRecharge = () => {
                   {...register("price", {
                     required: "مقدار واریزی الزامی است",
                     min: {
-                      value: 20000,
-                      message: "مبلغ باید بیشتر از ۲۰,۰۰۰ ریال باشد",
+                      value: 200000,
+                      message: "مبلغ باید بیشتر از ۲۰,۰۰۰ تومان باشد",
                     },
                   })}
                   className={`w-full p-3 border ${

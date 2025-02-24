@@ -47,6 +47,9 @@ import Header from "@/components/Header";
 import React from "react";
 
 const page = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
   const certificates = JSON.parse(localStorage.getItem("certificates"));
   const siteName = JSON.parse(localStorage.getItem("siteName"));
   console.log(siteName);

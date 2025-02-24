@@ -7,6 +7,9 @@ import Config from "@/components/config";
 import Link from "next/link";
 
 const Page = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
   const {
     register,
     handleSubmit,

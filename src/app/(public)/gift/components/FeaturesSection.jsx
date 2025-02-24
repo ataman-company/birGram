@@ -2,6 +2,9 @@
 import TickIcon from "@public/icons/userPanel/tickIcon";
 
 const FeaturesSection = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
   const siteName = JSON.parse(localStorage.getItem("sitename"));
   return (
     <div className="bg-blue-100 py-12">

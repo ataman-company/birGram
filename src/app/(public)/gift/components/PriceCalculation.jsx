@@ -3,6 +3,9 @@ import MenuIcon from "@public/icons/userPanel/menuIcon";
 import PlusIcon from "@public/icons/userPanel/plus";
 
 export default function CardPrice() {
+  if (typeof window === "undefined") {
+    return null;
+  }
   const siteName = JSON.parse(localStorage.getItem("sitename"));
   return (
     <div className="bg-blue-50 p-6 sm:p-8 rounded-lg max-w-4xl mx-auto text-center">

@@ -27,7 +27,7 @@
 // export default Help;
 
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
@@ -80,4 +80,10 @@ function Help() {
   );
 }
 
-export default Help;
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Help />
+    </Suspense>
+  );
+}

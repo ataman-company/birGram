@@ -172,7 +172,7 @@
 // export default Chatbox;
 
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation"; // Import useSearchParams
 import Config from "@/components/config";
@@ -419,4 +419,10 @@ const Chatbox = () => {
   );
 };
 
-export default Chatbox;
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Chatbox />
+    </Suspense>
+  );
+}

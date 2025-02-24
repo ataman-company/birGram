@@ -12,6 +12,9 @@ import PlusIcon from "@public/icons/userPanel/plus";
 import Link from "next/link";
 
 const Transactions = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
   const [tickets, setTickets] = useState([]);
   const [currentPrice, setCurrentPrice] = useState(null);
   const [loading, setLoading] = useState(true);

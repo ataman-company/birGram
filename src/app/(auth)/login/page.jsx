@@ -13,8 +13,11 @@ import useRedirect from "@/app/hooks/useRedirect";
 // Import the hook
 
 function Login() {
+  if (typeof window === "undefined") {
+    return null;
+  }
   const { redirectTo } = useRedirect(); // Use redirect function
-  const siteName = JSON.parse(localStorage.getItem("sitename"));
+  const siteName = JSON.parse(window.localStorage.getItem("sitename"));
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
   const [pass, setPass] = useState("");

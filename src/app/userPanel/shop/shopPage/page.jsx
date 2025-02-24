@@ -10,6 +10,9 @@ import { useEffect, useState } from "react";
 import CardRenderer from "../component/CardRenderer";
 
 const ShopPage = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
   useAuthRedirect();
 
   const { redirectTo } = useRedirect();

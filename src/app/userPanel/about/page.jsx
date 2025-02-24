@@ -6,6 +6,9 @@ import PhoneIcon from "@public/icons/userPanel/phone";
 import RedirectIcon from "@public/icons/userPanel/redirect";
 
 export default function AboutMili() {
+  if (typeof window === "undefined") {
+    return null;
+  }
   const { redirectTo, goBack } = useRedirect(); // Use both redirect and goBack
   const siteName = JSON.parse(localStorage.getItem("siteName"));
 
