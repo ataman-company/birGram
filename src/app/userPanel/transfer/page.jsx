@@ -95,7 +95,7 @@ export default function MoneyTransfer() {
   };
 
   const validateBalance = () => {
-    if (user && transferAmount > user.gold) {
+    if (user && transferAmount > Number(user.gold)) {
       setBalanceError(true);
     } else {
       setBalanceError(false);
@@ -155,7 +155,7 @@ export default function MoneyTransfer() {
         // If the code is 1, it's a success
         console.log("Success:", response.data);
         toast.success("انتقال ثبت شد!");
-        redirectTo("/userPanel");
+        redirectTo("/userPanel/transactions");
       } else {
         // Handle non-success response code
         toast.error("خطا در ارسال اطلاعات.");

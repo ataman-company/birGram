@@ -28,13 +28,11 @@ function TradeBox() {
   } = useForm();
 
   const onSubmitBuy = (data) => {
-    console.log("Buy data:", data);
     // TODO: Handle buy logic
     redirectTo("/userPanel/goldTrade");
   };
 
   const onSubmitSell = (data) => {
-    console.log("Sell data:", data);
     // TODO: Handle sell logic
     redirectTo("/userPanel/sellGold");
   };

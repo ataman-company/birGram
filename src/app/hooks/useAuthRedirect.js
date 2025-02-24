@@ -50,7 +50,7 @@ const useAuthRedirect = (apiUrl) => {
           redirectTo("/login");
         } else {
           // Some other error
-          alert(res.data.error);
+          console.log(res.data.error);
         }
       })
       .catch((error) => {

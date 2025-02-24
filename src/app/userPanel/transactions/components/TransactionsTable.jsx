@@ -39,6 +39,9 @@ const TransactionTable = ({ transactions = [] }) => {
               <th className="px-2 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                 گد رهگیری
               </th>
+              <th className="px-2 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                وضعیت
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -67,6 +70,9 @@ const TransactionTable = ({ transactions = [] }) => {
                 <td className="px-2 py-4 whitespace-nowrap text-center text-sm text-gray-900">
                   {transaction.refid}
                 </td>
+                <td className="px-2 py-4 whitespace-nowrap text-center text-sm text-gray-900">
+                  {transaction.status}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -80,10 +86,11 @@ const TransactionTable = ({ transactions = [] }) => {
             key={transaction.id}
             className="bg-white shadow overflow-hidden rounded-lg"
           >
-            <div className="px-4 py-5 border-b border-gray-200">
+            <div className="flex justify-between px-4 py-5 border-b border-gray-200">
               <h3 className="text-lg font-medium text-gray-900">
                 {transaction.text}
               </h3>
+              <span>وضعیت: {transaction.status}</span>
             </div>
             <div className="px-4 py-5">
               <dl className="grid grid-cols-2 gap-y-2">
