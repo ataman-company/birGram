@@ -12,6 +12,7 @@ import Loading from "@/components/Loading";
 import { Toaster, toast } from "react-hot-toast";
 import TransactionLimitsModal from "./components/TransactionLimitsModal";
 import useRedirect from "@/app/hooks/useRedirect";
+import useCheckAuth from "@/app/hooks/useCheckAuth";
 
 export default function MoneyTransfer() {
   const {
@@ -23,6 +24,7 @@ export default function MoneyTransfer() {
   } = useForm();
 
   useAuthRedirect();
+  useCheckAuth();
 
   const { redirectTo } = useRedirect();
 

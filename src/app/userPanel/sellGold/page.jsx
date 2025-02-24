@@ -11,6 +11,7 @@ import { Controller, useForm, useWatch } from "react-hook-form";
 import Header from "../Header/Header";
 import TransactionLimitsModal from "../transfer/components/TransactionLimitsModal";
 import Num2persian from "num2persian";
+import useCheckAuth from "@/app/hooks/useCheckAuth";
 
 const SellGoldForm = () => {
   const {
@@ -26,6 +27,7 @@ const SellGoldForm = () => {
   });
 
   useAuthRedirect();
+  useCheckAuth();
 
   const [serverData, setServerData] = useState(null);
   const [currentPrice, setCurrentPrice] = useState(0);

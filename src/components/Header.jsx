@@ -66,8 +66,8 @@ const Header = () => {
 
   return (
     <header className="text-white">
-      <div className="flex items-center justify-between pt-3">
-        <div className="md:flex items-center lg:gap-5 md:gap-3 text-sm hidden">
+      <div className="flex items-center justify-between pt-3 ">
+        <div className="md:flex items-center lg:gap-5 md:gap-3 text-sm hidden w-full">
           <Link href={"/"}>
             <Image
               width={80}
@@ -199,17 +199,19 @@ const Header = () => {
               )}
             </ModalContent>
           </Modal>
+        </div>
+        <div className="flex items-center justify-between flex-shrink-0">
           {isLoggedIn ? (
             <>
               <button
                 onClick={handleLogout}
-                className="py-2 px-3 bg-red-500 text-white rounded-md text-sm lg:block hidden"
+                className="mx-2 py-2 px-3 bg-red-500 text-white rounded-md text-sm lg:block hidden"
               >
                 خروج
               </button>
               <Link
                 href="/userPanel"
-                className="py-2 px-3 bg-blue-400 text-white rounded-md text-sm lg:block hidden"
+                className="mx-2 py-2 px-3 bg-blue-400 text-white rounded-md text-sm lg:block hidden"
               >
                 ورود به پنل
               </Link>
@@ -217,24 +219,24 @@ const Header = () => {
           ) : (
             <Link
               href={"/login"}
-              className="py-2 px-3 bg-blue-400 text-white rounded-md text-sm lg:block hidden"
+              className="mx-2 py-2 px-3 bg-blue-400 text-white rounded-md text-sm lg:block hidden"
             >
               ورود
             </Link>
           )}
+          <Link
+            href={"#"}
+            className="py-2 px-3 bg-yellow-400 text-black rounded-md flex items-center gap-1 text-sm"
+          >
+            <Image
+              width={20}
+              height={16}
+              src={"/icons/download.svg"}
+              alt="icon"
+            />
+            نصب اپلیکیشن
+          </Link>
         </div>
-        <Link
-          href={"#"}
-          className="py-2 px-3 bg-yellow-400 text-black rounded-md flex items-center gap-1 text-sm"
-        >
-          <Image
-            width={20}
-            height={16}
-            src={"/icons/download.svg"}
-            alt="icon"
-          />
-          نصب اپلیکیشن
-        </Link>
       </div>
     </header>
   );

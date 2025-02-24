@@ -11,6 +11,7 @@ const Page = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
   const router = useRouter();
 
@@ -27,6 +28,11 @@ const Page = () => {
     const formData = new FormData();
     formData.append("subject", data.subject);
     formData.append("text", data.text);
+
+    // Append file if provided
+    if (data.file && data.file[0]) {
+      formData.append("image", data.file[0]);
+    }
 
     // Send a POST request using axios with the bearer token
     try {
@@ -97,6 +103,38 @@ const Page = () => {
           {errors.text && (
             <p className="text-red-500 text-xs">{errors.text.message}</p>
           )}
+        </div>
+
+        {/* File Upload Field */}
+        <div>
+          <label
+            htmlFor="file"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          ></label>
+          <div className="flex items-center justify-between">
+            <input
+              id="file"
+              type="file"
+              {...register("file", {
+                validate: (value) => {
+                  // Ensure the file is either jpg or png
+                  if (value && value[0]) {
+                    const fileType = value[0].type;
+                    if (fileType !== "image/jpeg" && fileType !== "image/png") {
+                      return "فقط فایل‌های jpg و png قابل قبول هستند";
+                    }
+                  }
+                  return true;
+                },
+              })}
+              className="block w-full text-sm text-gray-500 file:py-2 file:px-4 file:border file:border-gray-300 file:rounded-md file:bg-blue-50 file:text-blue-500 hover:file:bg-blue-100"
+            />
+            <p className="text-xs text-gray-500 ml-2">
+              {errors.file
+                ? errors.file.message
+                : "فایل‌های jpg و png قابل قبول هستند"}
+            </p>
+          </div>
         </div>
 
         <button

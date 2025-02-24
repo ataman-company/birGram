@@ -11,9 +11,11 @@ import ChevronRightIcon from "@public/icons/userPanel/chevronRight";
 import ShoppingCartIcon from "@public/icons/userPanel/shoppingIcon";
 import Link from "next/link";
 import CardRenderer from "./component/CardRenderer";
+import useCheckAuth from "@/app/hooks/useCheckAuth";
 
 const GiftCardsList = () => {
   useAuthRedirect();
+  useCheckAuth();
 
   const { redirectTo } = useRedirect();
 

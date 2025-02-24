@@ -1,5 +1,6 @@
 "use client";
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
+import useCheckAuth from "@/app/hooks/useCheckAuth";
 import useRedirect from "@/app/hooks/useRedirect";
 import Config from "@/components/config";
 import Loading from "@/components/Loading";
@@ -21,6 +22,7 @@ export default function ReceiveGold() {
   } = useForm({ mode: "onChange" }); // Enable validation on form value change
 
   useAuthRedirect();
+  useCheckAuth();
 
   const { redirectTo } = useRedirect();
 

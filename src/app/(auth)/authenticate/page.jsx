@@ -14,30 +14,22 @@ const IdentifyForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [phone, setPhone] = useState("");
+
   const [token, setToken] = useState("");
   const [birthDate, setBirthDate] = useState(null);
   const router = useRouter();
 
   // Load phone and token from localStorage when the component mounts
-  useEffect(() => {
-    const user = localStorage.getItem("userData");
-    const storedPhone = user.phone;
-    const storedToken = localStorage.getItem("token");
-    if (storedPhone && storedToken) {
-      setPhone(storedPhone);
-      setToken(storedToken);
-    }
-  }, []);
+  useEffect(() => {}, []);
 
   const onSubmit = async (data) => {
     const storedToken = localStorage.getItem("token");
     const formData = new FormData();
-    formData.append("token", storedToken);
     formData.append("nc", data.nationalCode);
     formData.append("name", data.firstName);
     formData.append("family", data.lastName);
     formData.append("birth", birthDate);
+
     try {
       const response = await axios.post(
         `${Config.apiUrl}/user/identify`,
@@ -45,7 +37,7 @@ const IdentifyForm = () => {
         {
           headers: {
             Authorization: `Bearer ${storedToken}`,
-            "Content-Type": "application/json",
+            "Content-Type": "multimultipart/form-data",
           },
         }
       );
@@ -53,7 +45,7 @@ const IdentifyForm = () => {
       if (response.data.code === 1) {
         router.push("/userPanel"); // Redirect to user panel
       } else {
-        alert("خطا: اطلاعات نامعتبر است.");
+        alert(response.data.error);
       }
     } catch (error) {
       console.error("Error identifying user:", error);
@@ -72,15 +64,6 @@ const IdentifyForm = () => {
         </h2>
 
         {/* Display phone number (read-only) */}
-        <div className="mb-6">
-          <label className="block text-gray-700 font-medium">شماره تلفن</label>
-          <input
-            type="text"
-            value={phone}
-            disabled
-            className="w-full p-3 border border-gray-300 rounded-lg mt-2 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
 
         {/* First Name Input */}
         <div className="mb-6">

@@ -36,6 +36,7 @@ const Transactions = () => {
 
         if (response.data.code === 1) {
           setTickets(response.data.tickets);
+          console.log("tik", response.data.tickets);
         } else {
           setError("Failed to fetch tickets.");
         }
