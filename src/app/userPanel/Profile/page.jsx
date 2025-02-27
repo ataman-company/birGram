@@ -2,16 +2,16 @@
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
 import Config from "@/components/config";
 import BottomNav from "@/components/userPanel/BottomNav";
-import Support from "@icons/userPanel/support.svg";
+
+import useRedirect from "@/app/hooks/useRedirect";
 import ChevronLeftIcon from "@public/icons/userPanel/chevronLeft";
-import LogoutIcon from "@public/icons/userPanel/logout";
+import Support from "@public/icons/userPanel/support";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Header from "../Header/Header";
-import useRedirect from "@/app/hooks/useRedirect";
 
 function Profile() {
   useAuthRedirect();
@@ -188,7 +188,7 @@ function Profile() {
             <p className="text-lg font-bold">پروفایل</p>
             <div className="py-1 px-2 bg-green-100 text-green-700 flex items-center rounded-lg relative">
               <p className="text-green-700 text-sm">پشتیبانی</p>
-              <Support width={24} height={24} fill="#3a5a40" />
+              <Support size={24} color="#3a5a40" />
               <span className="absolute flex size-3 top-0 left-0">
                 <span className="absolute top-0 inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
                 <span className="relative inline-flex size-3 rounded-full bg-red-500"></span>
@@ -299,15 +299,6 @@ function Profile() {
             </div>
 
             {/* Logout Button */}
-            <div>
-              <button
-                onClick={handleLogout}
-                className="mt-4 w-full bg-pink-50 text-pink-600 py-3 rounded-lg text-center font-semibold flex items-center justify-center gap-2"
-              >
-                <LogoutIcon color="red" size={20} />
-                خروج از حساب کاربری
-              </button>
-            </div>
           </div>
         </div>
 

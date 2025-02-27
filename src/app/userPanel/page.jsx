@@ -3,10 +3,7 @@ import Config from "@/components/config";
 import BottomNav from "@/components/userPanel/BottomNav";
 import UserPanelSwipper from "@/components/userPanel/page";
 import UserPanelGoldInformation from "@/components/userPanel/UserPanelGoldInformation";
-import Copy from "@icons/userPanel/copy.svg";
-import Down from "@icons/userPanel/down.svg";
-import Eye from "@icons/userPanel/eye.svg";
-import Support from "@icons/userPanel/support.svg";
+
 import BuyIcon from "@public/icons/userPanel/buy";
 import MoreIcon from "@public/icons/userPanel/more";
 import RequestIcon from "@public/icons/userPanel/request";
@@ -19,6 +16,10 @@ import useAuthRedirect from "../hooks/useAuthRedirect";
 import Header from "./Header/Header";
 import MoreModal from "@/components/userPanel/MoreModal";
 import Loading from "@/components/Loading";
+import Copy from "@public/icons/userPanel/copy";
+import Eye from "@public/icons/userPanel/eye";
+import Down from "@public/icons/userPanel/down";
+import Support from "@public/icons/userPanel/support";
 
 // Simple Loading component
 
@@ -168,7 +169,7 @@ function UserPanel() {
             <p className="text-lg font-bold">حساب {siteName}</p>
             <div className="py-1 px-2 bg-green-100 text-green-700 flex items-center rounded-lg relative">
               <p className="text-green-700 text-sm">پشتیبانی</p>
-              <Support width={24} height={24} fill="#3a5a40" />
+              <Support size={24} color="#3a5a40" />
               <span className="absolute flex size-3 top-0 left-0">
                 <span className="absolute top-0 inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
                 <span className="relative inline-flex size-3 rounded-full bg-red-500"></span>
@@ -192,7 +193,7 @@ function UserPanel() {
               <button className="z-50" onClick={handleCopyHesab}>
                 <div className="flex gap-1 text-sm text-yellow-400">
                   <p>{isBalanceVisible ? user.hesab : "****"}</p>
-                  <Copy className="h-5 w-5" />
+                  <Copy size={20} />
                 </div>
               </button>
             </div>

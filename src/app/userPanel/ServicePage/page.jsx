@@ -2,12 +2,13 @@
 import useAuthRedirect from "@/app/hooks/useAuthRedirect";
 import Config from "@/components/config";
 import BottomNav from "@/components/userPanel/BottomNav";
-import Support from "@icons/userPanel/support.svg";
+
 import { ChevronLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import Link from "next/link"; // Import Link
 import axios from "axios"; // Import axios for making HTTP requests
+import Support from "@public/icons/userPanel/support";
 
 const menuItems = [
   {
@@ -88,7 +89,7 @@ function UserPanel() {
           <Link href={"/userPanel/ticket"} className="flex justify-between">
             <div className="py-1 px-2 bg-green-100 text-green-700 flex items-center rounded-lg relative">
               <p className="text-green-700 text-sm">پشتیبانی</p>
-              <Support width={24} height={24} fill="#3a5a40" />
+              <Support size={24} color="#3a5a40" />
               <span className="absolute flex size-3 top-0 left-0">
                 <span className="absolute top-0 inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
                 <span className="relative inline-flex size-3 rounded-full bg-red-500"></span>
