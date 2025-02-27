@@ -40,7 +40,7 @@ export default function AboutMili() {
         {/* Item 2: مشاهده مجوزها */}
         <div
           className="flex items-center justify-between py-3 border-b cursor-pointer"
-          onClick={() => redirectTo("/licenses", "در حال مشاهده مجوزها")}
+          onClick={() => redirectTo("/certificates", "در حال مشاهده مجوزها")}
         >
           <div className="flex items-center gap-2">
             <span className="text-sm sm:text-base">مشاهده مجوزها</span>
