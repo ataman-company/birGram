@@ -6,6 +6,7 @@ import React from "react";
 function RecentQues({ faq, recent }) {
   if (faq.length === 0 || recent.length === 0) return <></>;
   const siteName = JSON.parse(localStorage.getItem("sitename"));
+  console.log("dat", faq, "rec", recent);
   return (
     <>
       <div className="flex flex-col gap-5 container mx-auto">

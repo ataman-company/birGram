@@ -11,6 +11,7 @@ export default function AboutMili() {
   }
   const { redirectTo, goBack } = useRedirect(); // Use both redirect and goBack
   const siteName = JSON.parse(localStorage.getItem("siteName"));
+  const data = JSON.parse(localStorage.getItem("Options"));
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col md:max-w-2xl">
@@ -54,7 +55,7 @@ export default function AboutMili() {
             <span className="text-sm sm:text-base">شماره پشتیبانی</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-600">۰۲۱-۹۱۰۰۱۵۵</span>
+            <span className="text-sm text-gray-600">{data.phone}</span>
             <PhoneIcon size={24} color="#666" />
           </div>
         </div>

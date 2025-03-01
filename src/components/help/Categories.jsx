@@ -23,7 +23,7 @@ function Categories({ category }) {
             alt={item.alt || "Icon"}
           />
           <span className="lg:text-base text-sm">
-            {item.title || "ثبت نام و احراز هویت"}
+            {item.name || "ثبت نام و احراز هویت"}
           </span>
         </Link>
       ))}

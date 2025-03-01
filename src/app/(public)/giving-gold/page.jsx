@@ -8,6 +8,30 @@ import physicalGoldData from "../giving-gold/goldData/physicalGoldData.json"; //
 import Link from "next/link";
 
 function Page() {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const data = JSON.parse(localStorage.getItem("Options"));
+
+  const steps = [
+    {
+      title: data.physical_step1_title,
+      description: data.physical_step1_description,
+      icon: "/icons/1.svg",
+    },
+    {
+      title: data.physical_step2_title,
+      description: data.physical_step2_description,
+      icon: "/icons/2.svg",
+    },
+    {
+      title: data.physical_step3_title,
+      description: data.physical_step3_description,
+      icon: "/icons/3.svg",
+    },
+  ];
+
   return (
     <>
       <div className="bg-blue-50">
@@ -19,11 +43,9 @@ function Page() {
 
         {/* Header Section */}
         <div className="bg-blue-800 flex flex-col gap-4 text-white p-4 container mx-auto rounded-2xl my-10">
-          <h1 className="sm:text-4xl text-2xl">
-            {physicalGoldData.header.title}
-          </h1>
+          <h1 className="sm:text-4xl text-2xl">{data.physical_header_title}</h1>
           <div className="sm:w-1/12 w-1/6 p-1 border-t-2 border-b-2 border-t-yellow-500 border-b-yellow-500"></div>
-          <p>{physicalGoldData.header.description}</p>
+          <p>{data.physical_header_descriptions}</p>
         </div>
 
         {/* Steps Section */}
@@ -34,7 +56,7 @@ function Page() {
           <div className="sm:w-1/12 w-1/6 p-1 border-t-2 border-b-2 border-t-yellow-500 border-b-yellow-500"></div>
 
           <div className="flex flex-wrap gap-5">
-            {physicalGoldData.steps.map((step, index) => (
+            {steps.map((step, index) => (
               <div
                 key={index}
                 className="flex gap-2 bg-white shadow-md p-3 py-6 rounded-lg sm:w-72 w-full"
@@ -56,7 +78,7 @@ function Page() {
 
           {/* Important Notes */}
           <h1 className="sm:text-2xl text-lg text-blue-900 font-bold">
-            {physicalGoldData.importantNotesTitle}
+            {data.physical_notes_title}
           </h1>
           <div className="sm:w-1/12 w-1/6 p-1 border-t-2 border-b-2 border-t-yellow-500 border-b-yellow-500"></div>
           {physicalGoldData.importantNotes.map((note, index) => (

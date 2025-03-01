@@ -25,7 +25,14 @@ function Footer() {
     <div className="bg-gradient-to-r from-blue-950 to-blue-800">
       <div className="container mx-auto py-4 px-2">
         <div className="flex flex-col gap-3 text-white">
-          <Image width={100} height={50} src={"/images/1.png"} alt="gold" />
+          <Link href={"/"}>
+            <Image
+              width={80}
+              height={10}
+              src={`${Config.baseUrl}/${data.logo}`}
+              alt="gold"
+            />
+          </Link>
           <p>{data?.mini_description}</p>
 
           <div className="flex sm:flex-row flex-col sm:gap-32 gap-10">
@@ -213,7 +220,7 @@ function Footer() {
                   مایکت
                 </Link>
                 <Link
-                  href={"#"}
+                  href={`${Config.baseUrl}/app.apk`}
                   className="flex flex-col gap-1 hover:text-yellow-400 duration-250"
                 >
                   <Image
@@ -387,8 +394,8 @@ function Footer() {
           </div>
           <Divider className="bg-white" />
           <p className="text-center">
-            &copy;همه حقوق مادی و معنوی برای شرکت فناوری اطلاعات آتامان ماندگار
-            محفوظ است.
+            &copy;همه حقوق مادی و معنوی برای شرکت فناوری اطلاعات آتامان محفوظ
+            است.
           </p>
         </div>
       </div>

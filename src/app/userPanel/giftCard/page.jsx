@@ -7,6 +7,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function GiftCard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -129,15 +130,16 @@ function ShabaModal({ onClose }) {
         onClose();
         // Optionally navigate or display a success message
       } else {
-        console.error("Withdrawal error:", res.data.message);
+        toast.error("سریال وارد شده صحیح نیست");
       }
     } catch (error) {
-      console.error("Error during withdrawal:", error);
+      toast.error(error);
     }
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <Toaster position="top-left" reverseOrder={false} />
       <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-md">
         <h2 className="text-lg font-bold mb-4 text-center">ورود کد هدیه</h2>
         <form onSubmit={handleSubmit(onSubmit)}>

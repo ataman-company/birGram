@@ -79,7 +79,7 @@ function CanIHelp() {
   return (
     <div className="flex flex-col gap-5 text-white items-center py-20">
       <h1 className="text-3xl">چطور میتونم کمکتون کنم؟</h1>
-      <p>پاسخ سوالات خود دربارۀ محصول {siteName} را در اینجا پیدا کنید</p>
+      <p>پاسخ سوالات خود دربارۀ محصول را در اینجا پیدا کنید</p>
 
       <div className="sm:w-1/2 w-full ">
         <form onSubmit={handleSubmit(onSubmit)} className="relative">

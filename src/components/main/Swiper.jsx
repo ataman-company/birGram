@@ -54,7 +54,7 @@ const Swipper = () => {
                 className="flex flex-col items-center text-center"
                 href={"#"}
               >
-                {item.text === "1" ? (
+                {item.text == "1" ? (
                   <span
                     dangerouslySetInnerHTML={{ __html: item.img }}
                     className="w-32 h-32"

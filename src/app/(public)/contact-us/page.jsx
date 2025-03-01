@@ -22,6 +22,7 @@ function page() {
   } = useForm();
 
   const siteName = JSON.parse(localStorage.getItem("siteName"));
+  const data = JSON.parse(localStorage.getItem("Options"));
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("phone", data.phone);
@@ -56,14 +57,9 @@ function page() {
           </div>
         </div>
         <section className="my-4 flex flex-col gap-3 container mx-auto px-20">
-          <h1 className="text-2xl text-blue-900 font-bold">
-            تماس با {siteName}
-          </h1>
+          <h1 className="text-2xl text-blue-900 font-bold">اطلاعات تماس</h1>
           <div className="w-1/12 p-1 border-t-2 border-b-2 border-t-yellow-500 border-b-yellow-500"></div>
-          <p>
-            لطفا قبل از تماس با {siteName}، ابتدا پرسش‌‌های متداول را مشاهده
-            کنید.
-          </p>
+          <p>لطفا قبل از تماس، ابتدا پرسش‌‌های متداول را مشاهده کنید.</p>
           <form
             className="flex flex-col gap-3"
             onSubmit={handleSubmit(onSubmit)}
@@ -114,17 +110,10 @@ function page() {
             </Button>
           </form>
 
-          <h1 className="text-2xl text-blue-900 font-bold">
-            اطلاعات تماس با {siteName}
-          </h1>
+          <h1 className="text-2xl text-blue-900 font-bold">اطلاعات تماس </h1>
           <div className="w-1/12 p-1 border-t-2 border-b-2 border-t-yellow-500 border-b-yellow-500"></div>
-          <h1 className="text-2xl text-blue-900 font-bold">
-            آدرس دفتر بیر گرم
-          </h1>
-          <p>
-            تهران، بلوار نلسون ماندلا، نرسیده به چهارراه جهان کودک کوچه ناوک،
-            پلاک ۶، طبقه ۱
-          </p>
+          <h1 className="text-2xl text-blue-900 font-bold">آدرس دفتر</h1>
+          <p>{data.address}</p>
           <div className="p-10 bg-gray-200 flex flex-col gap-1 items-center rounded-2xl mx-20">
             <Image
               width={34}
@@ -133,61 +122,18 @@ function page() {
               alt="email"
             />
             <h1 className="text-2xl text-blue-900 font-bold">
-              ایمیل مکاتبات اداری {siteName}
+              ایمیل مکاتبات اداری
             </h1>
-            <span>info@birgeram.gold</span>
+            <span>{data.email}</span>
           </div>
-          <h1 className="text-2xl text-blue-900 font-bold">
-            خزانه تحویل و فروشگاه {siteName}
-          </h1>
-          <p>
-            بازار بزرگ تهران، خیابان ناصرخسرو، پاساژ شمس العماره، طبقه منفی ۲،
-            پلاک ۲۳۹
-          </p>
-          <h1 className="text-2xl text-blue-900 font-bold">
-            پشتیبانی آنلاین و تلفنی {siteName}
-          </h1>
-          <div className="w-1/12 p-1 border-t-2 border-b-2 border-t-yellow-500 border-b-yellow-500"></div>
+
           <div className="flex flex-wrap gap-y-5">
-            <div className="w-1/2 flex flex-col gap-2 items-center">
-              <Image width={34} height={34} src={"/icons/hedset.svg"} alt="" />
-              <h1 className="text-xl text-blue-900 font-bold">
-                شماره تلفن پشتیبانی
-              </h1>
-              <p>021-91200150</p>
-            </div>
-            <div className="items-center w-1/2 flex flex-col gap-2">
-              <Image width={34} height={34} src={"/icons/email2.svg"} alt="" />
-              <h1 className="text-xl text-blue-900 font-bold">
-                ایمیل پشتیبانی کاربران {siteName}
-              </h1>
-              <p>021-91200150</p>
-            </div>
-            <div className=" w-1/2 flex flex-col gap-2 items-center">
-              <Image width={34} height={34} src={"/icons/phone2.svg"} alt="" />
-              <h1 className="text-xl text-blue-900 font-bold">
-                شماره تلفن پشتیبانی
-              </h1>
-              <p>021-91200150</p>
-            </div>
-            <div className="w-1/2 items-center flex flex-col gap-2">
-              <Image
-                width={34}
-                height={34}
-                src={"/icons/calendar2.svg"}
-                alt=""
-              />
-              <h1 className="text-xl text-blue-900 font-bold">
-                شماره تلفن پشتیبانی
-              </h1>
-              <p>021-91200150</p>
-            </div>
             <div className="flex justify-center w-full">
               <Link
                 href="/userPanel/goldTrade"
                 className="flex justify-center items-center px-6 py-3 bg-white border border-blue-500 text-blue-500 rounded-lg text-sm font-medium text-center"
               >
-                خرید طلای آب‌شده از {siteName}
+                خرید طلای آبشده
               </Link>
             </div>
           </div>

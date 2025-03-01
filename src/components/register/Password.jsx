@@ -66,7 +66,7 @@ function Password({ setPassword, submitPassword }) {
             required: "رمز عبور الزامی است",
             validate: (value) =>
               isPasswordValid(value) ||
-              "پسورد باید شامل حروف بزرگ، کوچک و اعداد باشد",
+              "پسورد باید شامل حروف کوچک، بزرگ، کاراکتر خاص و عدد باشد",
           }}
           render={({ field }) => (
             <Input

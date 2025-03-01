@@ -2,6 +2,8 @@
 import useRedirect from "@/app/hooks/useRedirect";
 import Config from "@/components/config";
 import ChevronRightIcon from "@public/icons/userPanel/chevronRight";
+import GiftIcon from "@public/icons/userPanel/giftIcon";
+import ReferralIcon from "@public/icons/userPanel/referral";
 import { Copy } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -129,23 +131,13 @@ const InviteFriends = () => {
       {/* Stats Section */}
       <div className="grid grid-cols-2 gap-4 mt-6">
         <div className="bg-white rounded-xl p-4 flex flex-col items-center justify-center shadow-md">
-          <Image
-            src="/icons/invite.svg"
-            alt="Invite Icon"
-            width={40}
-            height={40}
-          />
+          <ReferralIcon size={40} />
           <p className="text-gray-800 font-semibold mt-2">۰ نفر</p>
           <p className="text-xs text-gray-500">دعوت‌های انجام‌شده</p>
         </div>
         <div className="bg-white rounded-xl p-4 flex flex-col items-center justify-center shadow-md">
-          <Image
-            src="/icons/milli.svg"
-            alt="Milli Icon"
-            width={40}
-            height={40}
-          />
-          <p className="text-gray-800 font-semibold mt-2">میلی</p>
+          <GiftIcon size={40} />
+          <p className="text-gray-800 font-semibold mt-2">0 میلی</p>
           <p className="text-xs text-gray-500">میزان هدیه دریافت‌شده</p>
         </div>
       </div>
