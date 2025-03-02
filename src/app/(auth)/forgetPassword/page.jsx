@@ -126,6 +126,15 @@ const ForgotPassword = () => {
           >
             ارسال رمز یک بار مصرف{" "}
           </button>
+          <button
+            type="button"
+            onClick={() => {
+              redirectTo("/userPanel");
+            }}
+            className="w-full bg-red-700 text-white py-3 rounded-lg hover:bg-red-800 transition duration-300 transform hover:scale-105"
+          >
+            بازگشت
+          </button>
         </form>
       )}
 

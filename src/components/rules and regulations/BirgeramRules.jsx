@@ -20,6 +20,14 @@ const BirgeramRules = ({ rules, siteName }) => {
     return <div>No rules available.</div>; // Handle case when rules is empty or undefined
   }
 
+  function renderAnswer(answer) {
+    // A simple regex to detect HTML tags.
+    const containsHTML = /<\/?[a-z][\s\S]*>/i.test(answer);
+    if (containsHTML) {
+      return <span dangerouslySetInnerHTML={{ __html: answer }} />;
+    }
+    return answer;
+  }
   return (
     <Accordion variant="splitted">
       {rules.map((section) => (
@@ -32,7 +40,7 @@ const BirgeramRules = ({ rules, siteName }) => {
           }
         >
           <ul className="text-sm">
-            <li>{section.q}</li>
+            <li>{renderAnswer(section.answer)}</li>
           </ul>
         </AccordionItem>
       ))}

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import Config from "../config";
 
 function ApplicationDownload() {
   const siteName = JSON.parse(localStorage.getItem("sitename"));
@@ -52,7 +53,7 @@ function ApplicationDownload() {
             </div>
             <div className="flex items-center gap-2">
               <Link
-                href={"#"}
+                href={`${Config.baseUrl}/app.apk`}
                 className="bg-white py-1 px-3 text-black rounded-md flex items-center"
               >
                 <Image

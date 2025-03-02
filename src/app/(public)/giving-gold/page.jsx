@@ -32,6 +32,16 @@ function Page() {
     },
   ];
 
+  function renderContent(content) {
+    // A simple check: if content starts with '<' assume it's HTML.
+    const trimmed = content.trim();
+    const isHTML = trimmed.startsWith("<") && trimmed.endsWith(">");
+
+    if (isHTML) {
+      return <span dangerouslySetInnerHTML={{ __html: content }} />;
+    }
+    return <span>{content}</span>;
+  }
   return (
     <>
       <div className="bg-blue-50">
@@ -45,7 +55,7 @@ function Page() {
         <div className="bg-blue-800 flex flex-col gap-4 text-white p-4 container mx-auto rounded-2xl my-10">
           <h1 className="sm:text-4xl text-2xl">{data.physical_header_title}</h1>
           <div className="sm:w-1/12 w-1/6 p-1 border-t-2 border-b-2 border-t-yellow-500 border-b-yellow-500"></div>
-          <p>{data.physical_header_descriptions}</p>
+          <p>{data.physical_header_description}</p>
         </div>
 
         {/* Steps Section */}
@@ -81,12 +91,15 @@ function Page() {
             {data.physical_notes_title}
           </h1>
           <div className="sm:w-1/12 w-1/6 p-1 border-t-2 border-b-2 border-t-yellow-500 border-b-yellow-500"></div>
-          {physicalGoldData.importantNotes.map((note, index) => (
+          {/* {physicalGoldData.importantNotes.map((note, index) => (
             <p key={index}>
               {index + 1}- {note}
             </p>
-          ))}
+          ))} */}
 
+          <ul className="text-sm">
+            <li>{renderContent(data.physical_notes_description)}</li>
+          </ul>
           {/* Fee Section */}
           <h1 className="sm:text-2xl text-lg text-blue-900 font-bold">
             {physicalGoldData.feeTitle}
