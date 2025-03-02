@@ -24,7 +24,7 @@ function ChangePasswordForm() {
 
     const formData = new FormData();
     formData.append("password", data.password);
-    formData.append("pasword", data.newPassword);
+    formData.append("newpassword", data.newpassword);
 
     try {
       const response = await axios.post(
@@ -94,19 +94,19 @@ function ChangePasswordForm() {
           <div>
             <label
               className="block font-semibold mb-2 text-gray-700"
-              htmlFor="newPassword"
+              htmlFor="newpassword"
             >
               رمز عبور جدید
             </label>
             <input
-              id="newPassword"
+              id="newpassword"
               type="password"
               placeholder="رمز عبور جدید خود را وارد کنید"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg 
                          focus:outline-none focus:ring-2 focus:ring-blue-400 
                          focus:border-transparent placeholder-gray-400 
                          transition-colors"
-              {...register("newPassword", {
+              {...register("newpassword", {
                 required: "لطفاً رمز عبور جدید خود را وارد کنید.",
                 minLength: {
                   value: 8,
@@ -114,7 +114,7 @@ function ChangePasswordForm() {
                 },
               })}
             />
-            {errors.newPassword && (
+            {errors.newpassword && (
               <p className="text-red-500 mt-1 text-sm">
                 {errors.newPassword.message}
               </p>

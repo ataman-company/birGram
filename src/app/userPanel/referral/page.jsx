@@ -12,13 +12,15 @@ import toast, { Toaster } from "react-hot-toast";
 const InviteFriends = () => {
   const { goBack } = useRedirect();
   const [inviteCode, setInviteCode] = useState("");
+  const [userData, setUserData] = useState(null);
 
   // Fetch user referral code when component mounts
   useEffect(() => {
-    const userData = localStorage.getItem("userData");
-    if (userData) {
+    const user = localStorage.getItem("userData");
+    setUserData(JSON.parse(user));
+    if (user) {
       try {
-        const parsedData = JSON.parse(userData);
+        const parsedData = JSON.parse(user);
         setInviteCode(parsedData?.referral || "کدی یافت نشد");
       } catch (error) {
         console.error("Error parsing userData:", error);
@@ -61,6 +63,7 @@ const InviteFriends = () => {
     toast.success("کپی شد!");
   };
 
+  if (!userData) return null;
   return (
     <div className="bg-[#EEF3FF] min-h-screen py-6 px-4 max-w-2xl mx-auto">
       <Toaster position="top-center" />
@@ -132,12 +135,16 @@ const InviteFriends = () => {
       <div className="grid grid-cols-2 gap-4 mt-6">
         <div className="bg-white rounded-xl p-4 flex flex-col items-center justify-center shadow-md">
           <ReferralIcon size={40} />
-          <p className="text-gray-800 font-semibold mt-2">۰ نفر</p>
+          <p className="text-gray-800 font-semibold mt-2">
+            {userData.refcount} نفر
+          </p>
           <p className="text-xs text-gray-500">دعوت‌های انجام‌شده</p>
         </div>
         <div className="bg-white rounded-xl p-4 flex flex-col items-center justify-center shadow-md">
           <GiftIcon size={40} />
-          <p className="text-gray-800 font-semibold mt-2">0 میلی</p>
+          <p className="text-gray-800 font-semibold mt-2">
+            {userData.reward || "0"} میلی
+          </p>
           <p className="text-xs text-gray-500">میزان هدیه دریافت‌شده</p>
         </div>
       </div>
