@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 
 import OtpCodeLogin from "./authcode/page";
 import useRedirect from "@/app/hooks/useRedirect";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 // Import the hook
 
 function Login() {
