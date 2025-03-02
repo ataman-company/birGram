@@ -169,7 +169,7 @@ export default function MoneyTransfer() {
   return (
     <>
       {/* 4) Hot Toast container, can be placed anywhere globally, typically in layout */}
-      <Toaster position="top-left" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
 
       <div className="h-[90vh] max-w-2xl mx-auto flex flex-col p-2 ">
         {/* Top Bar */}

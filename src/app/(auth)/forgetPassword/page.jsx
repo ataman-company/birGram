@@ -102,7 +102,7 @@ const ForgotPassword = () => {
 
   return (
     <div className="max-w-lg mx-auto p-6 sm:p-8 bg-white rounded-3xl shadow-lg">
-      <Toaster position="top-left" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <h2 className="text-3xl text-center font-bold text-teal-700 mb-8">
         فراموشی رمز عبور
       </h2>

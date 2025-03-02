@@ -1,153 +1,152 @@
 "use client";
-import useAuthRedirect from "@/app/hooks/useAuthRedirect";
-import useRedirect from "@/app/hooks/useRedirect";
-import Config from "@/components/config";
-import ChevronLeftIcon from "@public/icons/userPanel/chevronLeft";
-import ChevronRightIcon from "@public/icons/userPanel/chevronRight";
+import React from "react";
 import axios from "axios";
-import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import Config from "@/components/config";
+import toast, { Toaster } from "react-hot-toast";
+import useRedirect from "@/app/hooks/useRedirect";
 
-export default function SecuritySettings() {
+function ChangePasswordForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const { redirectTo } = useRedirect();
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isValid },
-    getValues,
-    setValue,
-  } = useForm({ mode: "onChange" }); // Enable validation on form value change
-
-  useAuthRedirect();
-
-  // State to store user data (retrieved from localStorage)
-  const [user, setUser] = useState(null);
-  // State to track the OTP toggle; default to false.
-  const [isOtp, setIsOtp] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Track loading state
-
-  // On mount, retrieve user data from localStorage and update states
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const userDataString = localStorage.getItem("userData");
-      if (userDataString) {
-        const userData = JSON.parse(userDataString);
-        setUser(userData);
-        // If userData.auth exists, set the OTP checkbox accordingly.
-        setIsOtp(!!userData.auth);
-      }
-    }
-  }, []);
-
-  const handleOtp = async () => {
-    // Toggle the checkbox value
-    const newDisplayValue = !isOtp;
-    setIsOtp(newDisplayValue);
-
-    // Update user.auth in state and localStorage if user data exists
-    if (user && typeof window !== "undefined") {
-      const updatedUser = { ...user, auth: newDisplayValue };
-      setUser(updatedUser);
-      localStorage.setItem("userData", JSON.stringify(updatedUser));
+  const onSubmit = async (data) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("توکنی در حافظه مرورگر یافت نشد.");
+      return;
     }
 
-    // Get token from localStorage (only on client)
-    let token = "";
-    if (typeof window !== "undefined") {
-      token = localStorage.getItem("token");
-    }
+    const formData = new FormData();
+    formData.append("password", data.password);
+    formData.append("pasword", data.newPassword);
 
-    if (newDisplayValue) {
-      // Enabling OTP: send GET request to /user/activeauth
-      try {
-        const response = await axios.get(`${Config.apiUrl}/user/activeauth`, {
+    try {
+      const response = await axios.post(
+        `${Config.apiUrl}/user/password`,
+        formData,
+        {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
-        });
-        if (response.status === 200 && response.data.code === 1) {
-          redirectTo("/userPanel/OtpLogin");
-        } else {
-          console.error(
-            "Failed to activate OTP:",
-            response.data.message || response.statusText
-          );
         }
-      } catch (error) {
-        console.error("Error activating OTP:", error);
+      );
+
+      if (response.data.code == 1) {
+        toast.success("رمز عبور با موفقیت به‌روزرسانی شد!");
+        redirectTo("/userPanel");
+      } else {
+        toast.error(response.data.error);
       }
-    } else {
-      // Disabling OTP: send GET request to /user/disableauth
-      try {
-        const response = await axios.get(`${Config.apiUrl}/user/disableauth`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (response.status === 200 && response.data.code === 1) {
-          console.log("OTP disabled successfully");
-          // Optionally update UI or state here if needed
-        } else {
-          console.error(
-            "Failed to disable OTP:",
-            response.data.message || response.statusText
-          );
-        }
-      } catch (error) {
-        console.error("Error disabling OTP:", error);
-      }
+    } catch (error) {
+      toast.error("تغییر رمز عبور با خطا مواجه شد.");
     }
   };
 
   return (
-    <div className="h-[90vh] max-w-2xl mx-auto flex flex-col p-2 bg-white relative">
-      {/* Top Navigation */}
-      <div className="flex justify-between items-center mb-1 py-3">
-        <Link href="/userPanel/Profile">
-          <ChevronRightIcon className="w-5 h-5 text-gray-700 cursor-pointer" />
-        </Link>
-        <h1 className="flex justify-center grow text-md font-bold text-center">
-          تنظیمات امنیتی
-        </h1>
-      </div>
+    <div
+      className="max-w-2xl min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-200 p-4 mx-auto"
+      dir="rtl"
+    >
+      <Toaster position="top-center" reverseOrder={false} />
 
-      {/* Change Password Section */}
-      <div>
-        <Link
-          href="/userPanel/setting/ChangePassword"
-          className="text-sm text-gray-500 pb-2"
-        >
-          <div className="flex justify-between border-b border-gray-200 px-1 py-3">
-            تغییر رمز عبور
-            <ChevronLeftIcon className="w-5 h-5 text-gray-700 cursor-pointer" />
+      {/* Card Container */}
+      <div className="max-w-2xl w-full bg-white rounded-2xl shadow-2xl p-10">
+        <h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">
+          تغییر رمز عبور
+        </h2>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {/* Current Password */}
+          <div>
+            <label
+              className="block font-semibold mb-2 text-gray-700"
+              htmlFor="password"
+            >
+              رمز عبور فعلی
+            </label>
+            <input
+              id="password"
+              type="password"
+              placeholder="رمز عبور فعلی خود را وارد کنید"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg 
+                         focus:outline-none focus:ring-2 focus:ring-blue-400 
+                         focus:border-transparent placeholder-gray-400 
+                         transition-colors"
+              {...register("password", {
+                required: "لطفاً رمز عبور فعلی خود را وارد کنید.",
+              })}
+            />
+            {errors.password && (
+              <p className="text-red-500 mt-1 text-sm">
+                {errors.password.message}
+              </p>
+            )}
           </div>
-        </Link>
-      </div>
 
-      {/* OTP Activation Section */}
-      <div className="flex items-center justify-between py-4">
-        <p className="text-gray-800">فعال کردن ورود دو مرحله ای</p>
-        <label className="inline-flex items-center cursor-pointer">
-          <input
-            type="checkbox"
-            className="sr-only peer"
-            checked={isOtp}
-            onChange={handleOtp}
-          />
-          <div
-            className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full
-              dark:bg-gray-300 peer-checked:bg-[#001A80] relative after:content-[''] 
-              after:absolute after:top-0.5 after:left-[2px] after:bg-white 
-              after:border-gray-300 after:border after:rounded-full after:h-5 
-              after:w-5 after:transition-all peer-checked:after:translate-x-full 
-              peer-checked:after:border-white"
-          />
-        </label>
-      </div>
+          {/* New Password */}
+          <div>
+            <label
+              className="block font-semibold mb-2 text-gray-700"
+              htmlFor="newPassword"
+            >
+              رمز عبور جدید
+            </label>
+            <input
+              id="newPassword"
+              type="password"
+              placeholder="رمز عبور جدید خود را وارد کنید"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg 
+                         focus:outline-none focus:ring-2 focus:ring-blue-400 
+                         focus:border-transparent placeholder-gray-400 
+                         transition-colors"
+              {...register("newPassword", {
+                required: "لطفاً رمز عبور جدید خود را وارد کنید.",
+                minLength: {
+                  value: 8,
+                  message: "رمز عبور جدید باید حداقل ۸ کاراکتر داشته باشد.",
+                },
+              })}
+            />
+            {errors.newPassword && (
+              <p className="text-red-500 mt-1 text-sm">
+                {errors.newPassword.message}
+              </p>
+            )}
+          </div>
 
-      {/* MODAL - Opens on Info Click */}
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full px-4 py-3 bg-blue-600 text-white font-semibold rounded-lg 
+                       hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300
+                       active:bg-blue-800 active:scale-95 
+                       transition-all duration-200 text-lg"
+          >
+            تغییر رمز عبور
+          </button>
+
+          {/* Back Button */}
+          <button
+            type="button"
+            onClick={() => redirectTo("/userPanel/Profile")}
+            className="w-full px-4 py-3 bg-red-600 text-white font-semibold rounded-lg 
+                       hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300
+                       active:bg-red-800 active:scale-95 
+                       transition-all duration-200 text-lg"
+          >
+            بازگشت
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
+
+export default ChangePasswordForm;

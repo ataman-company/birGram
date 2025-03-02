@@ -7,11 +7,13 @@ import axios from "axios";
 
 function Footer() {
   const [data, setData] = useState(false);
+  const [certificates, setCertificates] = useState(false);
   const serverdata = async () => {
     try {
       const res = await axios.get(`${Config.apiUrl}/splash`);
       if (res.data.code === 1) {
         setData(res.data.options);
+        setCertificates(res.data.certificates);
         localStorage.setItem("Options", JSON.stringify(res.data.options));
       }
     } catch (error) {
@@ -286,38 +288,31 @@ function Footer() {
                 نماد ها
               </h5>
               <div className="flex flex-wrap gap-5">
-                <Link href={"#"} className="p-2 bg-white rounded-lg w-14">
-                  <Image
-                    width={70}
-                    height={16}
-                    src={"/images/namad.png"}
-                    alt="namad"
-                  />
-                </Link>
-                <Link href={"#"} className="p-2 bg-white rounded-lg w-14">
-                  <Image
-                    width={70}
-                    height={16}
-                    src={"/images/ettehadiyeh.png"}
-                    alt="namad"
-                  />
-                </Link>
-                <Link href={"#"} className="p-2 bg-white rounded-lg w-14">
-                  <Image
-                    width={70}
-                    height={16}
-                    src={"/images/samandehi.png"}
-                    alt="namad"
-                  />
-                </Link>
-                <Link href={"#"} className="p-2 bg-white rounded-lg w-14">
-                  <Image
-                    width={70}
-                    height={16}
-                    src={"/images/namad2.png"}
-                    alt="namad"
-                  />
-                </Link>
+                {certificates &&
+                  certificates.map(
+                    (item) =>
+                      item.mini == 2 && (
+                        <Link
+                          key={item.id} // Always include a key if you have a unique identifier
+                          className="flex flex-col items-center text-center"
+                          href="#"
+                        >
+                          {item.text == "1" ? (
+                            <span
+                              className="w-16 h-16"
+                              dangerouslySetInnerHTML={{ __html: item.img }}
+                            />
+                          ) : (
+                            <img
+                              src={`${Config.baseUrl}/${item.img}`}
+                              alt={item.title}
+                              className="w-16 h-16"
+                            />
+                          )}
+                          <span>{item.title}</span>
+                        </Link>
+                      )
+                  )}
               </div>
             </div>
             <div className="flex flex-col gap-3">
@@ -393,10 +388,7 @@ function Footer() {
             </Link>
           </div>
           <Divider className="bg-white" />
-          <p className="text-center">
-            &copy;همه حقوق مادی و معنوی برای شرکت فناوری اطلاعات آتامان محفوظ
-            است.
-          </p>
+          <p className="text-center">&copy;{data.copyright}</p>
         </div>
       </div>
     </div>

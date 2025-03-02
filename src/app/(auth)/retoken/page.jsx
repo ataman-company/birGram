@@ -62,7 +62,7 @@ const Retoken = () => {
 
   return (
     <>
-      <Toaster position="top-left" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
 
       <div className="flex h-screen items-center justify-center bg-gray-50">
         <form

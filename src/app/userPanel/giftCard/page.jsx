@@ -139,7 +139,7 @@ function ShabaModal({ onClose }) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <Toaster position="top-left" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-md">
         <h2 className="text-lg font-bold mb-4 text-center">ورود کد هدیه</h2>
         <form onSubmit={handleSubmit(onSubmit)}>

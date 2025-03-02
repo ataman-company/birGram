@@ -179,7 +179,7 @@ function Profile() {
   return (
     <>
       <div className="flex flex-col h-screen pb-[80px] px-2 max-w-2xl mx-auto relative">
-        <Toaster position="top-left" reverseOrder={false} />
+        <Toaster position="top-center" reverseOrder={false} />
         <Header currentPrice={currentPrice} />
 
         <div className="flex flex-col gap-2 mt-2 h-full justify-between">

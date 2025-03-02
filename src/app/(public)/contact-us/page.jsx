@@ -49,7 +49,7 @@ function page() {
 
   return (
     <>
-      <Toaster position="top-left" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="bg-blue-50">
         <div className="bg-gradient-to-r from-blue-950 to-blue-800">
           <div className="container pb-3 mx-auto relative px-3">

@@ -140,7 +140,7 @@ function SignUp() {
 
   return (
     <>
-      <Toaster position="top-left" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       {step === 0 && (
         <Register
           setStep={setStep}

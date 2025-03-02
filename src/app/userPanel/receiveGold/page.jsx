@@ -156,8 +156,7 @@ export default function ReceiveGold() {
         ); // Redirect to the ServicePage
       } else {
         // Handle any other response codes (if needed)
-        toast.error("عملیات با خطا مواجه شده است");
-        console.error("Error in response:", res.data);
+        toast.error(res.data.error);
       }
     } catch (error) {
       setIsLoading(false);
@@ -167,7 +166,7 @@ export default function ReceiveGold() {
   return (
     <div className="h-[90vh] max-w-2xl mx-auto flex flex-col p-2 bg-white relative">
       <div>
-        <Toaster position="top-left" reverseOrder={false} />
+        <Toaster position="top-center" reverseOrder={false} />
       </div>
       {/* Top Navigation */}
       <div className="flex justify-between items-center mb-1 py-3 ">

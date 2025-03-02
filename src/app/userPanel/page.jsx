@@ -160,7 +160,7 @@ function UserPanel() {
   return (
     <>
       <div className="flex flex-col gap-2 pb-5 px-2 max-w-2xl mx-auto">
-        <Toaster position="top-left" reverseOrder={false} />
+        <Toaster position="top-center" reverseOrder={false} />
         <Header currentPrice={currentPrice} />
 
         <div className="flex flex-col gap-2">

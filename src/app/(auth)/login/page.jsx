@@ -7,9 +7,10 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { toast, Toaster } from "sonner";
+
 import OtpCodeLogin from "./authcode/page";
 import useRedirect from "@/app/hooks/useRedirect";
+import { Toaster } from "react-hot-toast";
 // Import the hook
 
 function Login() {
@@ -71,7 +72,7 @@ function Login() {
 
   return (
     <>
-      <Toaster position="top-right" />
+      <Toaster position="top-center" reverseOrder={false} />
       <OtpCodeLogin
         isOpen={isOtpModalOpen}
         onClose={() => setIsOtpModalOpen(false)}
